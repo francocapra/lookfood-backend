@@ -20,6 +20,7 @@ public class Address implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String street;
+	private String number;
 	private String complement;
 	private String district;
 	private String postcode;
@@ -40,10 +41,11 @@ public class Address implements Serializable{
 	}
 
 
-	public Address(Integer id, String street, String complement, String district, String postcode, Partner partner, City city) {
+	public Address(Integer id, String street, String number, String complement, String district, String postcode, Partner partner, City city) {
 		super();
 		this.id = id;
 		this.street = street;
+		this.number = number;
 		this.complement = complement;
 		this.district = district;
 		this.postcode = postcode;
@@ -122,6 +124,15 @@ public class Address implements Serializable{
 	}
 
 
+	public String getNumber() {
+		return number;
+	}
+	
+	
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -147,6 +158,8 @@ public class Address implements Serializable{
 			return false;
 		return true;
 	}
+
+
 
 	
 	

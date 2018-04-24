@@ -2,6 +2,8 @@ package com.lookfood.backend.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lookfood.backend.domain.enums.TypeStatus;
@@ -19,22 +22,32 @@ public class Review implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY) //DEfinindo a estrategia de geração automatica dos ID, dependendo do banco tem q ser <> IDENTITY
+	@GeneratedValue(strategy=GenerationType.IDENTITY) 
 	private Integer id;
 	private Integer status;
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date date;
 	
+	@ManyToOne
+	@JoinColumn(name="partner_id")
+	private Partner partner;
+
+	@OneToMany(mappedBy="id.review")
+	private Set<ItemProduct> itensProduct = new HashSet<>(); 
+
+	@OneToMany(mappedBy="id.review")
+	private Set<ItemProfessional> itensProfessional = new HashSet<>(); 
 	
 	public Review() {
 		super();
 	}
 
-	public Review(Integer id, TypeStatus status, Date date ) {
+	public Review(Integer id, TypeStatus status, Date date, Partner partner) {
 		super();
 		this.id = id;
 		this.status = status.getCod();
 		this.date = date;
+		this.setPartner(partner);
 	}
 
 	public Integer getId() {
@@ -62,6 +75,30 @@ public class Review implements Serializable{
 	}
 
 
+	public Partner getPartner() {
+		return partner;
+	}
+	
+	public void setPartner(Partner partner) {
+		this.partner = partner;
+	}
+	
+	public Set<ItemProduct> getItensProduct() {
+		return itensProduct;
+	}
+
+	public void setItens(Set<ItemProduct> itens) {
+		this.itensProduct = itens;
+	}
+
+	public Set<ItemProfessional> getItensProfessional() {
+		return itensProfessional;
+	}
+
+	public void setItensProfessional(Set<ItemProfessional> itensProfessional) {
+		this.itensProfessional = itensProfessional;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -86,7 +123,7 @@ public class Review implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 	
 	
 }

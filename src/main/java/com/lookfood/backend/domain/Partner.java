@@ -38,7 +38,7 @@ public class Partner implements Serializable{
 	
 	@OneToMany(mappedBy="partner")
 	@JsonIgnore
-	private List<Catalog> catalogs = new ArrayList<>();
+	private List<Review> catalogs = new ArrayList<>();
 
 	public Partner() {
 		super();
@@ -109,11 +109,11 @@ public class Partner implements Serializable{
 		this.addresses = addresses;
 	}
 
-	public List<Catalog> getCatalogs() {
+	public List<Review> getCatalogs() {
 		return catalogs;
 	}
 
-	public void setCatalogs(List<Catalog> catalogs) {
+	public void setCatalogs(List<Review> catalogs) {
 		this.catalogs = catalogs;
 	}
 
