@@ -21,4 +21,10 @@ public class ProfessionalService {
 		
 	}
 	
+	public Professional insertReview(Professional obj) {
+		obj.setId(null);
+		return professionalRepository.save(obj);
+	}
+	
+	
 }

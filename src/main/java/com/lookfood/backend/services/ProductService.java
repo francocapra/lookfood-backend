@@ -21,4 +21,9 @@ public class ProductService {
 		
 	}
 	
+	public Product insertReview(Product obj) {
+		obj.setId(null);
+		return productRepository.save(obj);		
+	}
+	
 }

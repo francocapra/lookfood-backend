@@ -1,13 +1,11 @@
 package com.lookfood.backend.resources;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import java.net.URI;
 
-import java.security.Provider.Service;
-
-import org.apache.catalina.valves.rewrite.Substitution.ServerVariableHttpElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,8 +35,8 @@ public class ReviewResources {
 //	ResponseEntity = "Resposta HTTP"
 //	Void === Não vai ter corpo, Quando eu inserir um "Corpo(Body)" com sucesso! ele(method) 
 //	vou retornar uma reposta com o corpo vazio!!
-	
-	public ResponseEntity<Void>  insert(Review obj){
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void>  insert(@RequestBody Review obj){
 		
 		obj = this.reviewService.insertReview(obj);	
 		URI uri = ServletUriComponentsBuilder

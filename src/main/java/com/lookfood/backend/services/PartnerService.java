@@ -20,4 +20,6 @@ public class PartnerService {
 		return obj.orElseThrow( () -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Partner.class.getName() )); 
 		
 	}
+	
+	
 }
