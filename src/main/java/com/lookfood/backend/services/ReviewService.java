@@ -20,4 +20,9 @@ public class ReviewService {
 		return obj.orElseThrow( () -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Review.class.getName() )); 
 		
 	}
+	
+	public Review insertReview(Review obj) {
+		obj.setId(null);
+		return reviewRepository.save(obj);
+	}
 }

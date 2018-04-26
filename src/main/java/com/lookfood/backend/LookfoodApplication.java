@@ -70,7 +70,8 @@ public class LookfoodApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");		
+		
 		
 //		Persist: Region/City/Address/Partner
 		Region reg1 = new Region(null, "Rio Grande do Sul");
@@ -94,8 +95,7 @@ public class LookfoodApplication implements CommandLineRunner{
 
 		partnerRepository.saveAll(Arrays.asList(partner1));
 		addressRepository.saveAll(Arrays.asList(e1, e2));
-				
-		
+						
 //		Persist: Product/ Professional		
 		Professional prof1 = new Professional(null, "José"	, TypePosition.CHEF );
 		Professional prof2 = new Professional(null, "Maria"	, TypePosition.ASSISTANT );
@@ -105,16 +105,16 @@ public class LookfoodApplication implements CommandLineRunner{
 		Product p1 = new Product(null, "Prato1", sdf.parse("30/09/2017 10:32") );
 		Product p2 = new Product(null, "Prato2", sdf.parse("30/09/2017 10:32") );
 		Product p3 = new Product(null, "Prato3", sdf.parse("30/09/2017 10:32") );
-			
+		
+		prof1.getProducts().addAll(Arrays.asList(p1,p2,p3));
+		prof2.getProducts().addAll(Arrays.asList(p1,p3));		
+		
 		p1.getProfessionals().addAll(Arrays.asList(prof1,prof2));
 		p2.getProfessionals().addAll(Arrays.asList(prof1));
 		p3.getProfessionals().addAll(Arrays.asList(prof1,prof2));
 		
-//		prof1.getProducts().addAll(Arrays.asList(p1,p2,p3));
-		
-		professionalRepository.saveAll(Arrays.asList(prof1,prof2,prof3,prof4));
 		productRepository.saveAll(Arrays.asList(p1,p2,p3));
-		
+		professionalRepository.saveAll(Arrays.asList(prof1,prof2,prof3,prof4));
 //		Persist Review
 		Review rw1 = new Review(null, TypeStatus.ACTIVE, sdf.parse("20/10/2017 00:00"), partner1 );		
 		
@@ -122,8 +122,8 @@ public class LookfoodApplication implements CommandLineRunner{
 
 //		Persist: Item Product
 		ItemProduct itmProd1 = new ItemProduct(rw1, p1, 10);
-		ItemProduct itmProd2 = new ItemProduct(rw1, p2, 10);
-		ItemProduct itmProd3 = new ItemProduct(rw1, p3, 10);
+		ItemProduct itmProd2 = new ItemProduct(rw1, p2, 9);
+		ItemProduct itmProd3 = new ItemProduct(rw1, p3, 8);
 		ItemProfessional itmProf1 = new ItemProfessional(rw1, prof3 , 10);
 		ItemProfessional itmProf2 = new ItemProfessional(rw1, prof4 , 10);
 

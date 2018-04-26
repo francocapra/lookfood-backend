@@ -29,15 +29,16 @@ public class ItemProduct implements Serializable{
 		this.rate = rate;
 	}
 
+
+	public Product getProduct() {
+		return id.getProduct();
+	}
+	
 	@JsonIgnore
 	public Review getReview(){
 		return id.getReview();
 	}
-		
-	public Product getProfessional() {
-		return id.getProduct();
-	}
-	
+
 	public ItemProductPK getId() {
 		return id;
 	}

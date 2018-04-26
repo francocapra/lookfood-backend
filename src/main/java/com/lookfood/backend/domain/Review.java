@@ -14,11 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.lookfood.backend.domain.enums.TypeStatus;
 
 @Entity
-public class Review implements Serializable{
-	
+@JsonPropertyOrder({ "id", "partnerId"})
+public class Review implements Serializable{	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -74,9 +76,13 @@ public class Review implements Serializable{
 		this.date = date;
 	}
 
-
+	@JsonIgnore
 	public Partner getPartner() {
 		return partner;
+	}
+	
+	public Integer getPartnerId() {
+		return partner.getId();
 	}
 	
 	public void setPartner(Partner partner) {

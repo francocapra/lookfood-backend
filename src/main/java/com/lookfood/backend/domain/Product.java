@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,8 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Product implements Serializable{
-	
+public class Product implements Serializable{	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -28,7 +28,8 @@ public class Product implements Serializable{
 	private String description;
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")	
 	private Date date;
-	
+
+
 	@ManyToMany(mappedBy = "products")
 	private List<Professional> professionals = new ArrayList<>();
 	
@@ -47,6 +48,15 @@ public class Product implements Serializable{
 		this.date = date;
 	}
 
+	@JsonIgnore //Tudo que começa com GET é serializado, então eu não quero serealizar esta lista de pedidos
+	public List<Review> getReviews(){
+		List<Review> listReview = new ArrayList<>();
+		for (ItemProduct x : itensProduct ) {
+			listReview.add(x.getReview());
+		}
+		return listReview;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -70,7 +80,7 @@ public class Product implements Serializable{
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
+	
 	public List<Professional> getProfessionals() {
 		return professionals;
 	}
@@ -87,15 +97,6 @@ public class Product implements Serializable{
 		this.itensProduct = itensProduct;
 	}
 
-	@JsonIgnore //Tudo que começa com GET é serializado, então eu não quero serealizar esta lista de pedidos
-	public List<Review> getReviews(){
-		List<Review> listReview = new ArrayList<>();
-		for (ItemProduct x : getItensProduct() ) {
-			listReview.add(x.getReview());
-		}
-		return listReview;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -20,7 +20,6 @@ import com.lookfood.backend.domain.enums.TypePosition;
 
 @Entity
 public class Professional implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -30,10 +29,10 @@ public class Professional implements Serializable {
 	private Integer position;
 	
 	@ManyToMany
-	@JoinTable(	name				=	"PROFESSIONAL_PRODUCT",
-				joinColumns			=	@JoinColumn(	name	=	"professional_id"),
-				inverseJoinColumns	=	@JoinColumn(	name	=	"product_id")
-	)
+	@JsonIgnore
+	@JoinTable(	name				="PROFESSIONAL_PRODUCT",
+				joinColumns			=@JoinColumn(name="professional_id"),
+				inverseJoinColumns	=@JoinColumn(name="product_id"))
 	private List<Product> products = new ArrayList<>();
 	
 	@JsonIgnore
@@ -49,6 +48,15 @@ public class Professional implements Serializable {
 		this.id = id;
 		this.name = name;
 		this.position = position.getCod();
+	}
+
+	@JsonIgnore 
+	public List<Review> getReviews(){
+		List<Review> listReview = new ArrayList<>();
+		for (ItemProfessional x : itensProfessional ) {
+			listReview.add(x.getReview());
+		}
+		return listReview;
 	}
 
 	public Integer getId() {
@@ -91,14 +99,6 @@ public class Professional implements Serializable {
 		this.itensProfessional = itensProfessional;
 	}
 
-	@JsonIgnore //Tudo que começa com GET é serializado, então eu não quero serealizar esta lista de pedidos
-	public List<Review> getReviews(){
-		List<Review> listReview = new ArrayList<>();
-		for (ItemProfessional x : getItensProfessional() ) {
-			listReview.add(x.getReview());
-		}
-		return listReview;
-	}
 	
 	@Override
 	public int hashCode() {
