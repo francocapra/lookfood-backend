@@ -21,5 +21,10 @@ public class PartnerService {
 		
 	}
 	
+	public Partner insertPartner(Partner obj) {
+		obj.setId(null);
+		return partnerRepository.save(obj);
+	}
+	
 	
 }
