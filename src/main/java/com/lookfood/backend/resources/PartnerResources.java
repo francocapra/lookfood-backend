@@ -32,18 +32,30 @@ public class PartnerResources {
 	
 	@RequestMapping( method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Partner obj){
+		
 		obj = partnerService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand()
 				.toUri();
+		
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@PathVariable Integer id,@RequestBody Partner obj) {
+		
 		obj.setId(id);
 		obj = partnerService.update(obj); 
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
+		
+		partnerService.delete(id);
+		
 		return ResponseEntity.noContent().build();
 	}
 }

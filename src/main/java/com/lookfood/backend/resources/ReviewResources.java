@@ -15,45 +15,49 @@ import com.lookfood.backend.domain.Review;
 import com.lookfood.backend.services.ReviewService;
 
 @RestController
-@RequestMapping(value="/reviews")
+@RequestMapping(value = "/reviews")
 public class ReviewResources {
-	
-	@Autowired 
+
+	@Autowired
 	private ReviewService reviewService;
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Review> find(@PathVariable Integer id) {
-		
+
 		Review obj = reviewService.find(id);
-		return ResponseEntity
-				.ok()
-				.body(obj);		
+
+		return ResponseEntity.ok().body(obj);
 	}
-	
-//	Receber uma dominio no formato Json, e inserir no banco de dados
-//	ResponseEntity = "Resposta HTTP"
-//	Void === Não vai ter corpo, Quando eu inserir um "Corpo(Body)" com sucesso! ele(method) 
-//	vou retornar uma reposta com o corpo vazio!!
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void>  insert(@RequestBody Review obj){
-		
-		obj = this.reviewService.insert(obj);	
-		URI uri = ServletUriComponentsBuilder
-				.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(obj.getId())
-				.toUri();
-		
-		 return ResponseEntity.created(uri).build();
+
+	// Receber uma dominio no formato Json, e inserir no banco de dados
+	// ResponseEntity = "Resposta HTTP"
+	// Void === Não vai ter corpo, Quando eu inserir um "Corpo(Body)" com sucesso!
+	// ele(method)
+	// vou retornar uma reposta com o corpo vazio!!
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> insert(@RequestBody Review obj) {
+
+		obj = this.reviewService.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+
+		return ResponseEntity.created(uri).build();
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@PathVariable Integer id,@RequestBody Review obj) {
-		
+	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Review obj) {
+
 		obj.setId(id);
-		obj = reviewService.update(obj); 
-		
+		obj = reviewService.update(obj);
+
 		return ResponseEntity.noContent().build();
 	}
-	
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+
+		reviewService.delete(id);
+
+		return ResponseEntity.noContent().build();
+	}
+
 }

@@ -3,10 +3,12 @@ package com.lookfood.backend.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.lookfood.backend.domain.Partner;
 import com.lookfood.backend.repositories.PartnerRepository;
+import com.lookfood.backend.services.exceptions.DataIntegrityException;
 import com.lookfood.backend.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -17,7 +19,7 @@ public class PartnerService {
 	
 	public Partner find(Integer id) {
 		Optional<Partner> obj = partnerRepository.findById(id);
-		return obj.orElseThrow( () -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Partner.class.getName() )); 
+		return obj.orElseThrow( () -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Partner.class.getName() ) ); 
 		
 	}
 	
@@ -30,6 +32,17 @@ public class PartnerService {
 		// TODO Auto-generated method stub
 		find(obj.getId());
 		return partnerRepository.save(obj);
+	}
+
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
+		this.find(id);		
+		try {
+		partnerRepository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			// TODO: handle exception
+			throw new DataIntegrityException("Não é possivel excluir um Partner que possui Reviews");
+		}
 	}
 	
 	
