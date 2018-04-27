@@ -1,6 +1,7 @@
 package com.lookfood.backend.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,9 @@ public class ReviewResources {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Review> find(@PathVariable Integer id) {
-
+		
 		Review obj = reviewService.find(id);
-
+		
 		return ResponseEntity.ok().body(obj);
 	}
 
@@ -60,4 +61,13 @@ public class ReviewResources {
 		return ResponseEntity.noContent().build();
 	}
 
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<Review>> listAll() {
+		
+		List<Review> list = reviewService.listAll();
+		
+		return ResponseEntity.ok().body(list);
+	}
+
+	
 }

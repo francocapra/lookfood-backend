@@ -1,6 +1,7 @@
 package com.lookfood.backend.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +59,14 @@ public class ProfessionalResources {
 		professionalService.delete(id);
 		
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<Professional>> listAll() {
+		
+		List<Professional> list = professionalService.listAll();
+		
+		return ResponseEntity.ok().body(list);
 	}
 	
 }

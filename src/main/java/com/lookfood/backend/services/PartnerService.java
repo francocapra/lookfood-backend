@@ -1,5 +1,6 @@
 package com.lookfood.backend.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,21 +30,28 @@ public class PartnerService {
 	}
 
 	public Partner update(Partner obj) {
-		// TODO Auto-generated method stub
+		
 		find(obj.getId());
+		
 		return partnerRepository.save(obj);
 	}
 
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+		
 		this.find(id);		
-		try {
-		partnerRepository.deleteById(id);
-		} catch (DataIntegrityViolationException e) {
-			// TODO: handle exception
+
+		try {	partnerRepository.deleteById(id); } 
+		
+		catch (DataIntegrityViolationException e) {
+			
 			throw new DataIntegrityException("Não é possivel excluir um Partner que possui Reviews");
 		}
 	}
 	
+	public List<Partner> listAll() {
+		
+		return partnerRepository.findAll();
+		
+	}
 	
 }

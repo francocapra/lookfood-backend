@@ -1,5 +1,6 @@
 package com.lookfood.backend.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,12 @@ public class ProductService {
 			// TODO: handle exception
 			throw new DataIntegrityException("Não é possivel excluir um Product que possui um Professional ");
 		}
+	}
+	
+	public List<Product> listAll() {
+		
+		return productRepository.findAll();
+		
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.lookfood.backend.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,12 @@ public class ReviewService {
 			// TODO: handle exception
 			throw new DataIntegrityException("Não é possivel excluir uma Review que possui Itens de Reviews");
 		}
+	}
+
+
+	public List<Review> listAll() {
+		
+		return reviewRepository.findAll();
+		
 	}
 }

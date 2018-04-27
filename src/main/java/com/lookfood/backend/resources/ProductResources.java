@@ -1,6 +1,7 @@
 package com.lookfood.backend.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -61,4 +62,11 @@ public class ProductResources {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<Product>> listAll() {
+		
+		List<Product> list = productService.listAll();
+		
+		return ResponseEntity.ok().body(list);
+	}
 }
