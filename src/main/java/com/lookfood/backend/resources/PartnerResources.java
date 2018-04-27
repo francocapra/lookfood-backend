@@ -23,20 +23,27 @@ public class PartnerResources {
 	private PartnerService partnerService;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Partner> find(@PathVariable Integer id) {
 		
-		Partner obj = partnerService.fetchPartner(id);
+		Partner obj = partnerService.find(id);
 		return ResponseEntity.ok().body(obj);
 		
 	}
 	
 	@RequestMapping( method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Partner obj){
-		obj = partnerService.insertPartner(obj);
+		obj = partnerService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand()
 				.toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@PathVariable Integer id,@RequestBody Partner obj) {
+		obj.setId(id);
+		obj = partnerService.update(obj); 
+		return ResponseEntity.noContent().build();
 	}
 }

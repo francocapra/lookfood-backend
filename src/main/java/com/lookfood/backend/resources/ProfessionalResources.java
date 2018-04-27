@@ -23,22 +23,33 @@ public class ProfessionalResources {
 	private ProfessionalService professionalService;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Professional> find(@PathVariable Integer id) {
 		
-		Professional obj = professionalService.fetchReview(id);
+		Professional obj = professionalService.find(id);
 		return ResponseEntity.ok().body(obj);
 		
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Professional obj){
-		obj = professionalService.insertReview(obj);
+		
+		obj = professionalService.insert(obj);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand()				
 				.toUri();
+		
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@PathVariable Integer id,@RequestBody Professional obj) {
+		
+		obj.setId(id);
+		obj = professionalService.update(obj); 
+		
+		return ResponseEntity.noContent().build();
 	}
 	
 }

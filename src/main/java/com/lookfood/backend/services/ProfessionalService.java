@@ -15,14 +15,20 @@ public class ProfessionalService {
 	@Autowired
 	private ProfessionalRepository professionalRepository;
 	
-	public Professional fetchReview(Integer id) {
+	public Professional find(Integer id) {
 		Optional<Professional> obj = professionalRepository.findById(id);
 		return obj.orElseThrow( () -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Professional.class.getName() )); 
 		
 	}
 	
-	public Professional insertReview(Professional obj) {
+	public Professional insert(Professional obj) {
 		obj.setId(null);
+		return professionalRepository.save(obj);
+	}
+
+	public Professional update(Professional obj) {
+		// TODO Auto-generated method stub
+		find(obj.getId());
 		return professionalRepository.save(obj);
 	}
 	

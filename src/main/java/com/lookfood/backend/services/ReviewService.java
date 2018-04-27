@@ -15,14 +15,20 @@ public class ReviewService {
 	@Autowired
 	private ReviewRepository reviewRepository;
 	
-	public Review fetchReview(Integer id) {
+	public Review find(Integer id) {
 		Optional<Review> obj = reviewRepository.findById(id);
 		return obj.orElseThrow( () -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Review.class.getName() )); 
 		
 	}
 	
-	public Review insertReview(Review obj) {
+	public Review insert(Review obj) {
 		obj.setId(null);
+		return reviewRepository.save(obj);
+	}
+
+	public Review update(Review obj) {
+		// TODO Auto-generated method stub
+		find(obj.getId());
 		return reviewRepository.save(obj);
 	}
 }

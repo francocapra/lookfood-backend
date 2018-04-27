@@ -15,15 +15,24 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 	
-	public Product fetchReview(Integer id) {
+	public Product find(Integer id) {
 		Optional<Product> obj = productRepository.findById(id);
-		return obj.orElseThrow( () -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Product.class.getName() )); 
-		
+		return obj.orElseThrow( () 
+		-> new ObjectNotFoundException("Objeto não encontrado! Id: " 
+										+ id 
+										+ ", Tipo: " 
+										+ Product.class.getName() )); 		
 	}
 	
-	public Product insertReview(Product obj) {
+	public Product insert(Product obj) {
 		obj.setId(null);
 		return productRepository.save(obj);		
+	}
+
+	public Product update(Product obj) {
+		// TODO Auto-generated method stub
+		find(obj.getId());
+		return productRepository.save(obj);
 	}
 	
 }

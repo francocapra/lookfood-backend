@@ -22,13 +22,12 @@ public class ReviewResources {
 	private ReviewService reviewService;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Review> find(@PathVariable Integer id) {
 		
-		Review obj = reviewService.fetchReview(id);
+		Review obj = reviewService.find(id);
 		return ResponseEntity
 				.ok()
-				.body(obj);
-		
+				.body(obj);		
 	}
 	
 //	Receber uma dominio no formato Json, e inserir no banco de dados
@@ -38,7 +37,7 @@ public class ReviewResources {
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void>  insert(@RequestBody Review obj){
 		
-		obj = this.reviewService.insertReview(obj);	
+		obj = this.reviewService.insert(obj);	
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
@@ -46,6 +45,15 @@ public class ReviewResources {
 				.toUri();
 		
 		 return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@PathVariable Integer id,@RequestBody Review obj) {
+		
+		obj.setId(id);
+		obj = reviewService.update(obj); 
+		
+		return ResponseEntity.noContent().build();
 	}
 	
 }

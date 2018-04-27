@@ -15,14 +15,20 @@ public class PartnerService {
 	@Autowired
 	private PartnerRepository partnerRepository;
 	
-	public Partner fetchPartner(Integer id) {
+	public Partner find(Integer id) {
 		Optional<Partner> obj = partnerRepository.findById(id);
 		return obj.orElseThrow( () -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Partner.class.getName() )); 
 		
 	}
 	
-	public Partner insertPartner(Partner obj) {
+	public Partner insert(Partner obj) {
 		obj.setId(null);
+		return partnerRepository.save(obj);
+	}
+
+	public Partner update(Partner obj) {
+		// TODO Auto-generated method stub
+		find(obj.getId());
 		return partnerRepository.save(obj);
 	}
 	

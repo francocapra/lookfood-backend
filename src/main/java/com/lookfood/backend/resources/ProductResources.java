@@ -24,9 +24,9 @@ public class ProductResources {
 	private ProductService productService;
 	
 	@RequestMapping( value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find( @PathVariable Integer id) {
+	public ResponseEntity<Product> find( @PathVariable Integer id) {
 		
-		Product obj = productService.fetchReview(id);
+		Product obj = productService.find(id);
 		
 		return ResponseEntity.ok().body(obj);
 		
@@ -35,11 +35,22 @@ public class ProductResources {
 	@RequestMapping( method = RequestMethod.POST)
 	public ResponseEntity<Void> insert( @RequestBody Product obj){
 		
-		obj = this.productService.insertReview(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand().toUri();
+		obj = this.productService.insert(obj);
+		URI uri = ServletUriComponentsBuilder
+					.fromCurrentRequest()
+					.path("/{id}")
+					.buildAndExpand()
+					.toUri();
 		
 		return ResponseEntity.created(uri).build();
 		
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@PathVariable Integer id,@RequestBody Product obj) {
+		obj.setId(id);
+		obj = productService.update(obj); 
+		return ResponseEntity.noContent().build();
+	}	
 	
 }
