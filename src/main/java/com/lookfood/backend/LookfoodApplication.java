@@ -96,14 +96,20 @@ public class LookfoodApplication implements CommandLineRunner{
 		addressRepository.saveAll(Arrays.asList(e1, e2));
 						
 //		Persist: Product/ Professional		
+		Product p1 = new Product(null, "Prato1", sdf.parse("30/09/2017 10:32") );
+		Product p2 = new Product(null, "Prato2", sdf.parse("30/09/2017 10:32") );
+		Product p3 = new Product(null, "Prato3", sdf.parse("30/09/2017 10:32") );
+		Product p4 = new Product(null, "Prato4", sdf.parse("30/09/2017 10:32") );
+		Product p5 = new Product(null, "Prato5", sdf.parse("30/09/2017 10:32") );
+		Product p6 = new Product(null, "Prato6", sdf.parse("30/09/2017 10:32") );
+		Product p7 = new Product(null, "Prato7", sdf.parse("30/09/2017 10:32") );
+		Product p8 = new Product(null, "Prato8", sdf.parse("30/09/2017 10:32") );
+		Product p9 = new Product(null, "Prato9", sdf.parse("30/09/2017 10:32") );
+		
 		Professional prof1 = new Professional(null, "José"	, TypePosition.CHEF );
 		Professional prof2 = new Professional(null, "Maria"	, TypePosition.ASSISTANT );
 		Professional prof3 = new Professional(null, "Luiz"	, TypePosition.MANAGER );
 		Professional prof4 = new Professional(null, "Renata", TypePosition.WAITER );
-		
-		Product p1 = new Product(null, "Prato1", sdf.parse("30/09/2017 10:32") );
-		Product p2 = new Product(null, "Prato2", sdf.parse("30/09/2017 10:32") );
-		Product p3 = new Product(null, "Prato3", sdf.parse("30/09/2017 10:32") );
 		
 		prof1.getProducts().addAll(Arrays.asList(p1,p2,p3));
 		prof2.getProducts().addAll(Arrays.asList(p1,p3));		
@@ -112,7 +118,7 @@ public class LookfoodApplication implements CommandLineRunner{
 		p2.getProfessionals().addAll(Arrays.asList(prof1));
 		p3.getProfessionals().addAll(Arrays.asList(prof1,prof2));
 		
-		productRepository.saveAll(Arrays.asList(p1,p2,p3));
+		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8,p9));
 		professionalRepository.saveAll(Arrays.asList(prof1,prof2,prof3,prof4));
 //		Persist Review
 		Review rw1 = new Review(null, TypeStatus.ACTIVE, sdf.parse("20/10/2017 00:00"), partner1 );		
