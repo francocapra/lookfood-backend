@@ -15,9 +15,7 @@ public class ProductDTO  implements Serializable{
 	public ProductDTO() {
 		super();
 	}
-	
-	
-	
+		
 	public ProductDTO(Product obj) {
 		super();
 		this.id = obj.getId();

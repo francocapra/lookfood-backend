@@ -2,6 +2,7 @@ package com.lookfood.backend.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lookfood.backend.domain.Partner;
+import com.lookfood.backend.dto.PartnerDTO;
 import com.lookfood.backend.services.PartnerService;
 
 @RestController
@@ -62,10 +64,12 @@ public class PartnerResources {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Partner>> listAll() {
+	public ResponseEntity<List<PartnerDTO>> listAll() {
 		
 		List<Partner> list = partnerService.listAll();
 		
-		return ResponseEntity.ok().body(list);
+		List<PartnerDTO> listDTO = list.stream().map(obj -> new PartnerDTO(obj)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok().body(listDTO);
 	}
 }

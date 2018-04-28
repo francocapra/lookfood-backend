@@ -6,19 +6,19 @@ public enum TypeStatus {
 	INACTIVE(2, "Inativo");
 	
 	private Integer cod;
-	private String descricao;
+	private String description;
 	
-	private TypeStatus(Integer cod, String descricao) {
+	private TypeStatus(Integer cod, String description) {
 		this.cod = cod;
-		this.descricao = descricao;
+		this.description = description;
 	}
 	
 	public Integer getCod() {
 		return cod;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getDescription() {
+		return description;
 	}
 	
 	public static TypeStatus toEnum(Integer cod) {

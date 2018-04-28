@@ -2,6 +2,7 @@ package com.lookfood.backend.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lookfood.backend.domain.Review;
+import com.lookfood.backend.dto.ReviewDTO;
 import com.lookfood.backend.services.ReviewService;
 
 @RestController
@@ -66,11 +68,12 @@ public class ReviewResources {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Review>> listAll() {
+	public ResponseEntity<List<ReviewDTO>> listAll() {
 		
 		List<Review> list = reviewService.listAll();
 		
-		return ResponseEntity.ok().body(list);
+		List<ReviewDTO> listDTO = list.stream().map(obj -> new ReviewDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
 
 	
