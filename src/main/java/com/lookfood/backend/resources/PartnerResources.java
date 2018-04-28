@@ -35,9 +35,10 @@ public class PartnerResources {
 	public ResponseEntity<Void> insert(@RequestBody Partner obj){
 		
 		obj = partnerService.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+		URI uri = ServletUriComponentsBuilder
+				.fromCurrentRequest()
 				.path("/{id}")
-				.buildAndExpand()
+				.buildAndExpand(obj.getId())
 				.toUri();
 		
 		return ResponseEntity.created(uri).build();

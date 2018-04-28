@@ -39,7 +39,11 @@ public class ReviewResources {
 	public ResponseEntity<Void> insert(@RequestBody Review obj) {
 
 		obj = this.reviewService.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(obj.getId())
+				.toUri();
 
 		return ResponseEntity.created(uri).build();
 	}
