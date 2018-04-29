@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -30,18 +32,21 @@ public class ProductResources {
 	private ProductService productService;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Product> find(@PathVariable Integer id) {
-
-		Product obj = productService.find(id);
+	public ResponseEntity<ProductDTO> find(@PathVariable Integer id) {
+		
+		ProductDTO obj = productService.find(id);
 
 		return ResponseEntity.ok().body(obj);
 
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Product obj) {
-
+	public ResponseEntity<Void> insert(@Valid @RequestBody ProductDTO objDTO) {
+		
+		Product obj = productService.fromDTO(objDTO);
+		
 		obj = this.productService.insert(obj);
+		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
 		return ResponseEntity.created(uri).build();
@@ -49,9 +54,14 @@ public class ProductResources {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Product obj) {
+	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody ProductDTO objDTO) {
+		
+		Product obj = productService.fromDTO(objDTO);
+		
 		obj.setId(id);
+		
 		obj = productService.update(obj);
+		
 		return ResponseEntity.noContent().build();
 	}
 

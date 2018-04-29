@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.lookfood.backend.domain.Product;
+import com.lookfood.backend.dto.ProductDTO;
 import com.lookfood.backend.repositories.ProductRepository;
 import com.lookfood.backend.services.exceptions.DataIntegrityException;
 import com.lookfood.backend.services.exceptions.ObjectNotFoundException;
@@ -21,13 +22,14 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 	
-	public Product find(Integer id) {
+	public ProductDTO find(Integer id) {
+		
 		Optional<Product> obj = productRepository.findById(id);
-		return obj.orElseThrow( () 
-		-> new ObjectNotFoundException("Objeto não encontrado! Id: " 
-										+ id 
-										+ ", Tipo: " 
-										+ Product.class.getName() )); 		
+		
+		Optional<ProductDTO> objDTO = obj.map( product -> new ProductDTO(product)); 
+		
+		return objDTO.orElseThrow( () -> new ObjectNotFoundException
+				("Objeto não encontrado! Id: " + id + ", Tipo: " + Product.class.getName() )); 		
 	}
 	
 	public Product insert(Product obj) {
@@ -64,6 +66,10 @@ public class ProductService {
 		
 		return productRepository.findAll(pageRequest);
 		
+	}
+	
+	public Product fromDTO(ProductDTO objDTO) {
+		return new Product(objDTO.getId(), objDTO.getDescription(), objDTO.getDate());
 	}
 	
 }

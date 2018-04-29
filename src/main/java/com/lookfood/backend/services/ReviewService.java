@@ -32,19 +32,19 @@ public class ReviewService {
 	}
 
 	public Review update(Review obj) {
-		// TODO Auto-generated method stub
+
 		find(obj.getId());
 		return reviewRepository.save(obj);
 	}
 
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+
 		find(id);
 		try {
 		reviewRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			// TODO: handle exception
-			throw new DataIntegrityException("Não é possivel excluir uma Review que possui Itens de Reviews");
+			throw new DataIntegrityException
+			("Não é possivel excluir Review pois existem Itens associados");
 		}
 	}
 
