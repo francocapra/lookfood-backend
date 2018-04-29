@@ -2,11 +2,7 @@ package com.lookfood.backend.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-import com.lookfood.backend.domain.ItemProduct;
-import com.lookfood.backend.domain.ItemProfessional;
 import com.lookfood.backend.domain.Partner;
 import com.lookfood.backend.domain.Review;
 
@@ -17,21 +13,17 @@ public class ReviewDTO implements Serializable{
 	private String status;
 	private Date date;
 	private Partner partner;
-	private Set<ItemProduct> itensProduct = new HashSet<>(); 
-	private Set<ItemProfessional> itensProfessional = new HashSet<>();
 	
 	public ReviewDTO() {
 		super();
-	}
+	}	
 	public ReviewDTO(Review obj) {
 		super();
 		this.id = obj.getId();
 		this.status = obj.getStatus().getDescription();
 		this.date = obj.getDate();
 		this.partner = obj.getPartner();
-		this.itensProduct = obj.getItensProduct();
-		this.itensProfessional = obj.getItensProfessional();
-	}
+	}	
 	public Integer getId() {
 		return id;
 	}
@@ -55,19 +47,5 @@ public class ReviewDTO implements Serializable{
 	}
 	public void setPartner(Partner partner) {
 		this.partner = partner;
-	}
-	public Set<ItemProduct> getItensProduct() {
-		return itensProduct;
-	}
-	public void setItensProduct(Set<ItemProduct> itensProduct) {
-		this.itensProduct = itensProduct;
-	}
-	public Set<ItemProfessional> getItensProfessional() {
-		return itensProfessional;
-	}
-	public void setItensProfessional(Set<ItemProfessional> itensProfessional) {
-		this.itensProfessional = itensProfessional;
-	} 
-	
-	
+	}	
 }

@@ -22,12 +22,12 @@ import com.lookfood.backend.services.ReviewService;
 public class ReviewResources {
 
 	@Autowired
-	private ReviewService reviewService;
+	private ReviewService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Review> find(@PathVariable Integer id) {
 		
-		Review obj = reviewService.find(id);
+		Review obj = service.find(id);
 		
 		return ResponseEntity.ok().body(obj);
 	}
@@ -40,7 +40,7 @@ public class ReviewResources {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Review obj) {
 
-		obj = this.reviewService.insert(obj);
+		obj = this.service.insert(obj);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
@@ -54,7 +54,7 @@ public class ReviewResources {
 	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Review obj) {
 
 		obj.setId(id);
-		obj = reviewService.update(obj);
+		obj = service.update(obj);
 
 		return ResponseEntity.noContent().build();
 	}
@@ -62,7 +62,7 @@ public class ReviewResources {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 
-		reviewService.delete(id);
+		service.delete(id);
 
 		return ResponseEntity.noContent().build();
 	}
@@ -70,7 +70,7 @@ public class ReviewResources {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ReviewDTO>> listAll() {
 		
-		List<Review> list = reviewService.listAll();
+		List<Review> list = service.listAll();
 		
 		List<ReviewDTO> listDTO = list.stream().map(obj -> new ReviewDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);

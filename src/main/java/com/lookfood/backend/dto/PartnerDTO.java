@@ -1,12 +1,13 @@
 package com.lookfood.backend.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import com.lookfood.backend.domain.Address;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.URL;
+
 import com.lookfood.backend.domain.Partner;
 
 public class PartnerDTO  implements Serializable{
@@ -14,12 +15,18 @@ public class PartnerDTO  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Length(min=5,max=120,message="O tamanho deve ser entre 5 a 120 caracteres")	
 	private String name;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Email(message="Email inválido")
 	private String email;
-	private String cnpj;
+		
+	@NotEmpty(message="Preenchimento obrigatório")
+	@URL()
 	private String website;
-	private Set<String> phones = new HashSet<>();
-	private List<Address> addresses = new ArrayList<>();
 	
 	public PartnerDTO() {
 		super();
@@ -30,10 +37,8 @@ public class PartnerDTO  implements Serializable{
 		this.id = obj.getId();
 		this.name = obj.getName();
 		this.email = obj.getEmail();
-		this.cnpj = obj.getCnpj();
 		this.website = obj.getWebsite();
-		this.phones = obj.getPhones();
-		this.addresses = obj.getAddresses();
+
 	}
 	
 	
@@ -61,14 +66,6 @@ public class PartnerDTO  implements Serializable{
 		this.email = email;
 	}
 
-	public String getCnpj() {
-		return cnpj;
-	}
-
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
-
 	public String getWebsite() {
 		return website;
 	}
@@ -76,23 +73,5 @@ public class PartnerDTO  implements Serializable{
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-
-	public Set<String> getPhones() {
-		return phones;
-	}
-
-	public void setPhones(Set<String> phones) {
-		this.phones = phones;
-	}
-
-	public List<Address> getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(List<Address> addresses) {
-		this.addresses = addresses;
-	}
-
-	
 	
 }

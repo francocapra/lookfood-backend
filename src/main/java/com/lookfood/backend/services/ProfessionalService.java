@@ -19,30 +19,30 @@ import com.lookfood.backend.services.exceptions.ObjectNotFoundException;
 public class ProfessionalService {
 	
 	@Autowired
-	private ProfessionalRepository professionalRepository;
+	private ProfessionalRepository repository;
 	
 	public Professional find(Integer id) {
-		Optional<Professional> obj = professionalRepository.findById(id);
+		Optional<Professional> obj = repository.findById(id);
 		return obj.orElseThrow( () -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Professional.class.getName() )); 
 		
 	}
 	
 	public Professional insert(Professional obj) {
 		obj.setId(null);
-		return professionalRepository.save(obj);
+		return repository.save(obj);
 	}
 
 	public Professional update(Professional obj) {
 		// TODO Auto-generated method stub
 		find(obj.getId());
-		return professionalRepository.save(obj);
+		return repository.save(obj);
 	}
 
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
 		find(id);
 		try {
-		professionalRepository.deleteById(id);
+		repository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
 			// TODO: handle exception
 			throw new DataIntegrityException("Não é possivel excluir uma Professional que possui Products");
@@ -51,13 +51,13 @@ public class ProfessionalService {
 	
 	public List<Professional> listAll() {
 		
-		return professionalRepository.findAll();
+		return repository.findAll();
 		
 	}
 	
 	public Page<Professional> listPage(Integer page, Integer linesPerPage, Direction sortDirection, String orderBy ) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, sortDirection, orderBy);
-		return professionalRepository.findAll(pageRequest);
+		return repository.findAll(pageRequest);
 	}
 	
 	

@@ -29,23 +29,24 @@ public class ProductResources {
 	// de controle)
 	// @Autowired === Intanciar automaticamente
 	@Autowired
-	private ProductService productService;
+	private ProductService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<ProductDTO> find(@PathVariable Integer id) {
+	public ResponseEntity<Product> find(@PathVariable Integer id) {
 		
-		ProductDTO obj = productService.find(id);
+		Product obj = service.find(id);
 
 		return ResponseEntity.ok().body(obj);
 
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ProductDTO objDTO) {
+	public ResponseEntity<Void> insert(
+			@Valid @RequestBody ProductDTO objDTO) {
 		
-		Product obj = productService.fromDTO(objDTO);
+		Product obj = service.fromDTO(objDTO);
 		
-		obj = this.productService.insert(obj);
+		obj = this.service.insert(obj);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
@@ -54,13 +55,15 @@ public class ProductResources {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody ProductDTO objDTO) {
+	public ResponseEntity<Void> update(
+			@PathVariable Integer id, 
+			@Valid @RequestBody ProductDTO objDTO) {
 		
-		Product obj = productService.fromDTO(objDTO);
+		Product obj = service.fromDTO(objDTO);
 		
 		obj.setId(id);
 		
-		obj = productService.update(obj);
+		obj = service.update(obj);
 		
 		return ResponseEntity.noContent().build();
 	}
@@ -68,7 +71,7 @@ public class ProductResources {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 
-		productService.delete(id);
+		service.delete(id);
 
 		return ResponseEntity.noContent().build();
 	}
@@ -78,7 +81,7 @@ public class ProductResources {
 
 		// Recebo a LISTA de Produtos, e para cada elemnto desta lista eu vou instanciar
 		// um DTO
-		List<Product> list = productService.listAll();
+		List<Product> list = service.listAll();
 
 		// Percorrer objeto LIST, usando STREAM (Recurso do Java 8),
 		// Operação, MAP(vai efetuar uma operação para cada elemento)
@@ -98,7 +101,7 @@ public class ProductResources {
 			@RequestParam(value="orderBy"		, defaultValue="description" ) String orderBy, 
 			@RequestParam(value="sortDirection"	, defaultValue="ASC" ) String sortDirection) {
 		
-		Page<Product> list = productService.listPage(page, linesPerPage, orderBy, sortDirection);
+		Page<Product> list = service.listPage(page, linesPerPage, orderBy, sortDirection);
 //		PAGE(é java complice, JAVA 8 ), não precisa de STREAM, nem de Collect
 		Page<ProductDTO> listDTO = list.map(obj -> new ProductDTO(obj));
 		

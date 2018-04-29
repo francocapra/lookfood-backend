@@ -47,7 +47,7 @@ public class Professional implements Serializable {
 		super();
 		this.id = id;
 		this.name = name;
-		this.position = position.getCod();
+		this.position = (position == null) ? null : position.getCod();
 	}
 
 	@JsonIgnore 

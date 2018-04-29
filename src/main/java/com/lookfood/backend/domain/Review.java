@@ -47,7 +47,7 @@ public class Review implements Serializable{
 	public Review(Integer id, TypeStatus status, Date date, Partner partner) {
 		super();
 		this.id = id;
-		this.status = status.getCod();
+		this.status = (status == null) ? null : status.getCod();
 		this.date = date;
 		this.setPartner(partner);
 	}

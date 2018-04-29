@@ -23,8 +23,7 @@ public class ResourceExceptionHandler {
 				e.getMessage(), 
 				System.currentTimeMillis());
 				
-		return ResponseEntity.status(
-				HttpStatus.NOT_FOUND).body(err);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 		
 	}
 	

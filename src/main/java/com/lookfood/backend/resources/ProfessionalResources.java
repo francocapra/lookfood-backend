@@ -26,12 +26,12 @@ public class ProfessionalResources {
 	
 	//Declaração de dependencia,(Mecanismo de Injeção de dependencia, ou inversão de controle)
 	@Autowired //Intanciar automaticamente
-	private ProfessionalService professionalService;
+	private ProfessionalService service;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Professional> find(@PathVariable Integer id) {
 		
-		Professional obj = professionalService.find(id);
+		Professional obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 		
 	}
@@ -39,7 +39,7 @@ public class ProfessionalResources {
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Professional obj){
 		
-		obj = professionalService.insert(obj);
+		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
@@ -53,7 +53,7 @@ public class ProfessionalResources {
 	public ResponseEntity<Void> update(@PathVariable Integer id,@RequestBody Professional obj) {
 		
 		obj.setId(id);
-		obj = professionalService.update(obj); 
+		obj = service.update(obj); 
 		
 		return ResponseEntity.noContent().build();
 	} 
@@ -61,7 +61,7 @@ public class ProfessionalResources {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		
-		professionalService.delete(id);
+		service.delete(id);
 		
 		return ResponseEntity.noContent().build();
 	}
@@ -69,7 +69,7 @@ public class ProfessionalResources {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ProfessionalDTO>> listAll() {
 		
-		List<Professional> list = professionalService.listAll();
+		List<Professional> list = service.listAll();
 		
 		List<ProfessionalDTO> listDTO = list.stream().map(obj -> new ProfessionalDTO(obj)).collect(Collectors.toList());
 		
@@ -83,7 +83,7 @@ public class ProfessionalResources {
 			@RequestParam(value="sortDirection"	, defaultValue="ASC" ) Direction sortDirection, 
 			@RequestParam(value="orderBy"		, defaultValue="name" )String orderBy) {
 		
-		Page<Professional> list = professionalService.listPage(page, linesPerPage, sortDirection, orderBy);
+		Page<Professional> list = service.listPage(page, linesPerPage, sortDirection, orderBy);
 		
 		Page<ProfessionalDTO> listDTO = list.map(obj -> new ProfessionalDTO(obj));
 		

@@ -20,34 +20,31 @@ import com.lookfood.backend.services.exceptions.ObjectNotFoundException;
 public class ProductService {
 	
 	@Autowired
-	private ProductRepository productRepository;
+	private ProductRepository repository;
 	
-	public ProductDTO find(Integer id) {
+	public Product find(Integer id) {
 		
-		Optional<Product> obj = productRepository.findById(id);
-		
-		Optional<ProductDTO> objDTO = obj.map( product -> new ProductDTO(product)); 
-		
-		return objDTO.orElseThrow( () -> new ObjectNotFoundException
+		Optional<Product> obj = repository.findById(id);			
+		return obj.orElseThrow( () -> new ObjectNotFoundException
 				("Objeto não encontrado! Id: " + id + ", Tipo: " + Product.class.getName() )); 		
 	}
 	
 	public Product insert(Product obj) {
 		obj.setId(null);
-		return productRepository.save(obj);		
+		return repository.save(obj);		
 	}
 
 	public Product update(Product obj) {
 		// TODO Auto-generated method stub
 		find(obj.getId());
-		return productRepository.save(obj);
+		return repository.save(obj);
 	}
 	
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
 		this.find(id);		
 		try {
-		productRepository.deleteById(id);
+		repository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
 			// TODO: handle exception
 			throw new DataIntegrityException("Não é possivel excluir um Product que possui um Professional ");
@@ -56,7 +53,7 @@ public class ProductService {
 	
 	public List<Product> listAll() {
 		
-		return productRepository.findAll();
+		return repository.findAll();
 		
 	}
 	
@@ -64,7 +61,7 @@ public class ProductService {
 		
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(sortDirection) , orderBy);
 		
-		return productRepository.findAll(pageRequest);
+		return repository.findAll(pageRequest);
 		
 	}
 	
