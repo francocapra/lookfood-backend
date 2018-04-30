@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lookfood.backend.domain.Product;
+import com.lookfood.backend.domain.Professional;
 import com.lookfood.backend.dto.ProductDTO;
 import com.lookfood.backend.repositories.ProductRepository;
+import com.lookfood.backend.repositories.ProfessionalRepository;
 import com.lookfood.backend.services.exceptions.DataIntegrityException;
 import com.lookfood.backend.services.exceptions.ObjectNotFoundException;
 
@@ -23,11 +25,33 @@ public class ProductService {
 	@Autowired
 	private ProductRepository repository;
 	
+	@Autowired
+	private ProfessionalRepository professionalRepository;
+	
 	public Product find(Integer id) {		
 		Optional<Product> obj = repository.findById(id);			
 		return obj.orElseThrow( () -> new ObjectNotFoundException
 				("Objeto não encontrado! Id: " + id + ", Tipo: " + Product.class.getName() )); 		
 	
+	}
+	
+	public Page<Product> search(
+			String description, 
+			List<Integer> ids,
+			Integer page, 
+			Integer linesPerPage, 
+			String orderBy, 
+			String sortDirection){
+		
+		PageRequest pageRequest = PageRequest.of(
+				page, 
+				linesPerPage, 
+				Direction.valueOf(sortDirection) , 
+				orderBy);
+		
+		List<Professional> professionals = professionalRepository.findAllById(ids);
+		
+		return repository.findDistinctByDescriptionContainingAndProfessionalsIn(description, professionals, pageRequest);
 	}
 	
 	@Transactional
@@ -57,11 +81,11 @@ public class ProductService {
 		}
 	}
 	
-	public List<Product> listAll() {		
+	public List<Product> findAll() {		
 		return repository.findAll();		
 	}
 	
-	public Page<Product> listPage(
+	public Page<Product> findPage(
 			Integer page, 
 			Integer linesPerPage, 
 			String orderBy, 

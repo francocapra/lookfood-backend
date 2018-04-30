@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.dto.ProductDTO;
+import com.lookfood.backend.resources.utils.URL;
 import com.lookfood.backend.services.ProductService;
 
 @RestController
@@ -67,32 +68,27 @@ public class ProductResources {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ProductDTO>> listAll() {
-
-		// Recebo a LISTA de Produtos, e para cada elemnto desta lista eu vou instanciar
-		// um DTO
-		List<Product> list = service.listAll();
-
-		// Percorrer objeto LIST, usando STREAM (Recurso do Java 8),
-		// Operação, MAP(vai efetuar uma operação para cada elemento)
-		// Apelido, "obj" cada elemento da lista eu posso dar um apelido
-		// Função, "->" ARROW executar uma função em cada elemento da lista
-		// Criar, "new" Criar um novo objeto DTO
-		// Collect, voltar o STREAM de objetos para o tipo LIST, usando COLLECTOR
+	public ResponseEntity<List<ProductDTO>> findAll() {
+		
+		List<Product> list = service.findAll();
+		
 		List<ProductDTO> listDTO = list.stream().map(obj -> new ProductDTO(obj)).collect(Collectors.toList());
-
+		
 		return ResponseEntity.ok().body(listDTO);
 	}
-
-	@RequestMapping(value="/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<ProductDTO>> listPage(
+	
+	@RequestMapping(value="/page", method = RequestMethod.GET )
+	public ResponseEntity<Page<ProductDTO>> findPage(
+			@RequestParam(value="description"	, defaultValue="")	String description,
+			@RequestParam(value="professionals" , defaultValue="") 	String professionals,
 			@RequestParam(value="page"			, defaultValue="0" ) Integer page, 
 			@RequestParam(value="linesPerPage"	, defaultValue="24" ) Integer linesPerPage, 
 			@RequestParam(value="orderBy"		, defaultValue="description" ) String orderBy, 
 			@RequestParam(value="sortDirection"	, defaultValue="ASC" ) String sortDirection) {
-		
-		Page<Product> list = service.listPage(page, linesPerPage, orderBy, sortDirection);
-//		PAGE(é java complice, JAVA 8 ), não precisa de STREAM, nem de Collect
+
+		String descriptionDecoded = URL.decodeParam(description);
+		List<Integer> ids = URL.decodeIntList(professionals);
+		Page<Product> list = service.search(descriptionDecoded, ids, page, linesPerPage, orderBy, sortDirection);		
 		Page<ProductDTO> listDTO = list.map(obj -> new ProductDTO(obj));
 		
 		return ResponseEntity.ok().body(listDTO);
