@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.dto.ProductDTO;
@@ -22,51 +23,65 @@ public class ProductService {
 	@Autowired
 	private ProductRepository repository;
 	
-	public Product find(Integer id) {
-		
+	public Product find(Integer id) {		
 		Optional<Product> obj = repository.findById(id);			
 		return obj.orElseThrow( () -> new ObjectNotFoundException
 				("Objeto não encontrado! Id: " + id + ", Tipo: " + Product.class.getName() )); 		
+	
 	}
 	
+	@Transactional
 	public Product insert(Product obj) {
 		obj.setId(null);
 		return repository.save(obj);		
 	}
 
 	public Product update(Product obj) {
-		// TODO Auto-generated method stub
-		find(obj.getId());
+		Product newObj = find(obj.getId());
+		updateData( newObj, obj);
 		return repository.save(obj);
 	}
 	
+	private void updateData(Product newObj, Product obj) {
+		newObj.setDescription(obj.getDescription());
+		newObj.setDate(obj.getDate());
+	}
+
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
 		this.find(id);		
 		try {
-		repository.deleteById(id);
+			repository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			// TODO: handle exception
-			throw new DataIntegrityException("Não é possivel excluir um Product que possui um Professional ");
+			throw new DataIntegrityException
+			("Não é possivel excluir um Product que possui um Professional ");
 		}
 	}
 	
-	public List<Product> listAll() {
-		
-		return repository.findAll();
-		
+	public List<Product> listAll() {		
+		return repository.findAll();		
 	}
 	
-	public Page<Product> listPage(Integer page, Integer linesPerPage, String orderBy, String sortDirection){
+	public Page<Product> listPage(
+			Integer page, 
+			Integer linesPerPage, 
+			String orderBy, 
+			String sortDirection){
 		
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(sortDirection) , orderBy);
+		PageRequest pageRequest = PageRequest.of(
+				page, 
+				linesPerPage, 
+				Direction.valueOf(sortDirection) , 
+				orderBy);
 		
 		return repository.findAll(pageRequest);
 		
 	}
 	
 	public Product fromDTO(ProductDTO objDTO) {
-		return new Product(objDTO.getId(), objDTO.getDescription(), objDTO.getDate());
+		return new Product(
+				objDTO.getId(), 
+				objDTO.getDescription(), 
+				objDTO.getDate());
 	}
 	
 }

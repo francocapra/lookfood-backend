@@ -25,31 +25,26 @@ import com.lookfood.backend.services.ProductService;
 @RequestMapping(value = "/products")
 public class ProductResources {
 
-	// Declaração de dependencia,(Mecanismo de Injeção de dependencia, ou inversão
-	// de controle)
-	// @Autowired === Intanciar automaticamente
 	@Autowired
 	private ProductService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Product> find(@PathVariable Integer id) {
-		
 		Product obj = service.find(id);
-
 		return ResponseEntity.ok().body(obj);
-
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(
 			@Valid @RequestBody ProductDTO objDTO) {
 		
-		Product obj = service.fromDTO(objDTO);
-		
-		obj = this.service.insert(obj);
-		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-
+		Product obj = service.fromDTO(objDTO);		
+		obj = this.service.insert(obj);		
+		URI uri = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(obj.getId())
+				.toUri();
 		return ResponseEntity.created(uri).build();
 
 	}
@@ -59,20 +54,15 @@ public class ProductResources {
 			@PathVariable Integer id, 
 			@Valid @RequestBody ProductDTO objDTO) {
 		
-		Product obj = service.fromDTO(objDTO);
-		
-		obj.setId(id);
-		
-		obj = service.update(obj);
-		
+		Product obj = service.fromDTO(objDTO);		
+		obj.setId(id);		
+		obj = service.update(obj);		
 		return ResponseEntity.noContent().build();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
-
 		service.delete(id);
-
 		return ResponseEntity.noContent().build();
 	}
 

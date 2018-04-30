@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lookfood.backend.domain.Partner;
 import com.lookfood.backend.dto.PartnerDTO;
+import com.lookfood.backend.dto.PartnerNewDTO;
 import com.lookfood.backend.services.PartnerService;
 
 @RestController
@@ -38,7 +39,7 @@ public class PartnerResources {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(
-			@Valid @RequestBody PartnerDTO objDTO) {
+			@Valid @RequestBody PartnerNewDTO objDTO) {
 		
 		Partner obj = service.fromDTO(objDTO);
 		obj = this.service.insert(obj);		

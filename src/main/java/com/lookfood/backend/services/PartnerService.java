@@ -9,9 +9,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.lookfood.backend.domain.Address;
+import com.lookfood.backend.domain.City;
 import com.lookfood.backend.domain.Partner;
 import com.lookfood.backend.dto.PartnerDTO;
+import com.lookfood.backend.dto.PartnerNewDTO;
+import com.lookfood.backend.repositories.AddressRepository;
 import com.lookfood.backend.repositories.PartnerRepository;
 import com.lookfood.backend.services.exceptions.DataIntegrityException;
 import com.lookfood.backend.services.exceptions.ObjectNotFoundException;
@@ -22,15 +27,24 @@ public class PartnerService {
 	@Autowired
 	private PartnerRepository repository;
 	
+	@Autowired
+	private AddressRepository addressRepository;
+	
 	public Partner find(Integer id) {		
 		Optional<Partner> obj = repository.findById(id);				
 		return obj.orElseThrow( () -> new ObjectNotFoundException
-				("Objeto não encontrado! Id: " + id + ", Tipo: " + Partner.class.getName() )); 		
+				("Objeto não encontrado! Id: " 
+						+ id 
+						+ ", Tipo: " 
+						+ Partner.class.getName() )); 		
 	}
 	
+	@Transactional
 	public Partner insert(Partner obj) {
 		obj.setId(null);
-		return repository.save(obj);		
+		obj = repository.save(obj);
+		addressRepository.saveAll(obj.getAddresses());
+		return obj;
 	}
 
 	public Partner update(Partner obj) {		
@@ -47,14 +61,15 @@ public class PartnerService {
 
 	public void delete(Integer id) {
 
-		this.find(id);		
+		find(id);		
 		
-		try { repository.deleteById(id);} 
-		
+		try { 
+			repository.deleteById(id);} 		
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException
-			("Não é possivel excluir um Partner porque há entidades relacionadas");		
-		}
+			("Não é possivel excluir um Partner porque há " 
+					+ String.valueOf(find(id).getReviews().size()) 
+					+ " Review(s) relacionado(s)");	}
 	}
 	
 	public List<Partner> listAll() {		
@@ -81,9 +96,27 @@ public class PartnerService {
 		return new Partner(
 				objDTO.getId(), 
 				objDTO.getName(), 
-				objDTO.getEmail(), 
-				null, 
+				objDTO.getEmail(),
+				null,
 				objDTO.getWebsite());
 	}
+	
+	public Partner fromDTO(PartnerNewDTO objDTO) {
+		Partner ptr = new Partner(null, objDTO.getName(), objDTO.getEmail(), objDTO.getCnpj(), objDTO.getWebsite());
+		City cty = new City(objDTO.getCityId(), null, null);
+		Address adr = new Address(null, objDTO.getStreet(), objDTO.getNumber(), objDTO.getComplement(), objDTO.getDistrict(), objDTO.getPostcode(), ptr, cty);
+		ptr.getAddresses().add(adr);
+		ptr.getPhones().add(objDTO.getPhone1());
+		if	(objDTO.getPhone2()!=null) {
+			ptr.getPhones().add(objDTO.getPhone2());	
+		}
+		if	(objDTO.getPhone3()!=null) {
+			ptr.getPhones().add(objDTO.getPhone3());	
+		}		
+		
+		return ptr;
+	}
+	
+	
 	
 }

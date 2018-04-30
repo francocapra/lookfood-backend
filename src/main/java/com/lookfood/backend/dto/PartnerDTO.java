@@ -26,7 +26,7 @@ public class PartnerDTO  implements Serializable{
 		
 	@NotEmpty(message="Preenchimento obrigatório")
 	@URL()
-	private String website;
+	private String website;		
 	
 	public PartnerDTO() {
 		super();
@@ -73,5 +73,5 @@ public class PartnerDTO  implements Serializable{
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-	
+
 }

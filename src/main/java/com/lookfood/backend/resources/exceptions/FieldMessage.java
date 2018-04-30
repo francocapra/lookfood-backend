@@ -8,32 +8,32 @@ public class FieldMessage implements Serializable {
 	
 	private String fieldName;
 	
-	private String messageError;
+	private String message;
 	
 	public FieldMessage() {
 		
 	}
 
-	public FieldMessage(String fieldName, String messageError) {
+	public FieldMessage(String fieldName, String message) {
 		super();
 		this.fieldName = fieldName;
-		this.messageError = messageError;
+		this.message = message;
 	}
 
-	public String getFieldname() {
+	public String getFieldName() {
 		return fieldName;
 	}
 
-	public void setFieldname(String fieldName) {
+	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
 
-	public String getMessageError() {
-		return messageError;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setMessageError(String messageError) {
-		this.messageError = messageError;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 	

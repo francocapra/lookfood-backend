@@ -6,7 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +27,8 @@ public class Partner implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)	
 	private Integer id;
 	private String name;
+	
+	@Column(unique=true)
 	private String email;
 	private String cnpj;
 	private String website;
@@ -33,7 +37,7 @@ public class Partner implements Serializable{
 	@CollectionTable(name="PHONE")
 	private Set<String> phones = new HashSet<>();
 
-	@OneToMany(mappedBy="partner")
+	@OneToMany(mappedBy="partner", cascade=CascadeType.ALL)
 	private List<Address> addresses = new ArrayList<>();
 	
 	@OneToMany(mappedBy="partner")
