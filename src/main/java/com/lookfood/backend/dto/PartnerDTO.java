@@ -9,7 +9,9 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
 import com.lookfood.backend.domain.Partner;
+import com.lookfood.backend.services.validation.PartnerUpdate;
 
+@PartnerUpdate
 public class PartnerDTO  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
