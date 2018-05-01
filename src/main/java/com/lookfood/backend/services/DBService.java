@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lookfood.backend.domain.Address;
@@ -30,7 +31,9 @@ import com.lookfood.backend.repositories.ReviewRepository;
 
 @Service
 public class DBService {
-
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	@Autowired
 	private CityRepository cityRepository;
 	@Autowired
@@ -65,7 +68,13 @@ public class DBService {
 		regionRepository.saveAll(Arrays.asList(reg1));
 		cityRepository.saveAll(Arrays.asList(c1, c2));
 
-		Partner partner1 = new Partner(null, "Maria Silva", "email@dominio.com.br", "123456789", "www.restaurante.com");
+		Partner partner1 = new Partner(
+								null, 
+								"Maria Silva", 
+								"email@dominio.com.br", 
+								"123456789", 
+								"www.restaurante.com",
+								pe.encode("123"));
 
 		partner1.getPhones().addAll(Arrays.asList("5127363323", "93838393"));
 

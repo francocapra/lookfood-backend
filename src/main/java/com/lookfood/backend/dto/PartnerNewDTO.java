@@ -24,6 +24,9 @@ public class PartnerNewDTO implements Serializable{
 	private String email;
 	
 	@NotEmpty(message="Preenchimento obrigatório")
+	private String password;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	@CNPJ
 	private String cnpj;
 
@@ -54,25 +57,6 @@ public class PartnerNewDTO implements Serializable{
 	public PartnerNewDTO() {		
 	}
 
-	public PartnerNewDTO(String name, String email, String cnpj, String website, String street, String number,
-			String complement, String district, String postcode, String phone1, String phone2, String phone3,
-			Integer cityId) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.cnpj = cnpj;
-		this.website = website;
-		this.street = street;
-		this.number = number;
-		this.complement = complement;
-		this.district = district;
-		this.postcode = postcode;
-		this.phone1 = phone1;
-		this.phone2 = phone2;
-		this.phone3 = phone3;
-		this.cityId = cityId;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -87,6 +71,14 @@ public class PartnerNewDTO implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getCnpj() {

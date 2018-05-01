@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +27,11 @@ public class PartnerService {
 
 	@Autowired
 	private PartnerRepository repository;
-
 	@Autowired
 	private AddressRepository addressRepository;
-
+	@Autowired
+	private BCryptPasswordEncoder pe;
+	
 	public Partner find(Integer id) {
 		Optional<Partner> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -81,24 +83,45 @@ public class PartnerService {
 	}
 
 	public Partner fromDTO(PartnerDTO objDTO) {
-		return new Partner(objDTO.getId(), objDTO.getName(), objDTO.getEmail(), null, objDTO.getWebsite());
+		return new Partner(
+				objDTO.getId(), 
+				objDTO.getName(), 
+				objDTO.getEmail(), 
+				null, 
+				objDTO.getWebsite(),
+				null);
 	}
 
-	public Partner fromDTO(PartnerNewDTO objDTO) {
-		Partner ptr = new Partner(null, objDTO.getName(), objDTO.getEmail(), objDTO.getCnpj(), objDTO.getWebsite());
-		City cty = new City(objDTO.getCityId(), null, null);
-		Address adr = new Address(null, objDTO.getStreet(), objDTO.getNumber(), objDTO.getComplement(),
-				objDTO.getDistrict(), objDTO.getPostcode(), ptr, cty);
-		ptr.getAddresses().add(adr);
-		ptr.getPhones().add(objDTO.getPhone1());
-		if (objDTO.getPhone2() != null) {
-			ptr.getPhones().add(objDTO.getPhone2());
+	public Partner fromDTO(PartnerNewDTO objNewDTO) {
+		
+		Partner partner = new Partner(
+							null, 
+							objNewDTO.getName(), 
+							objNewDTO.getEmail(), 
+							objNewDTO.getCnpj(), 
+							objNewDTO.getWebsite(),						
+							pe.encode(objNewDTO.getPassword())
+							);
+		City city = new City(objNewDTO.getCityId(), null, null);
+		Address address = new Address(
+							null, 
+							objNewDTO.getStreet(), 
+							objNewDTO.getNumber(), 
+							objNewDTO.getComplement(),
+							objNewDTO.getDistrict(), 
+							objNewDTO.getPostcode(), 
+							partner, 
+							city
+							);
+		partner.getAddresses().add(address);
+		partner.getPhones().add(objNewDTO.getPhone1());
+		if (objNewDTO.getPhone2() != null) {
+			partner.getPhones().add(objNewDTO.getPhone2());
 		}
-		if (objDTO.getPhone3() != null) {
-			ptr.getPhones().add(objDTO.getPhone3());
+		if (objNewDTO.getPhone3() != null) {
+			partner.getPhones().add(objNewDTO.getPhone3());
 		}
 
-		return ptr;
+		return partner;
 	}
-
 }

@@ -30,6 +30,10 @@ public class Partner implements Serializable{
 	
 	@Column(unique=true)
 	private String email;
+	
+	@JsonIgnore
+	private String password;
+
 	private String cnpj;
 	private String website;
 	
@@ -48,13 +52,14 @@ public class Partner implements Serializable{
 		super();
 	}
 
-	public Partner(Integer id, String name, String email, String cnpj, String website) {
+	public Partner(Integer id, String name, String email, String cnpj, String website, String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.cnpj = cnpj;
 		this.website = website;
+		this.password = password;
 	}
 
 	public Integer getId() {
@@ -80,6 +85,14 @@ public class Partner implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
 
 	public String getCnpj() {
 		return cnpj;
@@ -93,8 +106,8 @@ public class Partner implements Serializable{
 		return website;
 	}
 
-	public void setWebsite(String website) {
-		this.website = website;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Set<String> getPhones() {
