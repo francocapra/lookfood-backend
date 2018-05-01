@@ -2,8 +2,8 @@ package com.lookfood.backend.domain.enums;
 
 public enum TypeStatus {
 	
-	ACTIVE(1, "Ativo"),
-	INACTIVE(2, "Inativo");
+	OPEN(1, "Aberto"),
+	CLOSE(2, "Fechado");
 	
 	private Integer cod;
 	private String description;

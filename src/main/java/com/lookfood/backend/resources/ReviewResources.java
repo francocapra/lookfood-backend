@@ -27,9 +27,9 @@ public class ReviewResources {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Review> find(@PathVariable Integer id) {
 		
-		Review obj = service.find(id);
-		
+		Review obj = service.find(id);		
 		return ResponseEntity.ok().body(obj);
+		
 	}
 
 	// Receber uma dominio no formato Json, e inserir no banco de dados
@@ -46,8 +46,8 @@ public class ReviewResources {
 				.path("/{id}")
 				.buildAndExpand(obj.getId())
 				.toUri();
-
 		return ResponseEntity.created(uri).build();
+		
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -55,26 +55,27 @@ public class ReviewResources {
 
 		obj.setId(id);
 		obj = service.update(obj);
-
 		return ResponseEntity.noContent().build();
+		
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 
 		service.delete(id);
-
 		return ResponseEntity.noContent().build();
+		
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ReviewDTO>> listAll() {
 		
-		List<Review> list = service.listAll();
-		
-		List<ReviewDTO> listDTO = list.stream().map(obj -> new ReviewDTO(obj)).collect(Collectors.toList());
+		List<Review> list = service.listAll();		
+		List<ReviewDTO> listDTO = list
+				.stream()
+				.map(obj -> new ReviewDTO(obj))
+				.collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
+		
 	}
-
-	
 }

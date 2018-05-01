@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.lookfood.backend.domain.enums.TypeStatus;
 
@@ -26,7 +25,9 @@ public class Review implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY) 
 	private Integer id;
+	
 	private Integer status;
+	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date date;
 	
@@ -49,7 +50,7 @@ public class Review implements Serializable{
 		this.id = id;
 		this.status = (status == null) ? null : status.getCod();
 		this.date = date;
-		this.setPartner(partner);
+		this.partner = partner;
 	}
 
 	public Integer getId() {
@@ -76,13 +77,9 @@ public class Review implements Serializable{
 		this.date = date;
 	}
 
-	@JsonIgnore
+//	@JsonIgnore
 	public Partner getPartner() {
 		return partner;
-	}
-	
-	public Integer getPartnerId() {
-		return partner.getId();
 	}
 	
 	public void setPartner(Partner partner) {

@@ -8,8 +8,7 @@ import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class ItemProduct implements Serializable{
-	
+public class ItemProduct implements Serializable{	
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
@@ -29,32 +28,31 @@ public class ItemProduct implements Serializable{
 		this.rate = rate;
 	}
 
-
-	public Product getProduct() {
-		return id.getProduct();
-	}
-	
-	@JsonIgnore
-	public Review getReview(){
-		return id.getReview();
-	}
-
-	public ItemProductPK getId() {
-		return id;
-	}
-
-	public void setId(ItemProductPK id) {
-		this.id = id;
-	}
-
 	public Integer getRate() {
 		return rate;
 	}
-
+	
 	public void setRate(Integer rate) {
 		this.rate = rate;
 	}
 
+	@JsonIgnore
+	public Review getReview(){
+		return id.getReview();
+	}
+	
+	public void setReview(Review review) {
+		id.setReview(review);
+	}
+	
+	public Product getProduct() {
+		return id.getProduct();
+	}
+
+	public void setProduct(Product product) {
+		id.setProduct(product);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,7 +77,4 @@ public class ItemProduct implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
 }
