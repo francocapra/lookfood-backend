@@ -77,6 +77,18 @@ public class ItemProduct implements Serializable{
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		
+		StringBuilder builder = new StringBuilder();		
+		builder.append(getProduct().getDescription());
+		builder.append(", Avaliação: ");
+		builder.append(getRate());
+		builder.append("\n");
+		return builder.toString();
+		
+	}
 	
 	
 }

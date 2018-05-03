@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -17,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lookfood.backend.domain.enums.TypeProfile;
 
 @Entity
 public class Partner implements Serializable{
@@ -40,7 +42,11 @@ public class Partner implements Serializable{
 	@ElementCollection
 	@CollectionTable(name="PHONE")
 	private Set<String> phones = new HashSet<>();
-
+	
+	@ElementCollection
+	@CollectionTable(name="PROFILE")
+	private Set<Integer> profiles = new HashSet<>();
+	
 	@OneToMany(mappedBy="partner", cascade=CascadeType.ALL)
 	private List<Address> addresses = new ArrayList<>();
 	
@@ -50,6 +56,7 @@ public class Partner implements Serializable{
 
 	public Partner() {
 		super();
+		addProfile(TypeProfile.PARTNER);
 	}
 
 	public Partner(Integer id, String name, String email, String cnpj, String website, String password) {
@@ -60,6 +67,7 @@ public class Partner implements Serializable{
 		this.cnpj = cnpj;
 		this.website = website;
 		this.password = password;
+		addProfile(TypeProfile.PARTNER);
 	}
 
 	public Integer getId() {
@@ -121,7 +129,15 @@ public class Partner implements Serializable{
 	public List<Address> getAddresses() {
 		return addresses;
 	}
-
+	
+	public Set<TypeProfile> getProfile(){
+		return profiles.stream().map(x -> TypeProfile.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void addProfile(TypeProfile profile) {
+		profiles.add(profile.getCod());
+	}
+	
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
 	}

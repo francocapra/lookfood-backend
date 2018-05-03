@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lookfood.backend.domain.ItemProduct;
 import com.lookfood.backend.domain.ItemProfessional;
@@ -42,6 +43,7 @@ public class ReviewService {
 
 	}
 
+	@Transactional
 	public Review insert(Review obj) {
 
 		obj.setId(null);
@@ -64,6 +66,7 @@ public class ReviewService {
 		}
 
 		itemProfessionalRepository.saveAll(obj.getItensProfessional());
+		System.out.print(obj);
 		return obj;
 		
 	}

@@ -77,4 +77,16 @@ public class ItemProfessional implements Serializable{
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProfessional().getPosition().getDescription());
+		builder.append(", ");
+		builder.append(getProfessional().getName());
+		builder.append(", Avaliação: ");
+		builder.append(getRate());
+		builder.append("\n");
+		return builder.toString();
+	}
 }

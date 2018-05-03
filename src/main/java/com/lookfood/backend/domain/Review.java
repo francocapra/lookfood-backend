@@ -1,6 +1,7 @@
 package com.lookfood.backend.domain;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -127,6 +128,28 @@ public class Review implements Serializable{
 		return true;
 	}
 
-	
-	
+	@Override
+	public String toString() {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("Avaliação: ");
+		builder.append(getId());
+		builder.append(", Data Avaliação: ");
+		builder.append(sdf.format(getDate()));
+		builder.append(", Parceiro: ");
+		builder.append(getPartner().getName());
+		builder.append(", Status da Avaliação: ");
+		builder.append(getStatus().getDescription());
+		builder.append("\nProdutos:\n");
+		for (ItemProduct ip: getItensProduct()) {			
+			builder.append(ip.toString());
+		}	
+		builder.append("\nServiços:\n");
+		for (ItemProfessional ip: getItensProfessional()) {			
+			builder.append(ip.toString());
+		}		
+		return builder.toString();
+	}	
 }

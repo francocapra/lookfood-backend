@@ -18,6 +18,7 @@ import com.lookfood.backend.domain.Professional;
 import com.lookfood.backend.domain.Region;
 import com.lookfood.backend.domain.Review;
 import com.lookfood.backend.domain.enums.TypePosition;
+import com.lookfood.backend.domain.enums.TypeProfile;
 import com.lookfood.backend.domain.enums.TypeStatus;
 import com.lookfood.backend.repositories.AddressRepository;
 import com.lookfood.backend.repositories.CityRepository;
@@ -58,33 +59,61 @@ public class DBService {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 		// Persist: Region/City/Address/Partner
-		Region reg1 = new Region(null, "Rio Grande do Sul");
+		Region region1 = new Region(null, "Rio Grande do Sul");
 
-		City c1 = new City(null, "Porto Alegre", reg1);
-		City c2 = new City(null, "Canoas", reg1);
+		City city1 = new City(null, "Porto Alegre"	, region1);
+		City city2 = new City(null, "Canoas"		, region1);
 
-		reg1.getCities().addAll(Arrays.asList(c1, c2));
+		region1.getCities().addAll(Arrays.asList(city1, city2));
 
-		regionRepository.saveAll(Arrays.asList(reg1));
-		cityRepository.saveAll(Arrays.asList(c1, c2));
+		regionRepository.saveAll(Arrays.asList(region1));
+		cityRepository.saveAll(Arrays.asList(city1, city2));
 
 		Partner partner1 = new Partner(
 								null, 
 								"Maria Silva", 
-								"email@dominio.com.br", 
-								"123456789", 
-								"www.restaurante.com",
+								"email@dominio1.com.br", 
+								"61516394000120", 
+								"www.restaurante1.com",
 								pe.encode("123"));
-
+		
 		partner1.getPhones().addAll(Arrays.asList("5127363323", "93838393"));
+		
+		Address address1 = new Address(
+							null, 
+							"Rua Flores", 
+							"300", 
+							"Apto 203", 
+							"Jardim", 
+							"38220834", 
+							partner1, 
+							city1);
+		partner1.getAddresses().addAll(Arrays.asList(address1));
+		
+		Partner partner2 = new Partner(
+				null, 
+				"José Luiz", 
+				"email@dominio2.com.br", 
+				"26173313000135", 
+				"www.restaurante2.com",
+				pe.encode("123"));
+		
+		partner2.addProfile(TypeProfile.ADMIN);		
 
-		Address e1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", partner1, c1);
-		Address e2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", partner1, c2);
+		Address e2 = new Address(
+							null, 
+							"Avenida Matos", 
+							"105", 
+							"Sala 800", 
+							"Centro", 
+							"38777012", 
+							partner2, 
+							city2);
+		partner2.getAddresses().addAll(Arrays.asList(e2));
 
-		partner1.getAddresses().addAll(Arrays.asList(e1, e2));
 
-		partnerRepository.saveAll(Arrays.asList(partner1));
-		addressRepository.saveAll(Arrays.asList(e1, e2));
+		partnerRepository.saveAll(Arrays.asList(partner1,partner2));
+		addressRepository.saveAll(Arrays.asList(address1, e2));
 
 		// Persist: Product/ Professional
 		Product p1 = new Product(null, "Prato1", sdf.parse("30/09/2017 10:32"));
