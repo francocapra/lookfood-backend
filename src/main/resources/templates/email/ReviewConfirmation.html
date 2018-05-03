@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:remove="all">Order Confirmation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div>
+
+		<h1>
+			Avaliação número: <span th:text="${review.id}"> </span>
+		</h1>
+		<p>
+			Data: <span
+				th:text="${#dates.format(review.date, 'dd/MM/yyyy hh:mm')}"></span>
+		</p>
+		<p>
+			Parceiro: <span th:text="${review.partner.name}"></span>
+		</p>
+		<p>
+			Situação do avaliação: <span
+				th:text="${review.status.description}"></span>
+		</p>
+		<h3>Items Produtos:</h3>
+		<table border="1">
+			<tr>
+				<th>Produto</th>
+				<th>Nota</th>
+			</tr>
+			<tr th:each="itemProduct : ${review.itensProduct}">
+				<td th:text="${itemProduct.product.description}">nome</td>
+				<td th:text="${itemProduct.rate}">nota</td>
+			</tr>
+		</table>
+		<h3>Items Profissionais:</h3>
+		<table border="1">
+			<tr>				
+				<th>Profissional</th>
+				<th>Nome</th>
+				<th>Nota</th>
+			</tr>
+			<tr th:each="itemProfessional : ${review.itensProfessional}">
+				<td th:text="${itemProfessional.professional.position.description}">profissional</td>
+				<td th:text="${itemProfessional.professional.name}">nome</td>
+				<td th:text="${itemProfessional.rate}">nota</td>
+			</tr>
+		</table>
+		
+	</div>
+</body>
+</html>

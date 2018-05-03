@@ -68,7 +68,7 @@ public class ReviewService {
 		}
 
 		itemProfessionalRepository.saveAll(obj.getItensProfessional());
-		emailService.sendReviewConfirmationEmail(obj);
+		emailService.sendReviewConfirmationHtmlEmail(obj);
 		return obj;
 		
 	}
