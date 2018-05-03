@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,9 @@ import com.lookfood.backend.repositories.ReviewRepository;
 
 @Service
 public class DBService {
+	
+	@Value("${default.recipient}")
+	private String recipient;
 	
 	@Autowired
 	private BCryptPasswordEncoder pe;
@@ -72,7 +76,8 @@ public class DBService {
 		Partner partner1 = new Partner(
 								null, 
 								"Maria Silva", 
-								"email@dominio1.com.br", 
+//								"email@dominio1.com.br", 
+								recipient,
 								"61516394000120", 
 								"www.restaurante1.com",
 								pe.encode("123"));
@@ -91,12 +96,13 @@ public class DBService {
 		partner1.getAddresses().addAll(Arrays.asList(address1));
 		
 		Partner partner2 = new Partner(
-				null, 
-				"José Luiz", 
-				"email@dominio2.com.br", 
-				"26173313000135", 
-				"www.restaurante2.com",
-				pe.encode("123"));
+								null, 
+								"José Luiz", 
+								"email@dominio2.com.br", 
+//								recipient,
+								"26173313000135", 
+								"www.restaurante2.com",
+								pe.encode("123"));
 		
 		partner2.addProfile(TypeProfile.ADMIN);		
 

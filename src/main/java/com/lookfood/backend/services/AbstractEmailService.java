@@ -14,7 +14,6 @@ public abstract class AbstractEmailService implements EmailService {
 	
 	@Override
 	public void sendReviewConfirmationEmail(Review obj) {
-		// TODO Auto-generated method stub
 		SimpleMailMessage smm = prepareSimpleMailMessageFromReview(obj);
 		sendEmail(smm);
 	}
