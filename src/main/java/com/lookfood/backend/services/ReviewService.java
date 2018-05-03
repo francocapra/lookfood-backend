@@ -34,6 +34,8 @@ public class ReviewService {
 	private ProfessionalService professionalService;
 	@Autowired
 	private ItemProfessionalRepository itemProfessionalRepository;
+	@Autowired
+	private EmailService emailService;
 
 	public Review find(Integer id) {
 
@@ -66,7 +68,7 @@ public class ReviewService {
 		}
 
 		itemProfessionalRepository.saveAll(obj.getItensProfessional());
-		System.out.print(obj);
+		emailService.sendReviewConfirmationEmail(obj);
 		return obj;
 		
 	}

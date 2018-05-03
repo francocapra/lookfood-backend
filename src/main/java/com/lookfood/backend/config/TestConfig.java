@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.lookfood.backend.services.DBService;
+import com.lookfood.backend.services.EmailService;
+import com.lookfood.backend.services.MockEmailService;
 
 @Configuration
 @Profile("test")
@@ -18,5 +20,10 @@ public class TestConfig {
 	public boolean instantiateDataBase() throws Exception {
 		dbService.instatiateTestDataBase();
 		return true;
+	}
+	
+	@Bean
+	public EmailService emailService() {
+		return new MockEmailService();
 	}
 }
