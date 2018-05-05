@@ -12,8 +12,7 @@ import com.lookfood.backend.domain.Partner;
 import com.lookfood.backend.services.validation.PartnerUpdate;
 
 @PartnerUpdate
-public class PartnerDTO  implements Serializable{
-	
+public class PartnerDTO  implements Serializable{	
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;

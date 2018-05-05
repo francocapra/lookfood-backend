@@ -12,6 +12,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,7 +44,7 @@ public class Partner implements Serializable{
 	@CollectionTable(name="PHONE")
 	private Set<String> phones = new HashSet<>();
 	
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="PROFILE")
 	private Set<Integer> profiles = new HashSet<>();
 	
@@ -130,7 +131,7 @@ public class Partner implements Serializable{
 		return addresses;
 	}
 	
-	public Set<TypeProfile> getProfile(){
+	public Set<TypeProfile> getProfiles(){
 		return profiles.stream().map(x -> TypeProfile.toEnum(x)).collect(Collectors.toSet());
 	}
 	
