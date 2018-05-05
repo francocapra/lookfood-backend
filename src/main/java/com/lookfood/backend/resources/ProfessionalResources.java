@@ -87,7 +87,7 @@ public class ProfessionalResources {
 			@RequestParam(value="sortDirection"	, defaultValue="ASC" ) Direction sortDirection, 
 			@RequestParam(value="orderBy"		, defaultValue="name" )String orderBy) {
 		
-		Page<Professional> list = service.listPage(page, linesPerPage, sortDirection, orderBy);
+		Page<Professional> list = service.findPage(page, linesPerPage, sortDirection, orderBy);
 		
 		Page<ProfessionalDTO> listDTO = list.map(obj -> new ProfessionalDTO(obj));
 		

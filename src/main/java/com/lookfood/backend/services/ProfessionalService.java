@@ -57,7 +57,7 @@ public class ProfessionalService {
 		
 	}
 	
-	public Page<Professional> listPage(Integer page, Integer linesPerPage, Direction sortDirection, String orderBy ) {
+	public Page<Professional> findPage(Integer page, Integer linesPerPage, Direction sortDirection, String orderBy ) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, sortDirection, orderBy);
 		return repository.findAll(pageRequest);
 	}

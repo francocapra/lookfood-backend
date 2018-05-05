@@ -14,7 +14,9 @@ import com.lookfood.backend.domain.Professional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
-//	@Query("SELECT DISTINCT obj FROM Product obj INNER JOIN obj.professionals prof WHERE obj.description LIKE %:description% AND prof IN :professionals")
+//	@Query("SELECT DISTINCT obj 
+//			FROM Product obj INNER JOIN obj.professionals prof 
+//			WHERE obj.description LIKE %:description% AND prof IN :professionals")
 //	Page<Product> search(
 //			@Param("description") String description, 
 //			@Param("professionals") List<Professional> professionals, 

@@ -5,18 +5,22 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lookfood.backend.domain.ItemProduct;
 import com.lookfood.backend.domain.ItemProfessional;
+import com.lookfood.backend.domain.Partner;
 import com.lookfood.backend.domain.Review;
 import com.lookfood.backend.domain.enums.TypeStatus;
 import com.lookfood.backend.repositories.ItemProductRepository;
 import com.lookfood.backend.repositories.ItemProfessionalRepository;
 import com.lookfood.backend.repositories.ReviewRepository;
-import com.lookfood.backend.services.exceptions.DataIntegrityException;
+import com.lookfood.backend.security.SSUserDetails;
+import com.lookfood.backend.services.exceptions.AuthorizationException;
 import com.lookfood.backend.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -80,18 +84,24 @@ public class ReviewService {
 		
 	}
 
-	public void delete(Integer id) {
-
-		find(id);
-		try {
-			repository.deleteById(id);
-		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel excluir Review pois existem Itens associados");
-		}
-
-	}
-
 	public List<Review> listAll() {
 		return repository.findAll();
 	}
+	
+	public Page<Review> findPage(Integer page, Integer linesPerPage, Direction sortDirection, String orderBy ) {
+		
+		SSUserDetails user = UserService.authenticated();
+		
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, sortDirection, orderBy);
+		
+		Partner partner = partnerService.find(user.getId());
+		
+		return repository.findByPartner(partner, pageRequest);
+	}
+	
 }
