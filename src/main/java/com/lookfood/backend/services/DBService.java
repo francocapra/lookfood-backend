@@ -75,13 +75,11 @@ public class DBService {
 
 		Partner partner1 = new Partner(
 								null, 
-								"Maria Silva", 
-//								"email@dominio1.com.br", 
-								recipient,
+								"Fulano da Silva", 
+								"email@dominio.com.br", 
 								"61516394000120", 
-								"www.restaurante1.com",
-								pe.encode("123"));
-		
+								"www.restaurante.com",
+								pe.encode("123"));		
 		partner1.getPhones().addAll(Arrays.asList("5127363323", "93838393"));
 		
 		Address address1 = new Address(
@@ -92,18 +90,16 @@ public class DBService {
 							"Jardim", 
 							"38220834", 
 							partner1, 
-							city1);
+							city1);		
 		partner1.getAddresses().addAll(Arrays.asList(address1));
 		
 		Partner partner2 = new Partner(
 								null, 
-								"José Luiz", 
-								"email@dominio2.com.br", 
-//								recipient,
+								"Franco Capra", 
+								recipient, //configurado no "application.properties"
 								"26173313000135", 
 								"www.restaurante2.com",
-								pe.encode("123"));
-		
+								pe.encode("123"));		
 		partner2.addProfile(TypeProfile.ADMIN);		
 
 		Address e2 = new Address(
