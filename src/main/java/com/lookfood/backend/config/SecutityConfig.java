@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.lookfood.backend.security.JWTAuthenticationFilter;
+import com.lookfood.backend.security.JWTAuthorizationFilter;
 import com.lookfood.backend.security.JWTUtil;
 
 @Configuration
@@ -74,7 +75,7 @@ public class SecutityConfig extends WebSecurityConfigurerAdapter {
 
 		//Registrar filtro de autenticação
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
-		
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		//Para assegurar que nosso backend não vai armazenar sessão de usuário
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
