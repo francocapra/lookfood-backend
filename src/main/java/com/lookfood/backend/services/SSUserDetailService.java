@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.lookfood.backend.domain.Partner;
 import com.lookfood.backend.repositories.PartnerRepository;
-import com.lookfood.backend.security.UserSS;
+import com.lookfood.backend.security.SSUserDetails;
 
 @Service
-public class UserSSService implements UserDetailsService{
+public class SSUserDetailService implements UserDetailsService{
 	
 	@Autowired
 	private PartnerRepository partnerRepository;
@@ -25,7 +25,7 @@ public class UserSSService implements UserDetailsService{
 			throw new UsernameNotFoundException(email);
 		}
 		
-		return new UserSS(partner.getId(),partner.getEmail(),partner.getPassword(),partner.getProfiles());
+		return new SSUserDetails(partner.getId(),partner.getEmail(),partner.getPassword(),partner.getProfiles());
 	}
 
 }

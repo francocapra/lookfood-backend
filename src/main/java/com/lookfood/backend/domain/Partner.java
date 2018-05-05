@@ -19,7 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.lookfood.backend.domain.enums.TypeProfile;
+import com.lookfood.backend.domain.enums.Profile;
 
 @Entity
 public class Partner implements Serializable{
@@ -57,7 +57,7 @@ public class Partner implements Serializable{
 
 	public Partner() {
 		super();
-		addProfile(TypeProfile.PARTNER);
+		addProfile(Profile.PARTNER);
 	}
 
 	public Partner(Integer id, String name, String email, String cnpj, String website, String password) {
@@ -68,7 +68,7 @@ public class Partner implements Serializable{
 		this.cnpj = cnpj;
 		this.website = website;
 		this.password = password;
-		addProfile(TypeProfile.PARTNER);
+		addProfile(Profile.PARTNER);
 	}
 
 	public Integer getId() {
@@ -131,11 +131,11 @@ public class Partner implements Serializable{
 		return addresses;
 	}
 	
-	public Set<TypeProfile> getProfiles(){
-		return profiles.stream().map(x -> TypeProfile.toEnum(x)).collect(Collectors.toSet());
+	public Set<Profile> getProfiles(){
+		return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
 	}
 	
-	public void addProfile(TypeProfile profile) {
+	public void addProfile(Profile profile) {
 		profiles.add(profile.getCod());
 	}
 	

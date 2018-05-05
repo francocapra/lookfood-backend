@@ -1,6 +1,6 @@
 package com.lookfood.backend.domain.enums;
 
-public enum TypeProfile {
+public enum Profile {
 
 	ADMIN(1, "ROLE_ADMIN"),
 	PARTNER(2,"ROLE_PARTNER");
@@ -9,7 +9,7 @@ public enum TypeProfile {
 	private Integer cod;
 	private String description;
 ;	
-	private TypeProfile(Integer cod, String description) {
+	private Profile(Integer cod, String description) {
 		this.cod = cod;
 		this.description = description;
 	}
@@ -22,12 +22,12 @@ public enum TypeProfile {
 		return description;
 	}
 	
-	public static TypeProfile toEnum(Integer cod) {
+	public static Profile toEnum(Integer cod) {
 		if (cod == null) {
 			return null;
 		}
 		
-		for (TypeProfile x : TypeProfile.values() ) {
+		for (Profile x : Profile.values() ) {
 			if (cod.equals(x.getCod())) {
 				return x ;
 			}				

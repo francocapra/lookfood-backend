@@ -74,7 +74,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
 		//authResult.getPrincipal(): retorna o "Usuario do Spring Security"
 		//faço um CAST tipo do meu tipo de implementação "UserSS"
-		String username = ((UserSS) authResult.getPrincipal()).getUsername(); 
+		String username = ((SSUserDetails) authResult.getPrincipal()).getUsername(); 
 		
 		//Pego o username e gero num Token JWT
 		String token = jwtUtil.generateToken(username);

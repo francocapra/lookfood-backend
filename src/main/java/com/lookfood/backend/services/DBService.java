@@ -19,7 +19,7 @@ import com.lookfood.backend.domain.Professional;
 import com.lookfood.backend.domain.Region;
 import com.lookfood.backend.domain.Review;
 import com.lookfood.backend.domain.enums.TypePosition;
-import com.lookfood.backend.domain.enums.TypeProfile;
+import com.lookfood.backend.domain.enums.Profile;
 import com.lookfood.backend.domain.enums.TypeStatus;
 import com.lookfood.backend.repositories.AddressRepository;
 import com.lookfood.backend.repositories.CityRepository;
@@ -100,7 +100,7 @@ public class DBService {
 								"26173313000135", 
 								"www.restaurante2.com",
 								pe.encode("123"));		
-		partner2.addProfile(TypeProfile.ADMIN);		
+		partner2.addProfile(Profile.ADMIN);		
 
 		Address e2 = new Address(
 							null, 

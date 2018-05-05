@@ -8,10 +8,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.lookfood.backend.domain.enums.TypeProfile;
+import com.lookfood.backend.domain.enums.Profile;
 
 //Classe que implementa uma Interface que determina um Contrato do Spring Security
-public class UserSS implements UserDetails{
+public class SSUserDetails implements UserDetails{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
@@ -23,11 +23,11 @@ public class UserSS implements UserDetails{
 		return id;
 	}
 	
-	public UserSS() {
+	public SSUserDetails() {
 		super();
 	}
 
-	public UserSS(Integer id, String email, String password, Set<TypeProfile> profiles ) {
+	public SSUserDetails(Integer id, String email, String password, Set<Profile> profiles ) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -71,6 +71,10 @@ public class UserSS implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public boolean hasRole(Profile profile) {		
+		return getAuthorities().contains(new SimpleGrantedAuthority(profile.getDescription()));
 	}
 
 }

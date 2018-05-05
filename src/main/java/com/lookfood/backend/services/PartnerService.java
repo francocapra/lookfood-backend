@@ -15,10 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lookfood.backend.domain.Address;
 import com.lookfood.backend.domain.City;
 import com.lookfood.backend.domain.Partner;
+import com.lookfood.backend.domain.enums.Profile;
 import com.lookfood.backend.dto.PartnerDTO;
 import com.lookfood.backend.dto.PartnerNewDTO;
 import com.lookfood.backend.repositories.AddressRepository;
 import com.lookfood.backend.repositories.PartnerRepository;
+import com.lookfood.backend.security.SSUserDetails;
+import com.lookfood.backend.services.exceptions.AuthorizationException;
 import com.lookfood.backend.services.exceptions.DataIntegrityException;
 import com.lookfood.backend.services.exceptions.ObjectNotFoundException;
 
@@ -33,7 +36,14 @@ public class PartnerService {
 	private BCryptPasswordEncoder pe;
 	
 	public Partner find(Integer id) {
+		
+		SSUserDetails user = UserService.authenticated();
+		if (user==null || !user.hasRole(Profile.ADMIN) && id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		};
+		
 		Optional<Partner> obj = repository.findById(id);
+		
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Partner.class.getName()));
 	}
