@@ -1,5 +1,6 @@
 package com.lookfood.backend.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lookfood.backend.domain.Address;
 import com.lookfood.backend.domain.City;
@@ -34,6 +36,8 @@ public class PartnerService {
 	private AddressRepository addressRepository;
 	@Autowired
 	private BCryptPasswordEncoder pe;
+	@Autowired
+	private S3Service s3Service;
 	
 	public Partner find(Integer id) {
 		
@@ -80,11 +84,11 @@ public class PartnerService {
 		}
 	}
 
-	public List<Partner> listAll() {
+	public List<Partner> findAll() {
 		return repository.findAll();
 	}
 
-	public Page<Partner> listPage(Integer page, Integer linesPerPage, String orderBy, String sortDirection) {
+	public Page<Partner> findPage(Integer page, Integer linesPerPage, String orderBy, String sortDirection) {
 
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(sortDirection), orderBy);
 
@@ -133,5 +137,9 @@ public class PartnerService {
 		}
 
 		return partner;
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
 	}
 }

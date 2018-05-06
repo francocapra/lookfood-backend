@@ -23,44 +23,32 @@ public class ReviewResources {
 
 	@Autowired
 	private ReviewService service;
-	
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Review> find(@PathVariable Integer id) {
-		
-		Review obj = service.find(id);		
-		return ResponseEntity.ok().body(obj);
-		
-	}
 
-	// Receber uma dominio no formato Json, e inserir no banco de dados
-	// ResponseEntity = "Resposta HTTP"
-	// Void === Não vai ter corpo, Quando eu inserir um "Corpo(Body)" com sucesso!
-	// ele(method)
-	// vou retornar uma reposta com o corpo vazio!!
+		Review obj = service.find(id);
+		return ResponseEntity.ok().body(obj);
+
+	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Review obj) {
 
 		obj = this.service.insert(obj);
-		URI uri = ServletUriComponentsBuilder
-				.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(obj.getId())
-				.toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
-		
+
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Page<Review>> listPage(
-			@RequestParam(value="page"			, defaultValue="0" ) Integer page, 
-			@RequestParam(value="linesPerPage"	, defaultValue="24" ) Integer linesPerPage, 
-			@RequestParam(value="sortDirection"	, defaultValue="DESC" ) Direction sortDirection, 
-			@RequestParam(value="orderBy"		, defaultValue="date" )String orderBy) {
-		
+	public ResponseEntity<Page<Review>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+			@RequestParam(value = "sortDirection", defaultValue = "DESC") Direction sortDirection,
+			@RequestParam(value = "orderBy", defaultValue = "date") String orderBy) {
+
 		Page<Review> list = service.findPage(page, linesPerPage, sortDirection, orderBy);
-		
+
 		return ResponseEntity.ok().body(list);
-	}	
+	}
 }
