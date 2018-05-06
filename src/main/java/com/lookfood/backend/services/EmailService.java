@@ -4,6 +4,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.mail.SimpleMailMessage;
 
+import com.lookfood.backend.domain.Partner;
 import com.lookfood.backend.domain.Review;
 
 public interface EmailService {
@@ -14,5 +15,7 @@ public interface EmailService {
 	
 	void sendReviewConfirmationHtmlEmail(Review obj); 
 	
-	void sendHtmlEmail(MimeMessage msg); 
+	void sendHtmlEmail(MimeMessage msg);
+
+	void sendNewPasswordEmail(Partner partner, String newPass); 
 }

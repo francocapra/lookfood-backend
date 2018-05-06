@@ -48,10 +48,8 @@ public class SecutityConfig extends WebSecurityConfigurerAdapter {
 	};
 	
 	public static final String[] PUBLIC_MATCHERS_POST = {  
-			"/products/**", 
-			"/professionals/**",
-			"/partners/**",
-			"/reviews/**"
+			"/reviews/**",
+			"/auth/forgot/**"
 	};
 
 	@Override

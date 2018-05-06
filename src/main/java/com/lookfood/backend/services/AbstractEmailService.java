@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.lookfood.backend.domain.Partner;
 import com.lookfood.backend.domain.Review;
 
 public abstract class AbstractEmailService implements EmailService {
@@ -32,7 +33,7 @@ public abstract class AbstractEmailService implements EmailService {
 		sendEmail(smm);
 	}
 
-	private SimpleMailMessage prepareSimpleMailMessageFromReview(Review obj) {
+	protected SimpleMailMessage prepareSimpleMailMessageFromReview(Review obj) {
 		SimpleMailMessage smm = new SimpleMailMessage();
 		smm.setTo(obj.getPartner().getEmail());
 		smm.setFrom(sender);
@@ -61,7 +62,7 @@ public abstract class AbstractEmailService implements EmailService {
 
 	}
 
-	private MimeMessage prepareMimeMessageFromReview(Review obj) throws MessagingException {
+	protected MimeMessage prepareMimeMessageFromReview(Review obj) throws MessagingException {
 		MimeMessage mm = javaMailSender.createMimeMessage();
 		MimeMessageHelper mmh = new MimeMessageHelper(mm, true);
 		mmh.setTo(obj.getPartner().getEmail());
@@ -71,5 +72,21 @@ public abstract class AbstractEmailService implements EmailService {
 		mmh.setText(htmlFromTemplateReview(obj), true);
 
 		return mm;
+	}
+	
+	@Override
+	public void sendNewPasswordEmail(Partner partner, String newPass) {
+		SimpleMailMessage smm = prepareNewPasswordEmail(partner,newPass);
+		sendEmail(smm);
+	}
+
+	protected SimpleMailMessage prepareNewPasswordEmail(Partner partner, String newPass) {
+		SimpleMailMessage smm = new SimpleMailMessage();
+		smm.setTo(partner.getEmail());
+		smm.setFrom(sender);
+		smm.setSubject("Solicitação de nova senha");
+		smm.setSentDate(new Date(System.currentTimeMillis()));
+		smm.setText("Nova senha: " + newPass);
+		return smm;
 	}
 }
