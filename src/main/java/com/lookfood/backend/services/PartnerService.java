@@ -1,10 +1,12 @@
 package com.lookfood.backend.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,6 +40,11 @@ public class PartnerService {
 	private BCryptPasswordEncoder pe;
 	@Autowired
 	private S3Service s3Service;
+	@Autowired
+	private ImageService imageService;
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefixFile;
 	
 	public Partner find(Integer id) {
 		
@@ -141,22 +148,18 @@ public class PartnerService {
 	
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
 		
+		//Verificar se usuario esta logado!
 		SSUserDetails user = UserService.authenticated();
 		if (user==null) {
 			throw new AuthorizationException("Acesso negado");
 		};
 		
-		URI uri = s3Service.uploadFile(multipartFile);
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
 		
-		Optional<Partner> objPartner = repository.findById(user.getId());
+		String fileName = prefixFile + user.getId() + ".jpg";
 		
-		Partner partner = objPartner.get();
+		return s3Service.uploadFile(fileName, imageService.getInputStream(jpgImage, "jpg") , "image");
 		
-		partner.setImageRrl(uri.toString());
-		
-		repository.save(partner);
-		
-		return uri;
 		
 	}
 }

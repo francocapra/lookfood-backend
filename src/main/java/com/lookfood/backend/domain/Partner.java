@@ -56,8 +56,6 @@ public class Partner implements Serializable{
 	@JsonIgnore
 	private List<Review> reviews = new ArrayList<>();
 
-	private String imageRrl;
-	
 	public Partner() {
 		super();
 		addProfile(Profile.PARTNER);
@@ -179,12 +177,4 @@ public class Partner implements Serializable{
 		return true;
 	}
 
-	public String getImageRrl() {
-		return imageRrl;
-	}
-
-	public void setImageRrl(String imageRrl) {
-		this.imageRrl = imageRrl;
-	}		
-		
 }
