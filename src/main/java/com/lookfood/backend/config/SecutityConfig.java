@@ -50,7 +50,6 @@ public class SecutityConfig extends WebSecurityConfigurerAdapter {
 	public static final String[] PUBLIC_MATCHERS_POST = {  
 //			"/partners/**",
 			"/partners",
-			"/partners/picture",
 			"/auth/forgot/**"
 	};
 

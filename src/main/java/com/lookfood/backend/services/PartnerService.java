@@ -140,6 +140,23 @@ public class PartnerService {
 	}
 	
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
-		return s3Service.uploadFile(multipartFile);
+		
+		SSUserDetails user = UserService.authenticated();
+		if (user==null) {
+			throw new AuthorizationException("Acesso negado");
+		};
+		
+		URI uri = s3Service.uploadFile(multipartFile);
+		
+		Optional<Partner> objPartner = repository.findById(user.getId());
+		
+		Partner partner = objPartner.get();
+		
+		partner.setImageRrl(uri.toString());
+		
+		repository.save(partner);
+		
+		return uri;
+		
 	}
 }

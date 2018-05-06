@@ -40,6 +40,7 @@ public class Partner implements Serializable{
 	private String cnpj;
 	private String website;
 	
+	
 	@ElementCollection
 	@CollectionTable(name="PHONE")
 	private Set<String> phones = new HashSet<>();
@@ -55,6 +56,8 @@ public class Partner implements Serializable{
 	@JsonIgnore
 	private List<Review> reviews = new ArrayList<>();
 
+	private String imageRrl;
+	
 	public Partner() {
 		super();
 		addProfile(Profile.PARTNER);
@@ -174,6 +177,14 @@ public class Partner implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getImageRrl() {
+		return imageRrl;
+	}
+
+	public void setImageRrl(String imageRrl) {
+		this.imageRrl = imageRrl;
 	}		
 		
 }
