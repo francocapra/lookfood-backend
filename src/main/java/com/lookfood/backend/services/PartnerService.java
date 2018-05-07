@@ -97,7 +97,21 @@ public class PartnerService {
 	public List<Partner> findAll() {
 		return repository.findAll();
 	}
-
+	
+	public Partner findByEmail(String email) {
+		SSUserDetails user = UserService.authenticated();
+		if (user == null || !user.hasRole(Profile.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+	
+		Partner obj = repository.findByEmail(email);
+		if (obj == null) {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Partner.class.getName());
+		}
+		return obj;
+	}
+	
 	public Page<Partner> findPage(Integer page, Integer linesPerPage, String orderBy, String sortDirection) {
 
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(sortDirection), orderBy);
