@@ -39,8 +39,6 @@ public class AuthService {
 		
 		emailService.sendNewPasswordEmail(partner, newPass);
 		
-		
-
 	}
 
 	private String newPassword() {
