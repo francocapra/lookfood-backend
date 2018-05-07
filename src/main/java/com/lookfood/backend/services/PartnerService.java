@@ -46,6 +46,9 @@ public class PartnerService {
 	@Value("${img.prefix.client.profile}")
 	private String prefixFile;
 	
+	@Value("${img.profile.size}")
+	private Integer size;
+	
 	public Partner find(Integer id) {
 		
 		SSUserDetails user = UserService.authenticated();
@@ -155,6 +158,10 @@ public class PartnerService {
 		};
 		
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		
+		jpgImage = imageService.cropSquare(jpgImage);
+		jpgImage = imageService.resize(jpgImage, size);
+		
 		
 		String fileName = prefixFile + user.getId() + ".jpg";
 		
