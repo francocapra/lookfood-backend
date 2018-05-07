@@ -95,8 +95,9 @@ public class DBService {
 		
 		Partner partner2 = new Partner(
 								null, 
-								"Franco Capra", 
-								recipient, //configurado no "application.properties"
+								"Adminstrador", 
+								"admin@email.com.br",
+								//recipient, //configurado no "application.properties"
 								"26173313000135", 
 								"www.restaurante2.com",
 								pe.encode("123"));		
