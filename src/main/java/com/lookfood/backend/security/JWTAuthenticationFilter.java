@@ -81,14 +81,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
 		//coloco o JWToken no header do response!
 		response.addHeader("Authorization", "Bearer " + token);
-		
+		response.addHeader("access-control-expose-headers", "Authorization"); 
 	}
 	
 	
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		super.unsuccessfulAuthentication(request, response, failed);
 	}
 	
