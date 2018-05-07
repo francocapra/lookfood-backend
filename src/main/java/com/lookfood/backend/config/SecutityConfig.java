@@ -43,9 +43,7 @@ public class SecutityConfig extends WebSecurityConfigurerAdapter {
 
 	public static final String[] PUBLIC_MATCHERS_GET = { "/products/**", "/professionals/**", "/regions/**" };
 
-	public static final String[] PUBLIC_MATCHERS_POST = {
-			// "/partners/**",
-			"/partners", "/auth/forgot/**" };
+	public static final String[] PUBLIC_MATCHERS_POST = { "/partners", "/auth/forgot/**" };
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -83,11 +81,11 @@ public class SecutityConfig extends WebSecurityConfigurerAdapter {
 	// CORS: implementação de configurações básicas
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
-		
+
 		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
-		
+
 		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
-		
+
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
