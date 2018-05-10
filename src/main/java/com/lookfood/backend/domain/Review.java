@@ -37,10 +37,10 @@ public class Review implements Serializable{
 	private Partner partner;
 
 	@OneToMany(mappedBy="id.review")
-	private Set<ItemProduct> itensProduct = new HashSet<>(); 
+	private Set<ItemProduct> itemsProduct = new HashSet<>(); 
 
 	@OneToMany(mappedBy="id.review")
-	private Set<ItemProfessional> itensProfessional = new HashSet<>(); 
+	private Set<ItemProfessional> itemsProfessional = new HashSet<>(); 
 	
 	public Review() {
 		super();
@@ -87,20 +87,20 @@ public class Review implements Serializable{
 		this.partner = partner;
 	}
 	
-	public Set<ItemProduct> getItensProduct() {
-		return itensProduct;
+	public Set<ItemProduct> getItemsProduct() {
+		return itemsProduct;
 	}
 
-	public void setItens(Set<ItemProduct> itens) {
-		this.itensProduct = itens;
+	public void setItemsProduct(Set<ItemProduct> productItems) {
+		this.itemsProduct = productItems;
 	}
 
-	public Set<ItemProfessional> getItensProfessional() {
-		return itensProfessional;
+	public Set<ItemProfessional> getItemsProfessional() {
+		return itemsProfessional;
 	}
 
-	public void setItensProfessional(Set<ItemProfessional> itensProfessional) {
-		this.itensProfessional = itensProfessional;
+	public void setItensProfessional(Set<ItemProfessional> professionalItems) {
+		this.itemsProfessional = professionalItems;
 	}
 
 	@Override
@@ -143,11 +143,11 @@ public class Review implements Serializable{
 		builder.append(", Status da Avaliação: ");
 		builder.append(getStatus().getDescription());
 		builder.append("\nProdutos:\n");
-		for (ItemProduct ip: getItensProduct()) {			
+		for (ItemProduct ip: getItemsProduct()) {			
 			builder.append(ip.toString());
 		}	
 		builder.append("\nServiços:\n");
-		for (ItemProfessional ip: getItensProfessional()) {			
+		for (ItemProfessional ip: getItemsProfessional()) {			
 			builder.append(ip.toString());
 		}		
 		return builder.toString();

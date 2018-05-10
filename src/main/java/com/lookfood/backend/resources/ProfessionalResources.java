@@ -94,4 +94,11 @@ public class ProfessionalResources {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
+	@RequestMapping(value="/top", method=RequestMethod.GET)
+	public ResponseEntity<List<Professional>> findTop(
+			@RequestParam(value="limit", defaultValue="5" ) Integer nro,
+			@RequestParam(value="partnerId") Integer partnerId) {
+		List<Professional> list = service.findTop(partnerId,nro);
+		return ResponseEntity.ok().body(list);
+	}	
 }

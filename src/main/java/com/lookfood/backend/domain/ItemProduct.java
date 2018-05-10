@@ -27,6 +27,14 @@ public class ItemProduct implements Serializable{
 		this.id.setProduct(product);
 		this.rate = rate;
 	}
+	
+	public Product getProduct() {
+		return id.getProduct();
+	}
+	
+	public void setProduct(Product product) {
+		id.setProduct(product);
+	}
 
 	public Integer getRate() {
 		return rate;
@@ -45,13 +53,6 @@ public class ItemProduct implements Serializable{
 		id.setReview(review);
 	}
 	
-	public Product getProduct() {
-		return id.getProduct();
-	}
-
-	public void setProduct(Product product) {
-		id.setProduct(product);
-	}
 	
 	@Override
 	public int hashCode() {

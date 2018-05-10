@@ -28,6 +28,7 @@ public class ProductService {
 	@Autowired
 	private ProfessionalRepository professionalRepository;
 	
+	
 	public Product find(Integer id) {		
 		Optional<Product> obj = repository.findById(id);			
 		return obj.orElseThrow( () -> new ObjectNotFoundException
@@ -108,4 +109,9 @@ public class ProductService {
 				objDTO.getDate());
 	}
 	
+	public List<Product> findTop(Integer partnerId, Integer top){
+		PageRequest pageRequest = PageRequest.of(0, top);
+		List<Product> list = repository.findTop(partnerId, pageRequest);
+		return list;
+	}
 }

@@ -97,4 +97,12 @@ public class ProductResources {
 		
 		return ResponseEntity.ok().body(listDTO);
 	}
+	
+	@RequestMapping(value="/top", method=RequestMethod.GET)
+	public ResponseEntity<List<Product>> findTop(
+			@RequestParam(value="limit", defaultValue="5" ) Integer nro,
+			@RequestParam(value="partnerId") Integer partnerId) {
+		List<Product> list = service.findTop(partnerId,nro);
+		return ResponseEntity.ok().body(list);
+	}
 }

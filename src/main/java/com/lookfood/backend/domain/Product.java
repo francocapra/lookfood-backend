@@ -46,6 +46,7 @@ public class Product implements Serializable{
 		this.description = description;
 		this.date = date;
 	}
+	
 
 	@JsonIgnore //Tudo que começa com GET é serializado, então eu não quero serealizar esta lista de pedidos
 	public List<Review> getReviews(){

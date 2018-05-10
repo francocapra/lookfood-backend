@@ -35,18 +35,15 @@ public class ProfessionalService {
 	}
 
 	public Professional update(Professional obj) {
-		// TODO Auto-generated method stub
 		find(obj.getId());
 		return repository.save(obj);
 	}
 
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
 		find(id);
 		try {
 		repository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			// TODO: handle exception
 			throw new DataIntegrityException("Não é possivel excluir uma Professional que possui Products");
 		}		
 	}
@@ -62,5 +59,9 @@ public class ProfessionalService {
 		return repository.findAll(pageRequest);
 	}
 	
-	
+	public List<Professional> findTop(Integer partnerId, Integer top){
+		PageRequest pageRequest = PageRequest.of(0, top);
+		List<Professional> list = repository.findTop(partnerId, pageRequest);
+		return list;
+	}
 }

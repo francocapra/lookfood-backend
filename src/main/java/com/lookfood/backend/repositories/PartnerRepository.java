@@ -11,5 +11,5 @@ public interface PartnerRepository extends JpaRepository<Partner, Integer> {
 	
 	@Transactional(readOnly=true)
 	Partner findByEmail(String email);
-	
+
 }

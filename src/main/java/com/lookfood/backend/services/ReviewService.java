@@ -58,20 +58,20 @@ public class ReviewService {
 		obj.setPartner(partnerService.find(obj.getPartner().getId()));
 		obj = repository.save(obj);
 
-		for (ItemProduct ip : obj.getItensProduct()) {
+		for (ItemProduct ip : obj.getItemsProduct()) {
 			ip.setProduct(productService.find(ip.getProduct().getId()));
 			ip.setRate(ip.getRate());
 			ip.setReview(obj);
 		}
-		itemProductRepository.saveAll(obj.getItensProduct());
+		itemProductRepository.saveAll(obj.getItemsProduct());
 
-		for (ItemProfessional ip : obj.getItensProfessional()) {
+		for (ItemProfessional ip : obj.getItemsProfessional()) {
 			ip.setProfessional(professionalService.find(ip.getProfessional().getId()));
 			ip.setRate(ip.getRate());
 			ip.setReview(obj);
 		}
 
-		itemProfessionalRepository.saveAll(obj.getItensProfessional());
+		itemProfessionalRepository.saveAll(obj.getItemsProfessional());
 		emailService.sendReviewConfirmationHtmlEmail(obj);
 		return obj;
 		

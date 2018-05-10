@@ -8,4 +8,5 @@ import com.lookfood.backend.domain.ItemProduct;
 @Repository
 public interface ItemProductRepository extends JpaRepository<ItemProduct, Integer> {
 
+
 }
