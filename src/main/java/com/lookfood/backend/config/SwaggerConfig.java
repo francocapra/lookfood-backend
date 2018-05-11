@@ -44,7 +44,7 @@ public class SwaggerConfig {
 				.globalResponseMessage(RequestMethod.DELETE, Arrays.asList(m204del, m403, m404, m500)) 
 				
 				.select()
-//				.apis(RequestHandlerSelectors.any())
+//				.apis(RequestHandlerSelectors.any()) 
 				.apis(RequestHandlerSelectors.basePackage("com.lookfood.backend.resources")) 
 				.paths(PathSelectors.any())
 				.build()
@@ -52,12 +52,17 @@ public class SwaggerConfig {
 	}
 	
 	private ApiInfo apiInfo() {
-		return new ApiInfo("API do app LookFood",
-				"Esta API é utilizada no aplicativo Lookfood", "Versão 1.0",
-				"https://www.jfg-solutions.com/terms",
-				new Contact("JFG Solutions", "lookfood.com/user/jfg-solutions", "solutions.jfg@gmail.com"),
-				"Permitido uso próprio", "https://www.jfg-solutions.com/terms", Collections.emptyList() // Vendor
-																										// Extensions
+		return new ApiInfo(
+				"LookFood REST API",	
+				"The Lookfood RESTful API developed with Spring Boot", 
+				"Version 1.0",
+				"https://github.com/francocapra/lookfood-backend",
+				new Contact(
+						"JFG Solutions", 
+						"https://github.com/francocapra/lookfood-backend", 
+						"solutions.jfg@gmail.com"),				
+				null, 
+				"https://github.com/francocapra/lookfood-backend", Collections.emptyList() 							
 		);
 	}
 	
