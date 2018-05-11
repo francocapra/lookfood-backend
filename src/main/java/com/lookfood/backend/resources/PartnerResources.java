@@ -24,13 +24,18 @@ import com.lookfood.backend.dto.PartnerDTO;
 import com.lookfood.backend.dto.PartnerNewDTO;
 import com.lookfood.backend.services.PartnerService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping(value = "/partners")
 public class PartnerResources {
 
 	@Autowired
 	private PartnerService service;
-
+	
+	@ApiOperation(value="Busca por id") 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Partner> find(@PathVariable Integer id) {
 
@@ -38,7 +43,8 @@ public class PartnerResources {
 		return ResponseEntity.ok().body(obj);
 
 	}
-
+	
+	@ApiOperation(value="Busca por email") 
 	@RequestMapping(value = "/email", method = RequestMethod.GET)
 	public ResponseEntity<Partner> find(@RequestParam(value="value") String email) {
 		
@@ -46,7 +52,8 @@ public class PartnerResources {
 		return ResponseEntity.ok().body(obj);
 		
 	}
-
+	
+	@ApiOperation(value="Inseri novo Parceiro") 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody PartnerNewDTO objDTO) {
 
@@ -56,7 +63,8 @@ public class PartnerResources {
 		return ResponseEntity.created(uri).build();
 
 	}
-
+	
+	@ApiOperation(value="Atualiza Parceiro") 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody PartnerDTO objDTO) {
 
@@ -66,14 +74,19 @@ public class PartnerResources {
 		return ResponseEntity.noContent().build();
 		
 	}
-
+	
+	@ApiOperation(value="Deleta Partner{only has perfil:ADMIN}") 
+	@ApiResponses(value = { 
+			 @ApiResponse(code = 400, message = "Não é possível excluir uma Partner que possui Reviews relacionados"), 
+			 @ApiResponse(code = 404, message = "Código inexistente") }) 
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-
+	
+	@ApiOperation(value="Busca todos os parceiro {only has perfil:ADMIN}") 
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<PartnerDTO>> findAll() {
@@ -92,7 +105,8 @@ public class PartnerResources {
 
 		return ResponseEntity.ok().body(listDTO);
 	}
-
+	
+	@ApiOperation(value="Lista parceiro com paginação {only has perfil:ADMIN}") 
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<PartnerDTO>> findPage(
@@ -108,7 +122,8 @@ public class PartnerResources {
 		return ResponseEntity.ok().body(listDTO);
 
 	}
-
+	
+	@ApiOperation(value="Upload de foto do perfil") 
 	@RequestMapping(value = "/picture", method = RequestMethod.POST)
 	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file) {
 		
