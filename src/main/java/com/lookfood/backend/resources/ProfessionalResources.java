@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lookfood.backend.domain.Professional;
 import com.lookfood.backend.dto.ProfessionalDTO;
 import com.lookfood.backend.services.ProfessionalService;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value="/professionals")
@@ -100,5 +103,14 @@ public class ProfessionalResources {
 			@RequestParam(value="partnerId") Integer partnerId) {
 		List<Professional> list = service.findTop(partnerId,nro);
 		return ResponseEntity.ok().body(list);
-	}	
+	}
+	
+	@ApiOperation(value="Upload picture to Professional") 
+	@RequestMapping(value = "/picture", method = RequestMethod.POST)
+	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file) {
+		
+		URI uri = service.uploadProfilePicture(file);
+		return ResponseEntity.created(uri).build();
+
+	}
 }

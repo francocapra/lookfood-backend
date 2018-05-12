@@ -35,7 +35,7 @@ public class PartnerResources {
 	@Autowired
 	private PartnerService service;
 	
-	@ApiOperation(value="Busca por id") 
+	@ApiOperation(value="Find Partner by Id") 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Partner> find(@PathVariable Integer id) {
 
@@ -44,7 +44,7 @@ public class PartnerResources {
 
 	}
 	
-	@ApiOperation(value="Busca por email") 
+	@ApiOperation(value="Find Partner by Email") 
 	@RequestMapping(value = "/email", method = RequestMethod.GET)
 	public ResponseEntity<Partner> find(@RequestParam(value="value") String email) {
 		
@@ -53,7 +53,7 @@ public class PartnerResources {
 		
 	}
 	
-	@ApiOperation(value="Inseri novo Parceiro") 
+	@ApiOperation(value="Save new Partner") 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody PartnerNewDTO objDTO) {
 
@@ -64,7 +64,7 @@ public class PartnerResources {
 
 	}
 	
-	@ApiOperation(value="Atualiza Parceiro") 
+	@ApiOperation(value="Update Partner") 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody PartnerDTO objDTO) {
 
@@ -75,7 +75,7 @@ public class PartnerResources {
 		
 	}
 	
-	@ApiOperation(value="Deleta Partner{only has perfil:ADMIN}") 
+	@ApiOperation(value="Delete Partner {Whom has profile Admin}") 
 	@ApiResponses(value = { 
 			 @ApiResponse(code = 400, message = "Não é possível excluir uma Partner que possui Reviews relacionados"), 
 			 @ApiResponse(code = 404, message = "Código inexistente") }) 
@@ -86,7 +86,7 @@ public class PartnerResources {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@ApiOperation(value="Busca todos os parceiro {only has perfil:ADMIN}") 
+	@ApiOperation(value="List all Partners {Whom has profile Admin}") 
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<PartnerDTO>> findAll() {
@@ -106,7 +106,7 @@ public class PartnerResources {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
-	@ApiOperation(value="Lista parceiro com paginação {only has perfil:ADMIN}") 
+	@ApiOperation(value="List Partners by page {only has perfil:ADMIN}") 
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<PartnerDTO>> findPage(
@@ -123,7 +123,7 @@ public class PartnerResources {
 
 	}
 	
-	@ApiOperation(value="Upload de foto do perfil") 
+	@ApiOperation(value="Upload picture to profile") 
 	@RequestMapping(value = "/picture", method = RequestMethod.POST)
 	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file) {
 		

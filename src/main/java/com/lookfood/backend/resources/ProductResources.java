@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.dto.ProductDTO;
 import com.lookfood.backend.resources.utils.URL;
 import com.lookfood.backend.services.ProductService;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value = "/products")
@@ -98,11 +101,21 @@ public class ProductResources {
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
+	@ApiOperation(value="List Top Products") 
 	@RequestMapping(value="/top", method=RequestMethod.GET)
 	public ResponseEntity<List<Product>> findTop(
 			@RequestParam(value="limit", defaultValue="5" ) Integer nro,
 			@RequestParam(value="partnerId") Integer partnerId) {
 		List<Product> list = service.findTop(partnerId,nro);
 		return ResponseEntity.ok().body(list);
+	}
+	
+	@ApiOperation(value="Upload picture to Product") 
+	@RequestMapping(value = "/picture", method = RequestMethod.POST)
+	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file) {
+		
+		URI uri = service.uploadProfilePicture(file);
+		return ResponseEntity.created(uri).build();
+
 	}
 }

@@ -1,21 +1,27 @@
 package com.lookfood.backend.services;
 
+import java.awt.image.BufferedImage;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.domain.Professional;
 import com.lookfood.backend.dto.ProductDTO;
 import com.lookfood.backend.repositories.ProductRepository;
 import com.lookfood.backend.repositories.ProfessionalRepository;
+import com.lookfood.backend.security.SSUserDetails;
+import com.lookfood.backend.services.exceptions.AuthorizationException;
 import com.lookfood.backend.services.exceptions.DataIntegrityException;
 import com.lookfood.backend.services.exceptions.ObjectNotFoundException;
 
@@ -28,6 +34,17 @@ public class ProductService {
 	@Autowired
 	private ProfessionalRepository professionalRepository;
 	
+	@Autowired
+	private S3Service s3Service;
+	
+	@Autowired
+	private ImageService imageService;
+
+	@Value("${img.prefix.product.portrait}")
+	private String prefixFile;
+	
+	@Value("${img.profile.size}")
+	private Integer size;	
 	
 	public Product find(Integer id) {		
 		Optional<Product> obj = repository.findById(id);			
@@ -113,5 +130,26 @@ public class ProductService {
 		PageRequest pageRequest = PageRequest.of(0, top);
 		List<Product> list = repository.findTop(partnerId, pageRequest);
 		return list;
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		
+		//Verificar se usuario esta logado!
+		SSUserDetails user = UserService.authenticated();
+		if (user==null) {
+			throw new AuthorizationException("Access denied");
+		};
+		
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		
+		jpgImage = imageService.cropSquare(jpgImage);
+		jpgImage = imageService.resize(jpgImage, size);
+		
+		
+		String fileName = prefixFile + user.getId() + ".jpg";
+		
+		return s3Service.uploadFile(fileName, imageService.getInputStream(jpgImage, "jpg") , "image");
+		
+		
 	}
 }
