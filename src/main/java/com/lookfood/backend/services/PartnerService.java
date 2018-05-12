@@ -2,6 +2,7 @@ package com.lookfood.backend.services;
 
 import java.awt.image.BufferedImage;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,11 +20,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.lookfood.backend.domain.Address;
 import com.lookfood.backend.domain.City;
 import com.lookfood.backend.domain.Partner;
+import com.lookfood.backend.domain.Region;
 import com.lookfood.backend.domain.enums.Profile;
 import com.lookfood.backend.dto.PartnerDTO;
 import com.lookfood.backend.dto.PartnerNewDTO;
 import com.lookfood.backend.repositories.AddressRepository;
+import com.lookfood.backend.repositories.CityRepository;
 import com.lookfood.backend.repositories.PartnerRepository;
+import com.lookfood.backend.repositories.RegionRepository;
 import com.lookfood.backend.security.SSUserDetails;
 import com.lookfood.backend.services.exceptions.AuthorizationException;
 import com.lookfood.backend.services.exceptions.DataIntegrityException;
@@ -34,6 +38,10 @@ public class PartnerService {
 
 	@Autowired
 	private PartnerRepository repository;
+	@Autowired
+	private RegionRepository regionRepository;	
+	@Autowired
+	private CityRepository cityRepository;	
 	@Autowired
 	private AddressRepository addressRepository;
 	@Autowired
@@ -140,7 +148,9 @@ public class PartnerService {
 							objNewDTO.getWebsite(),						
 							pe.encode(objNewDTO.getPassword())
 							);
-		City city = new City(objNewDTO.getCityId(), null, null);
+		
+		City city = verifyCityNotInformed(objNewDTO.getCityId());	
+		
 		Address address = new Address(
 							null, 
 							objNewDTO.getStreet(), 
@@ -163,6 +173,21 @@ public class PartnerService {
 		return partner;
 	}
 	
+	private City verifyCityNotInformed(Integer Id) {
+		
+		if ( Id == null ) {
+			Region region1 = new Region(null, "Não informado");
+			City city1 = new City(null, "Não informado", region1);
+			region1.getCities().addAll(Arrays.asList(city1));
+			regionRepository.save(region1);
+			return cityRepository.save(city1);	
+		}
+		else {
+			return new City( Id, null, null);
+		}
+		
+	}
+	
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
 		
 		//Verificar se usuario esta logado!
@@ -175,12 +200,10 @@ public class PartnerService {
 		
 		jpgImage = imageService.cropSquare(jpgImage);
 		jpgImage = imageService.resize(jpgImage, size);
-		
-		
+				
 		String fileName = prefixFile + user.getId() + ".jpg";
 		
-		return s3Service.uploadFile(fileName, imageService.getInputStream(jpgImage, "jpg") , "image");
-		
+		return s3Service.uploadFile(fileName, imageService.getInputStream(jpgImage, "jpg") , "image");		
 		
 	}
 }
