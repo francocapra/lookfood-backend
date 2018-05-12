@@ -43,7 +43,7 @@ public class PartnerService {
 	@Autowired
 	private ImageService imageService;
 	
-	@Value("${img.prefix.client.profile}")
+	@Value("${img.prefix.partner.profile}")
 	private String prefixFile;
 	
 	@Value("${img.profile.size}")
