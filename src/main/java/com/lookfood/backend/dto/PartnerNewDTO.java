@@ -15,7 +15,7 @@ import com.lookfood.backend.services.validation.PartnerInsert;
 public class PartnerNewDTO implements Serializable{	
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty(message="Preenchimento obrigatório")
+//	@NotEmpty(message="Preenchimento obrigatório")
 	@Length(min=5,max=120,message="O tamanho deve ser entre 5 a 120 caracteres")
 	private String name;
 	
@@ -26,32 +26,32 @@ public class PartnerNewDTO implements Serializable{
 	@NotEmpty(message="Preenchimento obrigatório")
 	private String password;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+//	@NotEmpty(message="Preenchimento obrigatório")
 	@CNPJ
 	private String cnpj;
 
-	@NotEmpty(message="Preenchimento obrigatório")
+//	@NotEmpty(message="Preenchimento obrigatório")
 	@URL	
 	private String website;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+//	@NotEmpty(message="Preenchimento obrigatório")
 	private String street;
-	@NotEmpty(message="Preenchimento obrigatório")
+//	@NotEmpty(message="Preenchimento obrigatório")
 	private String number;
 	
 	private String complement;
 	
 	private String district;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+//	@NotEmpty(message="Preenchimento obrigatório")
 	private String postcode;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+//	@NotEmpty(message="Preenchimento obrigatório")
 	private String phone1;
 	private String phone2;
 	private String phone3;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+//	@NotEmpty(message="Preenchimento obrigatório")
 	private Integer cityId;
 	
 	public PartnerNewDTO() {		
