@@ -2,6 +2,7 @@ package com.lookfood.backend.services;
 
 import java.awt.image.BufferedImage;
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.domain.Professional;
+import com.lookfood.backend.domain.enums.Profile;
 import com.lookfood.backend.dto.ProductDTO;
 import com.lookfood.backend.repositories.ProductRepository;
 import com.lookfood.backend.repositories.ProfessionalRepository;
@@ -44,7 +46,10 @@ public class ProductService {
 	private String prefixFile;
 	
 	@Value("${img.profile.size}")
-	private Integer size;	
+	private Integer size;
+	
+	@Autowired
+	private PartnerService partnerService;
 	
 	public Product find(Integer id) {		
 		Optional<Product> obj = repository.findById(id);			
@@ -74,7 +79,17 @@ public class ProductService {
 	
 	@Transactional
 	public Product insert(Product obj) {
-		obj.setId(null);
+		
+		SSUserDetails user = UserService.authenticated();
+		if (user==null || !user.hasRole(Profile.ADMIN) ) {
+			throw new AuthorizationException("User haven't authorization or haven't profile Administrator.");
+		};
+		
+		obj.setId(null);		
+		obj.setPartner(partnerService.find(user.getId()));
+		if ( obj.getCreatedDate() == null ) {
+			obj.setCreatedDate(new Date());
+		}
 		return repository.save(obj);		
 	}
 
@@ -86,7 +101,7 @@ public class ProductService {
 	
 	private void updateData(Product newObj, Product obj) {
 		newObj.setDescription(obj.getDescription());
-		newObj.setDate(obj.getDate());
+		newObj.setCreatedDate(obj.getCreatedDate());
 	}
 
 	public void delete(Integer id) {

@@ -11,7 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -25,10 +27,14 @@ public class Product implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String description;
+	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")	
-	private Date date;
+	private Date createdDate;
 
-
+	@ManyToOne
+	@JoinColumn(name="partner_id")
+	private Partner partner;
+	
 	@ManyToMany(mappedBy = "products")
 	private List<Professional> professionals = new ArrayList<>();
 	
@@ -40,11 +46,11 @@ public class Product implements Serializable{
 		super();
 	}
 
-	public Product(Integer id, String description, Date date) {
+	public Product(Integer id, String description, Date createdDate) {
 		super();
 		this.id = id;
 		this.description = description;
-		this.date = date;
+		this.createdDate = createdDate;
 	}
 	
 
@@ -73,14 +79,22 @@ public class Product implements Serializable{
 		this.description = description;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setCreatedDate(Date date) {
+		this.createdDate = date;
 	}
 	
+	public Partner getPartner() {
+		return partner;
+	}
+
+	public void setPartner(Partner partner) {
+		this.partner = partner;
+	}
+
 	public List<Professional> getProfessionals() {
 		return professionals;
 	}

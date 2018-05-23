@@ -2,6 +2,7 @@ package com.lookfood.backend.services;
 
 import java.awt.image.BufferedImage;
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lookfood.backend.domain.Professional;
+import com.lookfood.backend.domain.enums.Profile;
 import com.lookfood.backend.repositories.ProfessionalRepository;
 import com.lookfood.backend.security.SSUserDetails;
 import com.lookfood.backend.services.exceptions.AuthorizationException;
@@ -40,6 +42,9 @@ public class ProfessionalService {
 	@Value("${img.profile.size}")
 	private Integer size;	
 	
+	@Autowired
+	private PartnerService partnerService;
+	
 	public Professional find(Integer id) {
 		Optional<Professional> obj = repository.findById(id);
 		return obj.orElseThrow( () -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Professional.class.getName() )); 
@@ -48,7 +53,17 @@ public class ProfessionalService {
 	
 	@Transactional
 	public Professional insert(Professional obj) {
+		
+		SSUserDetails user = UserService.authenticated();
+		if (user==null || !user.hasRole(Profile.ADMIN) ) {
+			throw new AuthorizationException("User haven't authorization or haven't administrator' profile");
+		};
+		
 		obj.setId(null);
+		obj.setPartner(partnerService.find(user.getId()));
+		if ( obj.getCreatedDate() == null ) {
+			obj.setCreatedDate(new Date());
+		}
 		return repository.save(obj);
 	}
 
@@ -62,7 +77,7 @@ public class ProfessionalService {
 		try {
 		repository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel excluir uma Professional que possui Products");
+			throw new DataIntegrityException("Não é possivel excluir Profissionais, existem Produtos associados");
 		}		
 	}
 	

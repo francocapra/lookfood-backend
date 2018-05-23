@@ -28,7 +28,7 @@ public class ProductDTO  implements Serializable{
 		super();
 		this.id = obj.getId();
 		this.description = obj.getDescription();
-		this.date = obj.getDate();
+		this.date = obj.getCreatedDate();
 	}
 
 

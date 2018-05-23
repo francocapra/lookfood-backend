@@ -55,7 +55,15 @@ public class Partner implements Serializable{
 	@OneToMany(mappedBy="partner")
 	@JsonIgnore
 	private List<Review> reviews = new ArrayList<>();
+	
+	@OneToMany(mappedBy="partner")
+	@JsonIgnore
+	private List<Product> products = new ArrayList<>();
 
+	@OneToMany(mappedBy="partner")
+	@JsonIgnore
+	private List<Professional> professionals = new ArrayList<>();
+	
 	public Partner() {
 		super();
 		addProfile(Profile.PARTNER);
@@ -150,6 +158,22 @@ public class Partner implements Serializable{
 
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+	public List<Professional> getProfessionals() {
+		return professionals;
+	}
+
+	public void setProfessionals(List<Professional> professionals) {
+		this.professionals = professionals;
 	}
 
 	@Override

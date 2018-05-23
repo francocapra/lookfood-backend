@@ -2,6 +2,7 @@ package com.lookfood.backend.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,8 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lookfood.backend.domain.enums.TypePosition;
 
@@ -27,6 +30,13 @@ public class Professional implements Serializable {
 	private Integer id;
 	private String name;
 	private Integer position;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")	
+	private Date createdDate;
+	
+	@ManyToOne
+	@JoinColumn(name="partner_id")
+	private Partner partner;	
 	
 	@ManyToMany
 	@JsonIgnore
@@ -81,6 +91,22 @@ public class Professional implements Serializable {
 
 	public void setPosition(TypePosition position) {
 		this.position = position.getCod();
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Partner getPartner() {
+		return partner;
+	}
+
+	public void setPartner(Partner partner) {
+		this.partner = partner;
 	}
 
 	public List<Product> getProducts() {

@@ -94,8 +94,7 @@ public class ReviewService {
 		
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
-		}
-		
+		}		
 		
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, sortDirection, orderBy);
 		

@@ -123,7 +123,8 @@ public class DBService {
 		Review rw3 = new Review(null, TypeStatus.OPEN, new Date(), partner2);
 
 		reviewRepository.saveAll(Arrays.asList(rw1, rw2, rw3));
-
+		
+		
 		// Persist: Item Product
 		ItemProduct itmProd1 = new ItemProduct(rw1, p1, 10);
 		ItemProduct itmProd2 = new ItemProduct(rw1, p2, 9);
