@@ -101,7 +101,7 @@ public class ProductService {
 	
 	private void updateData(Product newObj, Product obj) {
 		newObj.setDescription(obj.getDescription());
-		newObj.setCreatedDate(obj.getCreatedDate());
+		newObj.setModifiedDate(new Date());
 		newObj.setPrice(obj.getPrice());
 		newObj.setIdExternal(obj.getIdExternal());
 		
@@ -141,7 +141,6 @@ public class ProductService {
 		return new Product(
 				objDTO.getId(), 
 				objDTO.getDescription(), 
-				objDTO.getCreatedDate(), 
 				objDTO.getPrice(), 
 				objDTO.getIdExternal() 
 				);

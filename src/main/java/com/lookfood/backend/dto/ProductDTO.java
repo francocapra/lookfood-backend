@@ -24,6 +24,8 @@ public class ProductDTO  implements Serializable{
 	
 	private Date createdDate;
 	
+	private Date modifiedDate;	
+	
 	public ProductDTO() {
 		super();
 	}
@@ -32,10 +34,9 @@ public class ProductDTO  implements Serializable{
 		super();
 		this.id = obj.getId();
 		this.description = obj.getDescription();
-		this.createdDate = obj.getCreatedDate();
+		this.price = obj.getPrice();
+		this.idExternal = obj.getIdExternal();
 	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -73,10 +74,16 @@ public class ProductDTO  implements Serializable{
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date date) {
-		this.createdDate = date;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
-	
-	
-	
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
 }

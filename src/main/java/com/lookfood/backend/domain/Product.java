@@ -35,6 +35,9 @@ public class Product implements Serializable{
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")	
 	private Date createdDate;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")	
+	private Date modifiedDate;		
 
 	@ManyToOne
 	@JoinColumn(name="partner_id")
@@ -51,11 +54,10 @@ public class Product implements Serializable{
 		super();
 	}
 
-	public Product(Integer id, String description, Date createdDate, Double price, String idExternal ) {
+	public Product(Integer id, String description, Double price, String idExternal ) {
 		super();
 		this.id = id;
 		this.description = description;
-		this.createdDate = createdDate;
 		this.price = price;
 		this.idExternal = idExternal;
 	}
@@ -110,6 +112,14 @@ public class Product implements Serializable{
 		this.createdDate = date;
 	}
 	
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
 	public Partner getPartner() {
 		return partner;
 	}
