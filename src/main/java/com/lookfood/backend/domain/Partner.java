@@ -66,7 +66,7 @@ public class Partner implements Serializable{
 	
 	public Partner() {
 		super();
-		addProfile(Profile.PARTNER);
+		addProfile(Profile.ADMIN);
 	}
 
 	public Partner(Integer id, String name, String email, String cnpj, String website, String password) {
@@ -77,7 +77,7 @@ public class Partner implements Serializable{
 		this.cnpj = cnpj;
 		this.website = website;
 		this.password = password;
-		addProfile(Profile.PARTNER);
+		addProfile(Profile.ADMIN) ;
 	}
 
 	public Integer getId() {

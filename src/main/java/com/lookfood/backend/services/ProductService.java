@@ -102,6 +102,9 @@ public class ProductService {
 	private void updateData(Product newObj, Product obj) {
 		newObj.setDescription(obj.getDescription());
 		newObj.setCreatedDate(obj.getCreatedDate());
+		newObj.setPrice(obj.getPrice());
+		newObj.setIdExternal(obj.getIdExternal());
+		
 	}
 
 	public void delete(Integer id) {
@@ -138,7 +141,10 @@ public class ProductService {
 		return new Product(
 				objDTO.getId(), 
 				objDTO.getDescription(), 
-				objDTO.getDate());
+				objDTO.getCreatedDate(), 
+				objDTO.getPrice(), 
+				objDTO.getIdExternal() 
+				);
 	}
 	
 	public List<Product> findTop(Integer partnerId, Integer top){

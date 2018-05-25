@@ -55,9 +55,9 @@ public class PartnerResources {
 	
 	@ApiOperation(value="Save new Partner") 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody PartnerNewDTO objDTO) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody PartnerNewDTO objNewDTO) {
 
-		Partner obj = service.fromDTO(objDTO);
+		Partner obj = service.fromDTO(objNewDTO);
 		obj = this.service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();

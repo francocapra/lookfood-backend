@@ -26,7 +26,12 @@ public class Product implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
 	private String description;
+	
+	private Double price;
+	
+	private String idExternal;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")	
 	private Date createdDate;
@@ -46,11 +51,13 @@ public class Product implements Serializable{
 		super();
 	}
 
-	public Product(Integer id, String description, Date createdDate) {
+	public Product(Integer id, String description, Date createdDate, Double price, String idExternal ) {
 		super();
 		this.id = id;
 		this.description = description;
 		this.createdDate = createdDate;
+		this.price = price;
+		this.idExternal = idExternal;
 	}
 	
 
@@ -77,6 +84,22 @@ public class Product implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public String getIdExternal() {
+		return idExternal;
+	}
+
+	public void setIdExternal(String idExternal) {
+		this.idExternal = idExternal;
 	}
 
 	public Date getCreatedDate() {

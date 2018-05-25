@@ -25,6 +25,8 @@ public class PartnerNewDTO implements Serializable{
 	
 	@NotEmpty(message="Preenchimento obrigatório")
 	private String password;
+		
+	
 	
 //	@NotEmpty(message="Preenchimento obrigatório")
 	@CNPJ
@@ -53,7 +55,7 @@ public class PartnerNewDTO implements Serializable{
 	
 //	@NotEmpty(message="Preenchimento obrigatório")
 	private Integer cityId;
-	
+		
 	public PartnerNewDTO() {		
 	}
 
@@ -80,6 +82,7 @@ public class PartnerNewDTO implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 
 	public String getCnpj() {
 		return cnpj;

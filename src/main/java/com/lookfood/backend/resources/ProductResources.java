@@ -103,11 +103,14 @@ public class ProductResources {
 	
 	@ApiOperation(value="List Top Products") 
 	@RequestMapping(value="/top", method=RequestMethod.GET)
-	public ResponseEntity<List<Product>> findTop(
+	public ResponseEntity<List<ProductDTO>> findTop(
 			@RequestParam(value="limit", defaultValue="5" ) Integer nro,
 			@RequestParam(value="partnerId") Integer partnerId) {
 		List<Product> list = service.findTop(partnerId,nro);
-		return ResponseEntity.ok().body(list);
+		
+		List<ProductDTO> listDTO = list.stream().map(obj -> new ProductDTO(obj)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@ApiOperation(value="Upload picture to Product") 

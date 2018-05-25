@@ -18,7 +18,11 @@ public class ProductDTO  implements Serializable{
 	@Length(min=5,max=80,message="O tamanho deve ser entre 5 a 80 caracteres")
 	private String description;
 	
-	private Date date;
+	private Double price;
+	
+	private String idExternal;
+	
+	private Date createdDate;
 	
 	public ProductDTO() {
 		super();
@@ -28,7 +32,7 @@ public class ProductDTO  implements Serializable{
 		super();
 		this.id = obj.getId();
 		this.description = obj.getDescription();
-		this.date = obj.getCreatedDate();
+		this.createdDate = obj.getCreatedDate();
 	}
 
 
@@ -49,12 +53,28 @@ public class ProductDTO  implements Serializable{
 		this.description = description;
 	}
 
-	public Date getDate() {
-		return date;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public String getIdExternal() {
+		return idExternal;
+	}
+
+	public void setIdExternal(String idExternal) {
+		this.idExternal = idExternal;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date date) {
+		this.createdDate = date;
 	}
 	
 	
