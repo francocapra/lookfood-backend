@@ -92,15 +92,15 @@ public class DBService {
 		addressRepository.saveAll(Arrays.asList(address1, e2));
 
 		// Persist: Product/ Professional
-		Product p1 = new Product(null, "Prato1", null,null);
-		Product p2 = new Product(null, "Prato2", null,null);
-		Product p3 = new Product(null, "Prato3", null,null);
-		Product p4 = new Product(null, "Prato4", null,null);
-		Product p5 = new Product(null, "Prato5", null,null);
-		Product p6 = new Product(null, "Prato6", null,null);
-		Product p7 = new Product(null, "Prato7", null,null);
-		Product p8 = new Product(null, "Prato8", null,null);
-		Product p9 = new Product(null, "Prato9", null,null);
+		Product p1 = new Product(null, "Prato1", 10.00, "BRL", null);
+		Product p2 = new Product(null, "Prato2", 10.00, "BRL", null);
+		Product p3 = new Product(null, "Prato3", 10.00, "BRL", null);
+		Product p4 = new Product(null, "Prato4", 10.00, "BRL", null);
+		Product p5 = new Product(null, "Prato5", 10.00, "BRL", null);
+		Product p6 = new Product(null, "Prato6", 10.00, "BRL", null);
+		Product p7 = new Product(null, "Prato7", 10.00, "BRL", null);
+		Product p8 = new Product(null, "Prato8", 10.00, "BRL", null);
+		Product p9 = new Product(null, "Prato9", 10.00, "BRL", null);
 
 		Professional prof1 = new Professional(null, "José", TypePosition.CHEF);
 		Professional prof2 = new Professional(null, "Maria", TypePosition.ASSISTANT);

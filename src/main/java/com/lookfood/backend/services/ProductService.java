@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -103,8 +105,8 @@ public class ProductService {
 		newObj.setDescription(obj.getDescription());
 		newObj.setModifiedDate(new Date());
 		newObj.setPrice(obj.getPrice());
-		newObj.setIdExternal(obj.getIdExternal());
-		
+		newObj.setCurrency(obj.getCurrency());		
+		newObj.setIdExternal(obj.getIdExternal());		
 	}
 
 	public void delete(Integer id) {
@@ -146,7 +148,8 @@ public class ProductService {
 		return new Product(
 				objDTO.getId(), 
 				objDTO.getDescription(), 
-				objDTO.getPrice(), 
+				objDTO.getPrice(),
+				objDTO.getCurrency(),				
 				objDTO.getIdExternal() 
 				);
 	}
@@ -179,4 +182,14 @@ public class ProductService {
 		return s3Service.uploadFile(fileName, imageService.getInputStream(jpgImage, "jpg") , "image");
 				
 	}
+
+	public Product updateFromDTO(Integer id, @Valid ProductDTO objDTO) {
+		
+		Product product = find(id);
+		
+		updateData(product, fromDTO(objDTO) );
+		
+		return product;
+	}
+
 }

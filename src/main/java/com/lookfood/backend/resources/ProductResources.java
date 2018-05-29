@@ -35,8 +35,11 @@ public class ProductResources {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Product> find(@PathVariable Integer id) {
+		
 		Product obj = service.find(id);
+		
 		return ResponseEntity.ok().body(obj);
+		
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
@@ -45,12 +48,15 @@ public class ProductResources {
 			@Valid @RequestBody ProductDTO objDTO) {
 		
 		Product obj = service.fromDTO(objDTO);		
+		
 		obj = this.service.insert(obj);		
+	
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand(obj.getId())
 				.toUri();
+		
 		return ResponseEntity.created(uri).build();
 
 	}
@@ -60,18 +66,23 @@ public class ProductResources {
 	public ResponseEntity<Void> update(
 			@PathVariable Integer id, 
 			@Valid @RequestBody ProductDTO objDTO) {
+				
+		Product obj = service.updateFromDTO(id, objDTO);
 		
-		Product obj = service.fromDTO(objDTO);		
-		obj.setId(id);		
 		obj = service.update(obj);		
+		
 		return ResponseEntity.noContent().build();
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+	public ResponseEntity<Void> delete(
+			@PathVariable Integer id) {
+		
 		service.delete(id);
+		
 		return ResponseEntity.noContent().build();
+		
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -94,8 +105,11 @@ public class ProductResources {
 			@RequestParam(value="sortDirection"	, defaultValue="ASC" ) String sortDirection) {
 
 		String descriptionDecoded = URL.decodeParam(description);
+		
 		List<Integer> ids = URL.decodeIntList(professionals);
+		
 		Page<Product> list = service.search(descriptionDecoded, ids, page, linesPerPage, orderBy, sortDirection);		
+		
 		Page<ProductDTO> listDTO = list.map(obj -> new ProductDTO(obj));
 		
 		return ResponseEntity.ok().body(listDTO);
@@ -120,6 +134,7 @@ public class ProductResources {
 			@RequestParam(name = "id") Integer id ) {
 		
 		URI uri = service.uploadProfilePicture(file, id);
+		
 		return ResponseEntity.created(uri).build();
 
 	}
