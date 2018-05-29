@@ -104,9 +104,9 @@ public class ProductResources {
 	@ApiOperation(value="List Top Products") 
 	@RequestMapping(value="/top", method=RequestMethod.GET)
 	public ResponseEntity<List<ProductDTO>> findTop(
-			@RequestParam(value="limit", defaultValue="5" ) Integer nro,
-			@RequestParam(value="partnerId") Integer partnerId) {
-		List<Product> list = service.findTop(partnerId,nro);
+			@RequestParam(value="limit", defaultValue="5" ) Integer nro	) {
+		
+		List<Product> list = service.findTop(nro);
 		
 		List<ProductDTO> listDTO = list.stream().map(obj -> new ProductDTO(obj)).collect(Collectors.toList());
 		
@@ -115,9 +115,11 @@ public class ProductResources {
 	
 	@ApiOperation(value="Upload picture to Product") 
 	@RequestMapping(value = "/picture", method = RequestMethod.POST)
-	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file) {
+	public ResponseEntity<Void> uploadProfilePicture(
+			@RequestParam(name = "file") MultipartFile file,
+			@RequestParam(name = "id") Integer id ) {
 		
-		URI uri = service.uploadProfilePicture(file);
+		URI uri = service.uploadProfilePicture(file, id);
 		return ResponseEntity.created(uri).build();
 
 	}

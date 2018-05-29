@@ -117,8 +117,13 @@ public class ProductService {
 		}
 	}
 	
-	public List<Product> findAll() {		
-		return repository.findAll();		
+	public List<Product> findAll() {	
+		SSUserDetails user = UserService.authenticated();
+		if (user==null) {
+			throw new AuthorizationException("Access denied");
+		};
+			
+		return repository.findAllByPartnerId(user.getId());		
 	}
 	
 	public Page<Product> findPage(
@@ -146,13 +151,17 @@ public class ProductService {
 				);
 	}
 	
-	public List<Product> findTop(Integer partnerId, Integer top){
+	public List<Product> findTop(Integer top){
+		SSUserDetails user = UserService.authenticated();
+		if (user==null) {
+			throw new AuthorizationException("Access denied");
+		};
 		PageRequest pageRequest = PageRequest.of(0, top);
-		List<Product> list = repository.findTop(partnerId, pageRequest);
+		List<Product> list = repository.findTopReviewed(user.getId(), pageRequest);
 		return list;
 	}
 	
-	public URI uploadProfilePicture(MultipartFile multipartFile) {
+	public URI uploadProfilePicture(MultipartFile multipartFile, Integer productId) {
 		
 		//Verificar se usuario esta logado!
 		SSUserDetails user = UserService.authenticated();
@@ -164,12 +173,10 @@ public class ProductService {
 		
 		jpgImage = imageService.cropSquare(jpgImage);
 		jpgImage = imageService.resize(jpgImage, size);
-		
-		
-		String fileName = prefixFile + user.getId() + ".jpg";
+				
+		String fileName = prefixFile + productId + ".jpg";
 		
 		return s3Service.uploadFile(fileName, imageService.getInputStream(jpgImage, "jpg") , "image");
-		
-		
+				
 	}
 }

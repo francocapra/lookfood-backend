@@ -39,5 +39,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 		"WHERE obj.id.review.partner.id = :partnerId " +
 		"GROUP BY obj.id.product.id " + 
 		"ORDER BY AVG( obj.rate ) DESC " )
-	List<Product> findTop(@Param("partnerId") Integer partnerId, Pageable pageable);
+	List<Product> findTopReviewed(@Param("partnerId") Integer partnerId, Pageable pageable);
+	
+	@Transactional(readOnly=true)
+	List<Product> findAllByPartnerId(Integer partnerId);
+	
 }
