@@ -47,12 +47,17 @@ public class ProductResources {
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(
-			@Valid @RequestBody ProductDTO objDTO) {
+			@Valid @RequestBody ProductDTO objDTO,
+			@RequestParam(name = "file") MultipartFile file) {
 		
 		Product obj = service.fromDTO(objDTO);		
 		
 		obj = this.service.insert(obj);		
-	
+		
+		if ( file != null ) {
+			service.uploadProfilePicture(file, obj.getId());
+		}
+		
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
