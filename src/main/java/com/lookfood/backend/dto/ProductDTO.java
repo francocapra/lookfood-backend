@@ -1,6 +1,7 @@
 package com.lookfood.backend.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -22,6 +23,10 @@ public class ProductDTO  implements Serializable{
 	private String currency;
 	
 	private String idExternal;
+	
+	private Date createdDate;
+	
+	private Date modifiedDate;
 	
 	public ProductDTO() {
 		super();
@@ -74,6 +79,22 @@ public class ProductDTO  implements Serializable{
 
 	public void setIdExternal(String idExternal) {
 		this.idExternal = idExternal;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 

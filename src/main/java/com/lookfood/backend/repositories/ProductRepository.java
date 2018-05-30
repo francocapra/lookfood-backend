@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lookfood.backend.domain.ItemProduct;
 import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.domain.Professional;
 
@@ -34,12 +35,12 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Transactional(readOnly=true)
 	@Query(value= 
-	"SELECT obj.id.product , obj.rate " + 
+	"SELECT obj " + 
 		"FROM ItemProduct obj " +
 		"WHERE obj.id.review.partner.id = :partnerId " +
 		"GROUP BY obj.id.product.id " + 
 		"ORDER BY AVG( obj.rate ) DESC " )
-	List<Product> findTopReviewed(@Param("partnerId") Integer partnerId, Pageable pageable);
+	List<ItemProduct> findTop(@Param("partnerId") Integer partnerId, Pageable pageable);
 	
 	@Transactional(readOnly=true)
 	List<Product> findAllByPartnerId(Integer partnerId);

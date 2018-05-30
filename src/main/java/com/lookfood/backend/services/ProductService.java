@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.lookfood.backend.domain.ItemProduct;
+import com.lookfood.backend.domain.Partner;
 import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.domain.Professional;
 import com.lookfood.backend.domain.enums.Profile;
@@ -154,13 +156,19 @@ public class ProductService {
 				);
 	}
 	
-	public List<Product> findTop(Integer top){
+	public List<ItemProduct> findTop(Integer top){
+		
 		SSUserDetails user = UserService.authenticated();
 		if (user==null) {
 			throw new AuthorizationException("Access denied");
 		};
+		
 		PageRequest pageRequest = PageRequest.of(0, top);
-		List<Product> list = repository.findTopReviewed(user.getId(), pageRequest);
+		
+		Partner partner = partnerService.find(user.getId());
+		
+		List<ItemProduct> list = repository.findTop(partner.getId(), pageRequest);
+		
 		return list;
 	}
 	

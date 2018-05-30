@@ -113,6 +113,16 @@ public class DBService {
 		p1.getProfessionals().addAll(Arrays.asList(prof1, prof2));
 		p2.getProfessionals().addAll(Arrays.asList(prof1));
 		p3.getProfessionals().addAll(Arrays.asList(prof1, prof2));
+		
+		p1.setPartner(partner1);
+		p2.setPartner(partner1);
+		p3.setPartner(partner1);
+		p4.setPartner(partner1);
+		p5.setPartner(partner1);
+		p6.setPartner(partner1);
+		p7.setPartner(partner1);
+		p8.setPartner(partner1);
+		p9.setPartner(partner1);
 
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9));
 		professionalRepository.saveAll(Arrays.asList(prof1, prof2, prof3, prof4));

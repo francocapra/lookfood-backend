@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Product implements Serializable{	
@@ -43,6 +44,15 @@ public class Product implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name="partner_id")
+	@JsonIgnoreProperties({	
+		"cnpj", 
+		"website",
+		"phones",
+		"profiles",
+		"addresses", 
+		"reviews", 
+		"products",
+		"professionals"})
 	private Partner partner;
 	
 	@ManyToMany(mappedBy = "products")

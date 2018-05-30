@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.lookfood.backend.domain.ItemProduct;
 import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.dto.ProductDTO;
+import com.lookfood.backend.dto.ProductTopDTO;
 import com.lookfood.backend.resources.utils.URL;
 import com.lookfood.backend.services.ProductService;
 
@@ -117,14 +119,14 @@ public class ProductResources {
 	
 	@ApiOperation(value="List Top Products") 
 	@RequestMapping(value="/top", method=RequestMethod.GET)
-	public ResponseEntity<List<ProductDTO>> findTop(
+	public ResponseEntity<List<ProductTopDTO>> findTop(
 			@RequestParam(value="limit", defaultValue="5" ) Integer nro	) {
 		
-		List<Product> list = service.findTop(nro);
+		List<ItemProduct> list = service.findTop(nro);
 		
-		List<ProductDTO> listDTO = list.stream().map(obj -> new ProductDTO(obj)).collect(Collectors.toList());
+		List<ProductTopDTO> listTopDTO = list.stream().map(obj -> new ProductTopDTO(obj)).collect(Collectors.toList());
 		
-		return ResponseEntity.ok().body(listDTO);
+		return ResponseEntity.ok().body(listTopDTO);
 	}
 	
 	@ApiOperation(value="Upload picture to Product") 
