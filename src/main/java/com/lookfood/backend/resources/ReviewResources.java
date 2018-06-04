@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lookfood.backend.domain.Review;
+import com.lookfood.backend.dto.ReviewDTO;
 import com.lookfood.backend.services.ReviewService;
 
 @RestController
@@ -33,10 +34,15 @@ public class ReviewResources {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Review obj) {
+	public ResponseEntity<Void> insert(@RequestBody ReviewDTO objDTO) {
 
-		obj = this.service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		Review newObj = this.service.insert(objDTO);
+		
+		URI uri = ServletUriComponentsBuilder
+					.fromCurrentRequest()
+					.path("/{id}")
+					.buildAndExpand(newObj.getId()).toUri();
+		
 		return ResponseEntity.created(uri).build();
 
 	}

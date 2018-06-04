@@ -12,10 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lookfood.backend.domain.ItemProduct;
-import com.lookfood.backend.domain.ItemProfessional;
 import com.lookfood.backend.domain.Partner;
+import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.domain.Review;
 import com.lookfood.backend.domain.enums.TypeStatus;
+import com.lookfood.backend.dto.ReviewDTO;
 import com.lookfood.backend.repositories.ItemProductRepository;
 import com.lookfood.backend.repositories.ItemProfessionalRepository;
 import com.lookfood.backend.repositories.ReviewRepository;
@@ -50,30 +51,26 @@ public class ReviewService {
 	}
 
 	@Transactional
-	public Review insert(Review obj) {
-
-		obj.setId(null);
-		obj.setDate(new Date());
-		obj.setStatus(TypeStatus.OPEN);
-		obj.setPartner(partnerService.find(obj.getPartner().getId()));
-		obj = repository.save(obj);
-
-		for (ItemProduct ip : obj.getItemsProduct()) {
-			ip.setProduct(productService.find(ip.getProduct().getId()));
-			ip.setRate(ip.getRate());
-			ip.setReview(obj);
-		}
-		itemProductRepository.saveAll(obj.getItemsProduct());
-
-		for (ItemProfessional ip : obj.getItemsProfessional()) {
-			ip.setProfessional(professionalService.find(ip.getProfessional().getId()));
-			ip.setRate(ip.getRate());
-			ip.setReview(obj);
+	public Review insert(ReviewDTO objDTO) {
+		
+		Review newObj = new Review();
+		newObj.setId(null);
+		newObj.setDate(new Date());
+		newObj.setStatus(TypeStatus.OPEN);
+		newObj.setPartner(partnerService.find(objDTO.getPartner().getId()));
+		newObj = repository.save(newObj);
+		
+		ItemProduct ip = new ItemProduct(); 
+		
+		for (Product pd : objDTO.getProducts()) {
+			ip.setProduct(productService.find(pd.getId()));			
+			ip.setReview(newObj);
 		}
 
-		itemProfessionalRepository.saveAll(obj.getItemsProfessional());
-		emailService.sendReviewConfirmationHtmlEmail(obj);
-		return obj;
+		itemProductRepository.saveAll(newObj.getItemsProduct());
+
+		emailService.sendReviewConfirmationHtmlEmail(newObj);
+		return newObj;
 		
 	}
 

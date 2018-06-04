@@ -78,7 +78,6 @@ public class Review implements Serializable{
 		this.date = date;
 	}
 
-//	@JsonIgnore
 	public Partner getPartner() {
 		return partner;
 	}
