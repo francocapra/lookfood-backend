@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.lookfood.backend.domain.Partner;
-import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.domain.Review;
 
 public class ReviewDTO implements Serializable{	
@@ -15,9 +13,8 @@ public class ReviewDTO implements Serializable{
 	private Integer id;
 	private String status;
 	private Date date;
-	private Partner partner;
 	
-	private List<Product> products = new ArrayList<>();
+	private List<ProductDTO> products = new ArrayList<>();
 	
 	public ReviewDTO() {
 		super();
@@ -28,7 +25,6 @@ public class ReviewDTO implements Serializable{
 		this.id = obj.getId();
 		this.status = obj.getStatus().getDescription();
 		this.date = obj.getDate();
-		this.partner = obj.getPartner();
 	}	
 	public Integer getId() {
 		return id;
@@ -48,18 +44,12 @@ public class ReviewDTO implements Serializable{
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public Partner getPartner() {
-		return partner;
-	}
-	public void setPartner(Partner partner) {
-		this.partner = partner;
-	}
 
-	public List<Product> getProducts() {
+	public List<ProductDTO> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<Product> products) {
+	public void setProducts(List<ProductDTO> products) {
 		this.products = products;
 	}	
 }

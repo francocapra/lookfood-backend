@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lookfood.backend.domain.ItemProduct;
 import com.lookfood.backend.domain.Partner;
-import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.domain.Review;
 import com.lookfood.backend.domain.enums.TypeStatus;
+import com.lookfood.backend.dto.ProductDTO;
 import com.lookfood.backend.dto.ReviewDTO;
 import com.lookfood.backend.repositories.ItemProductRepository;
 import com.lookfood.backend.repositories.ItemProfessionalRepository;
@@ -53,17 +53,22 @@ public class ReviewService {
 	@Transactional
 	public Review insert(ReviewDTO objDTO) {
 		
+		SSUserDetails user = UserService.authenticated();
+		if (user==null) {
+			throw new AuthorizationException("Acesso negado");
+		};		
+		
 		Review newObj = new Review();
 		newObj.setId(null);
 		newObj.setDate(new Date());
 		newObj.setStatus(TypeStatus.OPEN);
-		newObj.setPartner(partnerService.find(objDTO.getPartner().getId()));
+		newObj.setPartner(partnerService.find(user.getId()));
 		newObj = repository.save(newObj);
 		
 		ItemProduct ip = new ItemProduct(); 
 		
-		for (Product pd : objDTO.getProducts()) {
-			ip.setProduct(productService.find(pd.getId()));			
+		for (ProductDTO pdDTO : objDTO.getProducts()) {
+			ip.setProduct(productService.find(pdDTO.getId()));			
 			ip.setReview(newObj);
 		}
 
