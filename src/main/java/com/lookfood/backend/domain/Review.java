@@ -141,14 +141,19 @@ public class Review implements Serializable{
 		builder.append(getPartner().getName());
 		builder.append(", Status da Avaliação: ");
 		builder.append(getStatus().getDescription());
+	
 		builder.append("\nProdutos:\n");
 		for (ItemProduct ip: getItemsProduct()) {			
 			builder.append(ip.toString());
-		}	
-		builder.append("\nServiços:\n");
-		for (ItemProfessional ip: getItemsProfessional()) {			
-			builder.append(ip.toString());
-		}		
+		};
+	
+		if ( getItemsProfessional() != null) {
+			builder.append("\nServiços:\n");
+			for (ItemProfessional ip: getItemsProfessional()) {			
+				builder.append(ip.toString());
+			};		
+		};
+		
 		return builder.toString();
 	}	
 }

@@ -160,9 +160,11 @@ public class DBService {
 		rw1.getItemsProduct().addAll(Arrays.asList(itmProd1, itmProd2, itmProd3, itmProd4, itmProd5, itmProd6, itmProd7,
 				itmProd8, itmProd9));
 		rw1.getItemsProfessional().addAll(Arrays.asList(itmProf1, itmProf2));
+		
 		rw2.getItemsProduct().addAll(Arrays.asList(itmProd1, itmProd2, itmProd3, itmProd4, itmProd5, itmProd6, itmProd7,
 				itmProd8, itmProd9));
 		rw2.getItemsProfessional().addAll(Arrays.asList(itmProf1, itmProf2));
+		
 		rw3.getItemsProduct().addAll(Arrays.asList(itmProd10, itmProd11, itmProd12, itmProd13, itmProd14, itmProd15));
 		rw3.getItemsProfessional().addAll(Arrays.asList(itmProf3, itmProf4));
 

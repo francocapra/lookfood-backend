@@ -1,5 +1,6 @@
 package com.lookfood.backend.services;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lookfood.backend.domain.ItemProduct;
 import com.lookfood.backend.domain.Partner;
+import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.domain.Review;
 import com.lookfood.backend.domain.enums.TypeStatus;
 import com.lookfood.backend.dto.ProductDTO;
@@ -58,32 +60,29 @@ public class ReviewService {
 			throw new AuthorizationException("Acesso negado");
 		};		
 		
-		Review newObj = new Review();
-		newObj.setId(null);
-		newObj.setDate(new Date());
-		newObj.setStatus(TypeStatus.OPEN);
-		newObj.setPartner(partnerService.find(user.getId()));
-		newObj = repository.save(newObj);
-		
-		ItemProduct ip = new ItemProduct(); 
+		Review rw = new Review();
+		rw.setId(null);
+		rw.setDate(new Date());
+		rw.setStatus(TypeStatus.OPEN);
+		rw.setPartner(partnerService.find(user.getId()));
+		rw = repository.save(rw);
 		
 		for (ProductDTO pdDTO : objDTO.getProducts()) {
-			ip.setProduct(productService.find(pdDTO.getId()));			
-			ip.setReview(newObj);
-		}
-
-		itemProductRepository.saveAll(newObj.getItemsProduct());
-
-		emailService.sendReviewConfirmationHtmlEmail(newObj);
-		return newObj;
+			Product pd = productService.find(pdDTO.getId());
+			ItemProduct ip = new ItemProduct(rw,pd,null);
+			rw.getItemsProduct().addAll(Arrays.asList(ip));
+			pd.getItensProduct().addAll(Arrays.asList(ip));
+		};
+		
+		itemProductRepository.saveAll(rw.getItemsProduct());
+//		emailService.sendReviewConfirmationHtmlEmail(rw);
+		return rw;
 		
 	}
 
 	public Review update(Review obj) {
-
 		find(obj.getId());
-		return repository.save(obj);
-		
+		return repository.save(obj);		
 	}
 
 	public List<Review> listAll() {

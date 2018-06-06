@@ -2,7 +2,6 @@ package com.lookfood.backend.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.lookfood.backend.domain.Review;
@@ -12,7 +11,6 @@ public class ReviewDTO implements Serializable{
 	
 	private Integer id;
 	private String status;
-	private Date date;
 	
 	private List<ProductDTO> products = new ArrayList<>();
 	
@@ -24,7 +22,6 @@ public class ReviewDTO implements Serializable{
 		super();
 		this.id = obj.getId();
 		this.status = obj.getStatus().getDescription();
-		this.date = obj.getDate();
 	}	
 	public Integer getId() {
 		return id;
@@ -37,12 +34,6 @@ public class ReviewDTO implements Serializable{
 	}
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public List<ProductDTO> getProducts() {
