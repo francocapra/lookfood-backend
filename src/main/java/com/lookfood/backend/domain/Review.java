@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.lookfood.backend.domain.enums.TypeStatus;
@@ -31,6 +33,8 @@ public class Review implements Serializable{
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date date;
+		
+	private String reviewCode;
 	
 	@ManyToOne
 	@JoinColumn(name="partner_id")
@@ -44,6 +48,7 @@ public class Review implements Serializable{
 	
 	public Review() {
 		super();
+		this.reviewCode = toGenerateReviewCode( );
 	}
 
 	public Review(Integer id, TypeStatus status, Date date, Partner partner) {
@@ -52,6 +57,7 @@ public class Review implements Serializable{
 		this.status = (status == null) ? null : status.getCod();
 		this.date = date;
 		this.partner = partner;
+		this.reviewCode = toGenerateReviewCode( );
 	}
 
 	public Integer getId() {
@@ -76,6 +82,14 @@ public class Review implements Serializable{
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getReviewCode() {		
+		return reviewCode;		
+	}
+
+	public void setReviewCode(String reviewCode) {
+		this.reviewCode = reviewCode;
 	}
 
 	public Partner getPartner() {
@@ -156,4 +170,14 @@ public class Review implements Serializable{
 		
 		return builder.toString();
 	}	
+	
+	private String toGenerateReviewCode() {
+		
+		int length = 10;
+		boolean useLetters = true;
+		boolean useNumbers = false;	    
+		String randomCode = RandomStringUtils.random(length, useLetters, useNumbers);
+		
+		return randomCode;
+	}
 }

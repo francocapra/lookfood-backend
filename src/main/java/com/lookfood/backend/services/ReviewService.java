@@ -46,6 +46,11 @@ public class ReviewService {
 
 	public Review find(Integer id) {
 
+		SSUserDetails user = UserService.authenticated();
+		if (user==null) {
+			throw new AuthorizationException("Acesso negado");
+		};	
+		
 		Optional<Review> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Review.class.getName()));
@@ -64,17 +69,18 @@ public class ReviewService {
 		rw.setId(null);
 		rw.setDate(new Date());
 		rw.setStatus(TypeStatus.OPEN);
-		rw.setPartner(partnerService.find(user.getId()));
+		rw.setPartner(partnerService.find(user.getId()));		
 		rw = repository.save(rw);
 		
 		for (ProductDTO pdDTO : objDTO.getProducts()) {
 			Product pd = productService.find(pdDTO.getId());
 			ItemProduct ip = new ItemProduct(rw,pd,null);
-			rw.getItemsProduct().addAll(Arrays.asList(ip));
-			pd.getItensProduct().addAll(Arrays.asList(ip));
+			rw.getItemsProduct().add(ip);
+			pd.getItensProduct().add(ip);
 		};
-		
+						
 		itemProductRepository.saveAll(rw.getItemsProduct());
+		
 //		emailService.sendReviewConfirmationHtmlEmail(rw);
 		return rw;
 		
@@ -102,6 +108,25 @@ public class ReviewService {
 		Partner partner = partnerService.find(user.getId());
 		
 		return repository.findByPartner(partner, pageRequest);
+	}
+
+	public ReviewDTO findByCode(String reviewCode) {
+		// TODO Auto-generated method stub
+		
+		Review review = repository.findByReviewCode(reviewCode);
+		
+		ReviewDTO objDTO = new ReviewDTO() ;
+		
+		objDTO.setId(review.getId());
+		objDTO.setStatus(review.getStatus().getDescription());
+		
+		for( ItemProduct ip : review.getItemsProduct()) {
+			Product pd = ip.getProduct();
+			ProductDTO pdDTO = new ProductDTO(pd);
+			objDTO.getProducts().addAll(Arrays.asList(pdDTO));
+		}
+		
+		return objDTO;
 	}
 	
 }

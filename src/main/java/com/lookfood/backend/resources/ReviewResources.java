@@ -2,6 +2,9 @@ package com.lookfood.backend.resources;
 
 import java.net.URI;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.skyscreamer.jsonassert.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort.Direction;
@@ -30,24 +33,32 @@ public class ReviewResources {
 
 		Review obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
-
+		
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody ReviewDTO objDTO) {
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<ReviewDTO> findByReviewCode(
+			@RequestParam(value = "code") String reviewCode) {
 
-		Review newObj = this.service.insert(objDTO);
+		ReviewDTO objDTO = service.findByCode(reviewCode);	
 		
+		return ResponseEntity.ok().body(objDTO);		
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<?> insert(@RequestBody ReviewDTO objDTO) {
+
+		Review newObj = this.service.insert(objDTO);		
 		URI uri = ServletUriComponentsBuilder
 					.fromCurrentRequest()
-					.path("/{id}")
-					.buildAndExpand(newObj.getId()).toUri();
+					.path("/{id}/{reviewCode}")
+					.buildAndExpand(newObj.getId(),newObj.getReviewCode()).toUri();		
 		
 		return ResponseEntity.created(uri).build();
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<Review>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "sortDirection", defaultValue = "DESC") Direction sortDirection,

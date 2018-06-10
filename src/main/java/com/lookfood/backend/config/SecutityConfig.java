@@ -42,7 +42,7 @@ public class SecutityConfig extends WebSecurityConfigurerAdapter {
 
 	public static final String[] PUBLIC_MATCHERS = { "/h2-console/**" };
 
-	public static final String[] PUBLIC_MATCHERS_GET = { "/products/**", "/professionals/**", "/regions/**" };
+	public static final String[] PUBLIC_MATCHERS_GET = { "/products/**", "/professionals/**", "/regions/**" , "/reviews/code**" };
 
 	public static final String[] PUBLIC_MATCHERS_POST = { "/partners", "/auth/forgot/**" };
 	
@@ -71,8 +71,10 @@ public class SecutityConfig extends WebSecurityConfigurerAdapter {
 				// CSRF: desabilitado pq não armazemos sessão
 				.csrf().disable();
 
-		http.authorizeRequests().antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
-				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll().antMatchers(PUBLIC_MATCHERS).permitAll()
+		http.authorizeRequests()
+				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+				.antMatchers(PUBLIC_MATCHERS).permitAll()
 				.anyRequest().authenticated();
 
 		// Registrar filtro de autenticação

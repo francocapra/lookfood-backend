@@ -40,7 +40,7 @@ public class ReviewDTO implements Serializable{
 		return products;
 	}
 
-	public void setProducts(List<ProductDTO> products) {
-		this.products = products;
+	public void setProducts(List<ProductDTO> productsDTO) {
+		this.products = productsDTO;
 	}	
 }

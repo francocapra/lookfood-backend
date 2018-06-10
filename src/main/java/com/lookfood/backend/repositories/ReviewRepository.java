@@ -15,4 +15,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 	@Transactional(readOnly=true)
 	Page<Review> findByPartner(Partner partner, Pageable pageRequest);
 	
+	@Transactional(readOnly=true)
+	Review findByReviewCode(String reviewCode);
+	
 }
