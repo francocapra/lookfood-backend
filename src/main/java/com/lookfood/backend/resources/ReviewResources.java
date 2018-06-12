@@ -33,9 +33,8 @@ public class ReviewResources {
 		
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<ReviewDTO> findByReviewCode(
-			@RequestParam(value = "code") String reviewCode) {
+	@RequestMapping(value = "/token/{reviewCode}", method = RequestMethod.GET)
+	public ResponseEntity<ReviewDTO> findByReviewCode(@PathVariable String reviewCode) {
 
 		ReviewDTO objDTO = service.findByCode(reviewCode);	
 		
@@ -48,7 +47,7 @@ public class ReviewResources {
 		Review newObj = this.service.insert(objDTO);		
 		URI uri = ServletUriComponentsBuilder
 					.fromCurrentRequest()
-					.path("/{id}/{reviewCode}")
+					.path("/{id}/token/{reviewCode}")
 					.buildAndExpand(newObj.getId(),newObj.getReviewCode()).toUri();		
 		
 		return ResponseEntity.created(uri).build();
