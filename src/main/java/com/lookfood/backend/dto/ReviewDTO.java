@@ -11,8 +11,9 @@ public class ReviewDTO implements Serializable{
 	
 	private Integer id;
 	private String status;
+	private String reviewCode;
 	
-	private List<ProductDTO> products = new ArrayList<>();
+	private List<ItemReviewDTO> itemsReviewDTO = new ArrayList<>();
 	
 	public ReviewDTO() {
 		super();
@@ -22,6 +23,7 @@ public class ReviewDTO implements Serializable{
 		super();
 		this.id = obj.getId();
 		this.status = obj.getStatus().getDescription();
+		this.reviewCode = obj.getReviewCode();
 	}	
 	public Integer getId() {
 		return id;
@@ -36,11 +38,19 @@ public class ReviewDTO implements Serializable{
 		this.status = status;
 	}
 
-	public List<ProductDTO> getProducts() {
-		return products;
+	public String getReviewCode() {
+		return reviewCode;
 	}
 
-	public void setProducts(List<ProductDTO> productsDTO) {
-		this.products = productsDTO;
+	public void setReviewCode(String reviewCode) {
+		this.reviewCode = reviewCode;
+	}
+
+	public List<ItemReviewDTO> getItemsReviewDTO() {
+		return itemsReviewDTO;
+	}
+
+	public void setItemsReviewDTO(List<ItemReviewDTO> itemsReviewDTO) {
+		this.itemsReviewDTO = itemsReviewDTO;
 	}	
 }
