@@ -152,7 +152,8 @@ public class ProductService {
 				objDTO.getDescription(), 
 				objDTO.getPrice(),
 				objDTO.getCurrency(),				
-				objDTO.getIdExternal() 
+				objDTO.getIdExternal(),
+				objDTO.getOrigin()
 				);
 	}
 	

@@ -13,6 +13,10 @@ public class ProductTopDTO  implements Serializable{
 	
 	private Integer rate;
 	
+	private double price;
+	
+	private String origin;
+	
 	public ProductTopDTO() {
 		super();
 	}
@@ -22,6 +26,8 @@ public class ProductTopDTO  implements Serializable{
 		this.id = obj.getProduct().getId();
 		this.description = obj.getProduct().getDescription();
 		this.setRate(obj.getRate());
+		this.price = obj.getProduct().getPrice();
+		this.origin = obj.getProduct().getOrigin();
 	}
 
 	public Integer getId() {
@@ -46,6 +52,22 @@ public class ProductTopDTO  implements Serializable{
 
 	public void setRate(Integer rate) {
 		this.rate = rate;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 }
