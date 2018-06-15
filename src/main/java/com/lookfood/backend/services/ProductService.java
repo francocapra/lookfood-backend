@@ -158,16 +158,14 @@ public class ProductService {
 	
 	public List<ItemProduct> findTop(Integer top){
 		
-		SSUserDetails user = UserService.authenticated();
-		if (user==null) {
-			throw new AuthorizationException("Access denied");
-		};
+//		SSUserDetails user = UserService.authenticated();
+//		if (user==null) {
+//			throw new AuthorizationException("Access denied");
+//		};
 		
 		PageRequest pageRequest = PageRequest.of(0, top);
 		
-		Partner partner = partnerService.find(user.getId());
-		
-		List<ItemProduct> list = repository.findTop(partner.getId(), pageRequest);
+		List<ItemProduct> list = repository.findTop(pageRequest);
 		
 		return list;
 	}
