@@ -37,7 +37,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query(value= 
 	"SELECT obj " + 
 		"FROM ItemProduct obj " +
-		"GROUP BY obj.id.product.id, obj.id.review.id " + 
+		"GROUP BY obj.id.product.id " + 
 		"ORDER BY AVG( obj.rate ) DESC " )
 	List<ItemProduct> findTop(Pageable pageable);
 	
