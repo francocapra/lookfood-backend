@@ -134,6 +134,17 @@ public class ProductResources {
 		return ResponseEntity.ok().body(listTopDTO);
 	}
 	
+	@ApiOperation(value="List Top Products Up To R$ 50,00") 
+	@RequestMapping(value="/top/upToFifty", method=RequestMethod.GET)
+	public ResponseEntity<List<ProductTopDTO>> findTopUpToFifty() {
+		
+		List<ItemProduct> list = service.fintTopUpToFifty();
+		
+		List<ProductTopDTO> listTopDTO = list.stream().map(obj -> new ProductTopDTO(obj)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok().body(listTopDTO);
+	}
+	
 	@ApiOperation(value="Upload picture to Product") 
 	@RequestMapping(value = "/picture", method = RequestMethod.POST)
 	public ResponseEntity<Void> uploadProfilePicture(

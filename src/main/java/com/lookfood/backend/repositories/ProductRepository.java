@@ -37,9 +37,16 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query(value= 
 	"SELECT obj " + 
 		"FROM ItemProduct obj " +
-		"GROUP BY obj.id.product.id " + 
+		"GROUP BY obj.id.product " + 
 		"ORDER BY AVG( obj.rate ) DESC " )
 	List<ItemProduct> findTop(Pageable pageable);
+	
+	@Transactional(readOnly=true)
+	@Query(value="SELECT obj FROM ItemProduct obj "
+			+ "WHERE obj.id.product.price <= 50.00 "
+			+ "GROUP BY obj.id.product.id "
+			+ "ORDER BY AVG( obj.rate ) DESC")
+	List<ItemProduct> findTopUpToFifty(Pageable pageable);
 	
 	@Transactional(readOnly=true)
 	List<Product> findAllByPartnerId(Integer partnerId);

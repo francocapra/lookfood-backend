@@ -171,6 +171,13 @@ public class ProductService {
 		return list;
 	}
 	
+	public List<ItemProduct> fintTopUpToFifty(){
+		PageRequest pageRequest = PageRequest.of(0, 20);
+		
+		return repository.findTopUpToFifty(pageRequest);
+		
+	}
+	
 	public URI uploadProfilePicture(MultipartFile multipartFile, Integer productId) {
 		
 		//Verificar se usuario esta logado!
