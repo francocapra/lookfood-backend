@@ -1,5 +1,7 @@
 package com.lookfood.backend.domain;
 
+import static org.assertj.core.api.Assertions.from;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,7 +38,7 @@ public class Product implements Serializable{
 	
 	private String idExternal;
 	
-	private String origin;
+	private Integer fromCountry;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")	
 	private Date createdDate;
@@ -68,14 +70,14 @@ public class Product implements Serializable{
 		super();
 	}
 
-	public Product(Integer id, String description, Double price, String currency, String idExternal, String nationality ) {
+	public Product(Integer id, String description, Double price, String currency, String idExternal, Integer fromCountry ) {
 		super();
 		this.id = id;
 		this.description = description;
 		this.price = price;
 		this.currency = currency;
 		this.idExternal = idExternal;
-		this.origin = nationality;
+		this.fromCountry = fromCountry;
 	}
 	
 
@@ -120,12 +122,12 @@ public class Product implements Serializable{
 		this.currency = currency;
 	}
 
-	public String getOrigin() {
-		return origin;
+	public Integer getFromCountry() {
+		return fromCountry;
 	}
 
-	public void setOrigin(String origin) {
-		this.origin = origin;
+	public void setFromCountry(Integer fromCountry) {
+		this.fromCountry = fromCountry;
 	}
 
 	public String getIdExternal() {

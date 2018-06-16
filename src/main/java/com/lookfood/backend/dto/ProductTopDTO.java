@@ -15,19 +15,32 @@ public class ProductTopDTO  implements Serializable{
 	
 	private double price;
 	
-	private String origin;
+	private Integer fromCountry;
+	
+	private long numberOfReviews;
 	
 	public ProductTopDTO() {
 		super();
 	}
 		
+	public ProductTopDTO(Integer id, String description, Integer rate, double price, Integer fromCountry,
+			long numberOfReviews) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.rate = rate;
+		this.price = price;
+		this.fromCountry = fromCountry;
+		this.numberOfReviews = numberOfReviews;
+	}
+
 	public ProductTopDTO(ItemProduct obj) {
 		super();
 		this.id = obj.getProduct().getId();
 		this.description = obj.getProduct().getDescription();
 		this.setRate(obj.getRate());
 		this.price = obj.getProduct().getPrice();
-		this.origin = obj.getProduct().getOrigin();
+		this.fromCountry = obj.getProduct().getFromCountry();
 	}
 
 	public Integer getId() {
@@ -54,12 +67,12 @@ public class ProductTopDTO  implements Serializable{
 		this.rate = rate;
 	}
 
-	public String getOrigin() {
-		return origin;
+	public Integer getFromCountry() {
+		return fromCountry;
 	}
 
-	public void setOrigin(String origin) {
-		this.origin = origin;
+	public void setFromCountry(Integer fromCountry) {
+		this.fromCountry = fromCountry;
 	}
 
 	public double getPrice() {
@@ -68,6 +81,14 @@ public class ProductTopDTO  implements Serializable{
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public long getNumberOfReviews() {
+		return numberOfReviews;
+	}
+
+	public void setNumberOfReviews(Integer numberOfReviews) {
+		this.numberOfReviews = numberOfReviews;
 	}
 
 }

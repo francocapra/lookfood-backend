@@ -122,22 +122,22 @@ public class ProductResources {
 	public ResponseEntity<List<ProductTopDTO>> findTop(
 			@RequestParam(value="limit", defaultValue="5" ) Integer nro	) {
 		
-		List<ItemProduct> list = service.findTop(nro);
+		List<ProductTopDTO> list = service.findTop(nro);
 		
-		List<ProductTopDTO> listTopDTO = list.stream().map(obj -> new ProductTopDTO(obj)).collect(Collectors.toList());
+//		List<ProductTopDTO> listTopDTO = list.stream().map(obj -> new ProductTopDTO(obj)).collect(Collectors.toList());
 		
-		return ResponseEntity.ok().body(listTopDTO);
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@ApiOperation(value="List Top Products Up To R$ 50,00") 
 	@RequestMapping(value="/top/upToFifty", method=RequestMethod.GET)
 	public ResponseEntity<List<ProductTopDTO>> findTopUpToFifty() {
 		
-		List<ItemProduct> list = service.fintTopUpToFifty();
+		List<ProductTopDTO> list = service.fintTopUpToFifty();
 		
-		List<ProductTopDTO> listTopDTO = list.stream().map(obj -> new ProductTopDTO(obj)).collect(Collectors.toList());
+//		List<ProductTopDTO> listTopDTO = list.stream().map(obj -> new ProductTopDTO(obj)).collect(Collectors.toList());
 		
-		return ResponseEntity.ok().body(listTopDTO);
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@ApiOperation(value="Upload picture to Product") 

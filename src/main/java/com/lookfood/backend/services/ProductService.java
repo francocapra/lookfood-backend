@@ -24,6 +24,7 @@ import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.domain.Professional;
 import com.lookfood.backend.domain.enums.Profile;
 import com.lookfood.backend.dto.ProductDTO;
+import com.lookfood.backend.dto.ProductTopDTO;
 import com.lookfood.backend.repositories.ProductRepository;
 import com.lookfood.backend.repositories.ProfessionalRepository;
 import com.lookfood.backend.security.SSUserDetails;
@@ -153,11 +154,11 @@ public class ProductService {
 				objDTO.getPrice(),
 				objDTO.getCurrency(),				
 				objDTO.getIdExternal(),
-				objDTO.getOrigin()
+				objDTO.getFromCountry()
 				);
 	}
 	
-	public List<ItemProduct> findTop(Integer top){
+	public List<ProductTopDTO> findTop(Integer top){
 		
 //		SSUserDetails user = UserService.authenticated();
 //		if (user==null) {
@@ -166,12 +167,12 @@ public class ProductService {
 		
 		PageRequest pageRequest = PageRequest.of(0, top);
 		
-		List<ItemProduct> list = repository.findTop(pageRequest);
+		List<ProductTopDTO> list = repository.findTop(pageRequest);
 		
 		return list;
 	}
 	
-	public List<ItemProduct> fintTopUpToFifty(){
+	public List<ProductTopDTO> fintTopUpToFifty(){
 		PageRequest pageRequest = PageRequest.of(0, 20);
 		
 		return repository.findTopUpToFifty(pageRequest);

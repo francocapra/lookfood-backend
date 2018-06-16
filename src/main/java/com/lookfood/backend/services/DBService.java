@@ -19,6 +19,7 @@ import com.lookfood.backend.domain.Professional;
 import com.lookfood.backend.domain.Region;
 import com.lookfood.backend.domain.Review;
 import com.lookfood.backend.domain.enums.Profile;
+import com.lookfood.backend.domain.enums.TypeCountries;
 import com.lookfood.backend.domain.enums.TypePosition;
 import com.lookfood.backend.domain.enums.TypeStatus;
 import com.lookfood.backend.repositories.AddressRepository;
@@ -92,15 +93,15 @@ public class DBService {
 		addressRepository.saveAll(Arrays.asList(address1, e2));
 
 		// Persist: Product/ Professional
-		Product p1 = new Product(null, "Moqueca", 23.00, "BRL", null, "brasil");
-		Product p2 = new Product(null, "Acarajé", 34.00, "BRL", null, "brasil");
-		Product p3 = new Product(null, "Poutine", 45.80, "BRL", null, "canada");
-		Product p4 = new Product(null, "Bannock", 28.00, "BRL", null, "canada");
-		Product p5 = new Product(null, "Butter tarts", 59.00, "BRL", null, "canada");
-		Product p6 = new Product(null, "Wurst e Currywurst", 56.00, "BRL", null, "alemanha");
-		Product p7 = new Product(null, "Schnitzel", 14.00, "BRL", null, "alemanha");
-		Product p8 = new Product(null, "Feijoada", 11.00, "BRL", null, "brasil");
-		Product p9 = new Product(null, "Churrasco", 23.00, "BRL", null, "brasil");
+		Product p1 = new Product(null, "Moqueca", 23.00, "BRL", null, TypeCountries.BRAZIL.getCod());
+		Product p2 = new Product(null, "Acarajé", 34.00, "BRL", null, TypeCountries.BRAZIL.getCod());
+		Product p3 = new Product(null, "Poutine", 45.80, "BRL", null, TypeCountries.BRAZIL.getCod());
+		Product p4 = new Product(null, "Bannock", 28.00, "BRL", null, TypeCountries.BRAZIL.getCod());
+		Product p5 = new Product(null, "Butter tarts", 59.00, "BRL", null, TypeCountries.BRAZIL.getCod());
+		Product p6 = new Product(null, "Wurst e Currywurst", 56.00, "BRL", null, TypeCountries.BRAZIL.getCod());
+		Product p7 = new Product(null, "Schnitzel", 14.00, "BRL", null, TypeCountries.BRAZIL.getCod());
+		Product p8 = new Product(null, "Feijoada", 11.00, "BRL", null, TypeCountries.BRAZIL.getCod());
+		Product p9 = new Product(null, "Churrasco", 23.00, "BRL", null, TypeCountries.BRAZIL.getCod());
 
 		Professional prof1 = new Professional(null, "José", TypePosition.CHEF);
 		Professional prof2 = new Professional(null, "Maria", TypePosition.ASSISTANT);

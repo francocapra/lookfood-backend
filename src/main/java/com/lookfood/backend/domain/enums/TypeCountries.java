@@ -14,4 +14,25 @@ public enum TypeCountries {
 		this.description = description;
 	}
 	
+	public Integer getCod() {
+		return code;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+	
+	public static TypeStatus toEnum(Integer code) {
+		if (code == null) {
+			return null;
+		}
+		
+		for (TypeStatus x : TypeStatus.values() ) {
+			if (code.equals(x.getCod())) {
+				return x ;
+			}				
+		}
+		
+		throw new IllegalArgumentException("Id inválido: " + code);
+	}
 }

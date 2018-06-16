@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lookfood.backend.domain.ItemProduct;
 import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.domain.Professional;
+import com.lookfood.backend.dto.ProductTopDTO;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
@@ -34,19 +35,21 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 			Pageable pageRequest);
 	
 	@Transactional(readOnly=true)
-	@Query(value= 
-	"SELECT obj " + 
+	@Query(value="SELECT new com.lookfood.backend.dto.ProductTopDTO(obj.id.product.id, obj.id.product.description, obj.rate, " + 
+			"obj.id.product.price, obj.id.product.fromCountry, count(obj.id.product.id) ) " +
 		"FROM ItemProduct obj " +
-		"GROUP BY obj.id.product " + 
+		"GROUP BY obj.id.product.id " + 
 		"ORDER BY AVG( obj.rate ) DESC " )
-	List<ItemProduct> findTop(Pageable pageable);
+	List<ProductTopDTO> findTop(Pageable pageable);
 	
 	@Transactional(readOnly=true)
-	@Query(value="SELECT obj FROM ItemProduct obj "
+	@Query(value="SELECT new com.lookfood.backend.dto.ProductTopDTO(obj.id.product.id, obj.id.product.description, obj.rate, " + 
+			"obj.id.product.price, obj.id.product.fromCountry, count(obj.id.product.id) ) "
+			+ "FROM ItemProduct obj "
 			+ "WHERE obj.id.product.price <= 50.00 "
 			+ "GROUP BY obj.id.product.id "
 			+ "ORDER BY AVG( obj.rate ) DESC")
-	List<ItemProduct> findTopUpToFifty(Pageable pageable);
+	List<ProductTopDTO> findTopUpToFifty(Pageable pageable);
 	
 	@Transactional(readOnly=true)
 	List<Product> findAllByPartnerId(Integer partnerId);
