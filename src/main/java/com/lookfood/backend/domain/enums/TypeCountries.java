@@ -14,7 +14,7 @@ public enum TypeCountries {
 		this.description = description;
 	}
 	
-	public Integer getCod() {
+	public Integer getCode() {
 		return code;
 	}
 
@@ -22,13 +22,13 @@ public enum TypeCountries {
 		return description;
 	}
 	
-	public static TypeStatus toEnum(Integer code) {
+	public static TypeCountries toEnum(Integer code) {
 		if (code == null) {
 			return null;
 		}
 		
-		for (TypeStatus x : TypeStatus.values() ) {
-			if (code.equals(x.getCod())) {
+		for (TypeCountries x : TypeCountries.values() ) {
+			if (code.equals(x.getCode())) {
 				return x ;
 			}				
 		}

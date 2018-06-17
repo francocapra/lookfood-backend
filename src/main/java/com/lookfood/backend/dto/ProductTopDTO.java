@@ -3,6 +3,7 @@ package com.lookfood.backend.dto;
 import java.io.Serializable;
 
 import com.lookfood.backend.domain.ItemProduct;
+import com.lookfood.backend.domain.enums.TypeCountries;
 
 public class ProductTopDTO  implements Serializable{	
 	private static final long serialVersionUID = 1L;
@@ -17,6 +18,20 @@ public class ProductTopDTO  implements Serializable{
 	
 	private Integer fromCountry;
 	
+	private String fromCountryName;
+	
+	public String getFromCountryName() {
+		return fromCountryName;
+	}
+
+	public void setFromCountryName(String fromCountryName) {
+		this.fromCountryName = fromCountryName;
+	}
+
+	public void setNumberOfReviews(long numberOfReviews) {
+		this.numberOfReviews = numberOfReviews;
+	}
+
 	private long numberOfReviews;
 	
 	public ProductTopDTO() {
@@ -32,6 +47,7 @@ public class ProductTopDTO  implements Serializable{
 		this.price = price;
 		this.fromCountry = fromCountry;
 		this.numberOfReviews = numberOfReviews;
+		this.fromCountryName = TypeCountries.toEnum(fromCountry).getDescription();
 	}
 
 	public ProductTopDTO(ItemProduct obj) {
