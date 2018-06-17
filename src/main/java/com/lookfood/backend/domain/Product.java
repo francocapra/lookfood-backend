@@ -1,7 +1,5 @@
 package com.lookfood.backend.domain;
 
-import static org.assertj.core.api.Assertions.from;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
