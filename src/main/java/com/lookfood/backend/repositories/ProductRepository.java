@@ -41,7 +41,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query(value=BASIC_TOP_PRODUCT_DTO +
 		"FROM ItemProduct obj " +
 		"GROUP BY obj.id.product.id " + 
-		"ORDER BY AVG( obj.rate ) DESC " )
+		"ORDER BY AVG( obj.rate ) DESC, count(obj.id.product.id) DESC" )
 	List<ProductTopDTO> findTop(Pageable pageable);
 	
 	@Transactional(readOnly=true)
@@ -49,7 +49,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 			+ "FROM ItemProduct obj "
 			+ "WHERE obj.id.product.price <= 50.00 "
 			+ "GROUP BY obj.id.product.id "
-			+ "ORDER BY AVG( obj.rate ) DESC")
+			+ "ORDER BY AVG( obj.rate ) DESC, count(obj.id.product.id) DESC")
 	List<ProductTopDTO> findTopUpToFifty(Pageable pageable);
 	
 	@Transactional(readOnly=true)
@@ -57,7 +57,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 			+ "FROM ItemProduct obj "
 			+ "WHERE obj.id.product.fromCountry = :countryIsoCode "
 			+ "GROUP BY obj.id.product.id "
-			+ "ORDER BY AVG( obj.rate ) DESC")
+			+ "ORDER BY AVG( obj.rate ) DESC, count(obj.id.product.id) DESC")
 	List<ProductTopDTO> findByCountry(Pageable pageable, @Param(value="countryIsoCode") String countryIsoCode);
 	
 	@Transactional(readOnly=true)
