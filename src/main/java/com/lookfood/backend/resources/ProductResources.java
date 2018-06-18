@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -124,8 +125,6 @@ public class ProductResources {
 		
 		List<ProductTopDTO> list = service.findTop(nro);
 		
-//		List<ProductTopDTO> listTopDTO = list.stream().map(obj -> new ProductTopDTO(obj)).collect(Collectors.toList());
-		
 		return ResponseEntity.ok().body(list);
 	}
 	
@@ -135,7 +134,16 @@ public class ProductResources {
 		
 		List<ProductTopDTO> list = service.fintTopUpToFifty();
 		
-//		List<ProductTopDTO> listTopDTO = list.stream().map(obj -> new ProductTopDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@ApiOperation(value="List Top Products By Country") 
+	@RequestMapping(value="/byCountry/{isoCode}", method=RequestMethod.GET)
+	public ResponseEntity<List<ProductTopDTO>> findByCountry(
+			@PathVariable("isoCode") String isoCode
+			) {
+		
+		List<ProductTopDTO> list = service.findByCountry(isoCode);
 		
 		return ResponseEntity.ok().body(list);
 	}

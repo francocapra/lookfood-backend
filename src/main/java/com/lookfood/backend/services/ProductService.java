@@ -160,11 +160,6 @@ public class ProductService {
 	
 	public List<ProductTopDTO> findTop(Integer top){
 		
-//		SSUserDetails user = UserService.authenticated();
-//		if (user==null) {
-//			throw new AuthorizationException("Access denied");
-//		};
-		
 		PageRequest pageRequest = PageRequest.of(0, top);
 		
 		List<ProductTopDTO> list = repository.findTop(pageRequest);
@@ -176,7 +171,14 @@ public class ProductService {
 		PageRequest pageRequest = PageRequest.of(0, 20);
 		
 		return repository.findTopUpToFifty(pageRequest);
+
+	}
+	
+	public List<ProductTopDTO> findByCountry(String countryIsoCode){
+		PageRequest pageRequest = PageRequest.of(0, 20);
 		
+		return repository.findByCountry(pageRequest, countryIsoCode);
+
 	}
 	
 	public URI uploadProfilePicture(MultipartFile multipartFile, Integer productId) {

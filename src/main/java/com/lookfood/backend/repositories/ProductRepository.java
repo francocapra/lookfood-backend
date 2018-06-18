@@ -28,6 +28,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 //FONT: https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods
 	
+	public static final String BASIC_TOP_PRODUCT_DTO = "SELECT new com.lookfood.backend.dto.ProductTopDTO(obj.id.product.id, obj.id.product.description, obj.rate, "
+			+ "obj.id.product.price, obj.id.product.fromCountry, count(obj.id.product.id) ) ";
+	
 	@Transactional(readOnly=true)
 	Page<Product> findDistinctByDescriptionContainingAndProfessionalsIn(
 			String description, 
@@ -35,21 +38,27 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 			Pageable pageRequest);
 	
 	@Transactional(readOnly=true)
-	@Query(value="SELECT new com.lookfood.backend.dto.ProductTopDTO(obj.id.product.id, obj.id.product.description, obj.rate, " + 
-			"obj.id.product.price, obj.id.product.fromCountry, count(obj.id.product.id) ) " +
+	@Query(value=BASIC_TOP_PRODUCT_DTO +
 		"FROM ItemProduct obj " +
 		"GROUP BY obj.id.product.id " + 
 		"ORDER BY AVG( obj.rate ) DESC " )
 	List<ProductTopDTO> findTop(Pageable pageable);
 	
 	@Transactional(readOnly=true)
-	@Query(value="SELECT new com.lookfood.backend.dto.ProductTopDTO(obj.id.product.id, obj.id.product.description, obj.rate, " + 
-			"obj.id.product.price, obj.id.product.fromCountry, count(obj.id.product.id) ) "
+	@Query(value=BASIC_TOP_PRODUCT_DTO
 			+ "FROM ItemProduct obj "
 			+ "WHERE obj.id.product.price <= 50.00 "
 			+ "GROUP BY obj.id.product.id "
 			+ "ORDER BY AVG( obj.rate ) DESC")
 	List<ProductTopDTO> findTopUpToFifty(Pageable pageable);
+	
+	@Transactional(readOnly=true)
+	@Query(value=BASIC_TOP_PRODUCT_DTO
+			+ "FROM ItemProduct obj "
+			+ "WHERE obj.id.product.fromCountry = :countryIsoCode "
+			+ "GROUP BY obj.id.product.id "
+			+ "ORDER BY AVG( obj.rate ) DESC")
+	List<ProductTopDTO> findByCountry(Pageable pageable, @Param(value="countryIsoCode") String countryIsoCode);
 	
 	@Transactional(readOnly=true)
 	List<Product> findAllByPartnerId(Integer partnerId);
