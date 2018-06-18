@@ -16,7 +16,7 @@ public class ProductTopDTO  implements Serializable{
 	
 	private double price;
 	
-	private Integer fromCountry;
+	private String fromCountry;
 	
 	private String fromCountryName;
 	
@@ -38,7 +38,7 @@ public class ProductTopDTO  implements Serializable{
 		super();
 	}
 		
-	public ProductTopDTO(Integer id, String description, Integer rate, double price, Integer fromCountry,
+	public ProductTopDTO(Integer id, String description, Integer rate, double price, String fromCountry,
 			long numberOfReviews) {
 		super();
 		this.id = id;
@@ -83,11 +83,11 @@ public class ProductTopDTO  implements Serializable{
 		this.rate = rate;
 	}
 
-	public Integer getFromCountry() {
+	public String getFromCountry() {
 		return fromCountry;
 	}
 
-	public void setFromCountry(Integer fromCountry) {
+	public void setFromCountry(String fromCountry) {
 		this.fromCountry = fromCountry;
 	}
 

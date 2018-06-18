@@ -2,16 +2,18 @@ package com.lookfood.backend.domain.enums;
 
 public enum TypeCountries {
 	
-	BRAZIL(076, "Brazil"),
-	USA(840, "United States"),
-	MEXICO(484, "Mexico");
+	BRAZIL(1, "BR", "Brazil"),
+	USA(2, "US", "United States"),
+	MEXICO(3, "MX", "Mexico");
 	
 	private Integer code;
+	private String isoCode;
 	private String description;
 	
-	private TypeCountries(Integer code, String description) {
+	private TypeCountries(Integer code, String isoCode, String description) {
 		this.code = code;
 		this.description = description;
+		this.isoCode = isoCode;
 	}
 	
 	public Integer getCode() {
@@ -22,17 +24,21 @@ public enum TypeCountries {
 		return description;
 	}
 	
-	public static TypeCountries toEnum(Integer code) {
-		if (code == null) {
+	public String getIsoCode() {
+		return isoCode;
+	}
+	
+	public static TypeCountries toEnum(String isoCode) {
+		if (isoCode == null) {
 			return null;
 		}
 		
 		for (TypeCountries x : TypeCountries.values() ) {
-			if (code.equals(x.getCode())) {
+			if (isoCode.equals(x.getIsoCode())) {
 				return x ;
 			}				
 		}
 		
-		throw new IllegalArgumentException("Id inválido: " + code);
+		throw new IllegalArgumentException("Id inválido: " + isoCode);
 	}
 }

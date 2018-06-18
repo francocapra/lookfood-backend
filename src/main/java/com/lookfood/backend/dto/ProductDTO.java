@@ -28,7 +28,7 @@ public class ProductDTO  implements Serializable{
 	
 	private Date modifiedDate;
 	
-	private Integer fromCountry;
+	private String fromCountry;
 	
 	public ProductDTO() {
 		super();
@@ -76,11 +76,11 @@ public class ProductDTO  implements Serializable{
 		this.currency = currency;
 	}
 
-	public Integer getFromCountry() {
+	public String getFromCountry() {
 		return fromCountry;
 	}
 
-	public void setFromCountry(Integer fromCountry) {
+	public void setFromCountry(String fromCountry) {
 		this.fromCountry = fromCountry;
 	}
 

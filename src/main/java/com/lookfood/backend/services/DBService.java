@@ -93,15 +93,15 @@ public class DBService {
 		addressRepository.saveAll(Arrays.asList(address1, e2));
 
 		// Persist: Product/ Professional
-		Product p1 = new Product(null, "Moqueca", 23.00, "BRL", null, TypeCountries.BRAZIL.getCode());
-		Product p2 = new Product(null, "Acarajé", 34.00, "BRL", null, TypeCountries.BRAZIL.getCode());
-		Product p3 = new Product(null, "Poutine", 45.80, "BRL", null, TypeCountries.USA.getCode());
-		Product p4 = new Product(null, "Bannock", 28.00, "BRL", null, TypeCountries.MEXICO.getCode());
-		Product p5 = new Product(null, "Butter tarts", 59.00, "BRL", null, TypeCountries.BRAZIL.getCode());
-		Product p6 = new Product(null, "Wurst e Currywurst", 56.00, "BRL", null, TypeCountries.MEXICO.getCode());
-		Product p7 = new Product(null, "Schnitzel", 14.00, "BRL", null, TypeCountries.USA.getCode());
-		Product p8 = new Product(null, "Feijoada", 11.00, "BRL", null, TypeCountries.USA.getCode());
-		Product p9 = new Product(null, "Churrasco", 23.00, "BRL", null, TypeCountries.MEXICO.getCode());
+		Product p1 = new Product(null, "Moqueca", 23.00, "BRL", null, TypeCountries.BRAZIL.getIsoCode());
+		Product p2 = new Product(null, "Acarajé", 34.00, "BRL", null, TypeCountries.BRAZIL.getIsoCode());
+		Product p3 = new Product(null, "Poutine", 45.80, "BRL", null, TypeCountries.USA.getIsoCode());
+		Product p4 = new Product(null, "Bannock", 28.00, "BRL", null, TypeCountries.MEXICO.getIsoCode());
+		Product p5 = new Product(null, "Butter tarts", 59.00, "BRL", null, TypeCountries.BRAZIL.getIsoCode());
+		Product p6 = new Product(null, "Wurst e Currywurst", 56.00, "BRL", null, TypeCountries.MEXICO.getIsoCode());
+		Product p7 = new Product(null, "Schnitzel", 14.00, "BRL", null, TypeCountries.USA.getIsoCode());
+		Product p8 = new Product(null, "Feijoada", 11.00, "BRL", null, TypeCountries.USA.getIsoCode());
+		Product p9 = new Product(null, "Churrasco", 23.00, "BRL", null, TypeCountries.MEXICO.getIsoCode());
 
 		Professional prof1 = new Professional(null, "José", TypePosition.CHEF);
 		Professional prof2 = new Professional(null, "Maria", TypePosition.ASSISTANT);
