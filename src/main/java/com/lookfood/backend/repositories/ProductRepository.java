@@ -29,7 +29,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 //FONT: https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods
 	
 	public static final String BASIC_TOP_PRODUCT_DTO = "SELECT new com.lookfood.backend.dto.ProductTopDTO(obj.id.product.id, obj.id.product.description, obj.rate, "
-			+ "obj.id.product.price, obj.id.product.fromCountry, count(obj.id.product.id) ) ";
+			+ "obj.id.product.price, obj.id.product.fromCountry, count(obj.id.product.id), obj.id.product.category) ";
 	
 	@Transactional(readOnly=true)
 	Page<Product> findDistinctByDescriptionContainingAndProfessionalsIn(
@@ -59,6 +59,14 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 			+ "GROUP BY obj.id.product.id "
 			+ "ORDER BY AVG( obj.rate ) DESC, count(obj.id.product.id) DESC")
 	List<ProductTopDTO> findByCountry(Pageable pageable, @Param(value="countryIsoCode") String countryIsoCode);
+	
+	@Transactional
+	@Query(value=BASIC_TOP_PRODUCT_DTO
+			+ "FROM ItemProduct obj "
+			+ "WHERE obj.id.product.category = :categoryCode "
+			+ "GROUP BY obj.id.product.id "
+			+ "ORDER BY AVG( obj.rate ) DESC, count(obj.id.product.id) DESC")
+	List<ProductTopDTO> findByCategory(Pageable pageable, @Param(value="categoryCode") Integer categoryCode);
 	
 	@Transactional(readOnly=true)
 	List<Product> findAllByPartnerId(Integer partnerId);

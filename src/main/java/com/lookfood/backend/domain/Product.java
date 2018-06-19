@@ -38,6 +38,8 @@ public class Product implements Serializable{
 	
 	private String fromCountry;
 	
+	private Integer category;
+	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")	
 	private Date createdDate;
 	
@@ -68,7 +70,7 @@ public class Product implements Serializable{
 		super();
 	}
 
-	public Product(Integer id, String description, Double price, String currency, String idExternal, String fromCountry ) {
+	public Product(Integer id, String description, Double price, String currency, String idExternal, String fromCountry, Integer category ) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -76,6 +78,7 @@ public class Product implements Serializable{
 		this.currency = currency;
 		this.idExternal = idExternal;
 		this.fromCountry = fromCountry;
+		this.category = category;
 	}
 	
 
@@ -174,6 +177,14 @@ public class Product implements Serializable{
 
 	public void setItensProduct(Set<ItemProduct> itensProduct) {
 		this.itensProduct = itensProduct;
+	}
+
+	public Integer getCategory() {
+		return category;
+	}
+
+	public void setCategory(Integer category) {
+		this.category = category;
 	}
 
 	@Override

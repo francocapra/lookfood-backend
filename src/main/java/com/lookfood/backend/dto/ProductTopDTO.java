@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.lookfood.backend.domain.ItemProduct;
 import com.lookfood.backend.domain.enums.TypeCountries;
+import com.lookfood.backend.domain.enums.TypeProductCategories;
 
 public class ProductTopDTO  implements Serializable{	
 	private static final long serialVersionUID = 1L;
@@ -20,17 +21,9 @@ public class ProductTopDTO  implements Serializable{
 	
 	private String fromCountryName;
 	
-	public String getFromCountryName() {
-		return fromCountryName;
-	}
-
-	public void setFromCountryName(String fromCountryName) {
-		this.fromCountryName = fromCountryName;
-	}
-
-	public void setNumberOfReviews(long numberOfReviews) {
-		this.numberOfReviews = numberOfReviews;
-	}
+	private Integer category;
+	
+	private String categoryName;
 
 	private long numberOfReviews;
 	
@@ -39,7 +32,7 @@ public class ProductTopDTO  implements Serializable{
 	}
 		
 	public ProductTopDTO(Integer id, String description, Integer rate, double price, String fromCountry,
-			long numberOfReviews) {
+			long numberOfReviews, Integer category) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -48,6 +41,8 @@ public class ProductTopDTO  implements Serializable{
 		this.fromCountry = fromCountry;
 		this.numberOfReviews = numberOfReviews;
 		this.fromCountryName = TypeCountries.toEnum(fromCountry).getDescription();
+		this.category = category;
+		this.categoryName = TypeProductCategories.toEnum(category).getDescription();
 	}
 
 	public ProductTopDTO(ItemProduct obj) {
@@ -103,8 +98,32 @@ public class ProductTopDTO  implements Serializable{
 		return numberOfReviews;
 	}
 
-	public void setNumberOfReviews(Integer numberOfReviews) {
+	public void setNumberOfReviews(long numberOfReviews) {
 		this.numberOfReviews = numberOfReviews;
+	}
+	
+	public String getFromCountryName() {
+		return fromCountryName;
+	}
+
+	public void setFromCountryName(String fromCountryName) {
+		this.fromCountryName = fromCountryName;
+	}
+
+	public Integer getCategory() {
+		return category;
+	}
+
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 }

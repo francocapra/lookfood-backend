@@ -132,7 +132,7 @@ public class ProductResources {
 	@RequestMapping(value="/top/upToFifty", method=RequestMethod.GET)
 	public ResponseEntity<List<ProductTopDTO>> findTopUpToFifty() {
 		
-		List<ProductTopDTO> list = service.fintTopUpToFifty();
+		List<ProductTopDTO> list = service.findTopUpToFifty();
 		
 		return ResponseEntity.ok().body(list);
 	}
@@ -144,6 +144,15 @@ public class ProductResources {
 			) {
 		
 		List<ProductTopDTO> list = service.findByCountry(isoCode);
+		
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@ApiOperation(value="List Top Products By Category")
+	@RequestMapping(value="/byCategory/{categoryCode}", method=RequestMethod.GET)
+	public ResponseEntity<List<ProductTopDTO>> findByCategory(@PathVariable("categoryCode") Integer categoryCode){
+		
+		List<ProductTopDTO> list = service.findByCategory(categoryCode);
 		
 		return ResponseEntity.ok().body(list);
 	}

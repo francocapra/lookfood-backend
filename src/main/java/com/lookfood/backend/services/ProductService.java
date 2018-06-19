@@ -154,7 +154,8 @@ public class ProductService {
 				objDTO.getPrice(),
 				objDTO.getCurrency(),				
 				objDTO.getIdExternal(),
-				objDTO.getFromCountry()
+				objDTO.getFromCountry(),
+				objDTO.getCategory()
 				);
 	}
 	
@@ -167,18 +168,22 @@ public class ProductService {
 		return list;
 	}
 	
-	public List<ProductTopDTO> fintTopUpToFifty(){
+	public List<ProductTopDTO> findTopUpToFifty(){
 		PageRequest pageRequest = PageRequest.of(0, 20);
 		
 		return repository.findTopUpToFifty(pageRequest);
-
 	}
 	
 	public List<ProductTopDTO> findByCountry(String countryIsoCode){
 		PageRequest pageRequest = PageRequest.of(0, 20);
 		
 		return repository.findByCountry(pageRequest, countryIsoCode);
-
+	}
+	
+	public List<ProductTopDTO> findByCategory(Integer categoryCode){
+		PageRequest pageRequest = PageRequest.of(0, 20);
+		
+		return repository.findByCategory(pageRequest, categoryCode);
 	}
 	
 	public URI uploadProfilePicture(MultipartFile multipartFile, Integer productId) {

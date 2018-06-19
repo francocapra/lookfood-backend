@@ -30,6 +30,8 @@ public class ProductDTO  implements Serializable{
 	
 	private String fromCountry;
 	
+	private Integer category;
+
 	public ProductDTO() {
 		super();
 	}
@@ -42,6 +44,7 @@ public class ProductDTO  implements Serializable{
 		this.currency = obj.getCurrency();
 		this.idExternal = obj.getIdExternal();
 		this.fromCountry = obj.getFromCountry();
+		this.category = obj.getCategory();
 	}
 
 	public Integer getId() {
@@ -108,5 +111,12 @@ public class ProductDTO  implements Serializable{
 		this.modifiedDate = modifiedDate;
 	}
 
+	public Integer getCategory() {
+		return category;
+	}
+
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
 
 }
