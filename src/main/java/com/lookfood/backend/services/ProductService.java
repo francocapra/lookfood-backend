@@ -154,7 +154,7 @@ public class ProductService {
 				objDTO.getPrice(),
 				objDTO.getCurrency(),				
 				objDTO.getIdExternal(),
-				objDTO.getFromCountry(),
+				objDTO.getCountryIsoCode(),
 				objDTO.getCategory()
 				);
 	}

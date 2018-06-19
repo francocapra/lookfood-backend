@@ -17,7 +17,7 @@ public class ProductTopDTO  implements Serializable{
 	
 	private double price;
 	
-	private String fromCountry;
+	private String countryIsoCode;
 	
 	private String fromCountryName;
 	
@@ -31,16 +31,16 @@ public class ProductTopDTO  implements Serializable{
 		super();
 	}
 		
-	public ProductTopDTO(Integer id, String description, Integer rate, double price, String fromCountry,
+	public ProductTopDTO(Integer id, String description, Integer rate, double price, String countryIsoCode,
 			long numberOfReviews, Integer category) {
 		super();
 		this.id = id;
 		this.description = description;
 		this.rate = rate;
 		this.price = price;
-		this.fromCountry = fromCountry;
+		this.countryIsoCode = countryIsoCode;
 		this.numberOfReviews = numberOfReviews;
-		this.fromCountryName = TypeCountries.toEnum(fromCountry).getDescription();
+		this.fromCountryName = TypeCountries.toEnum(countryIsoCode).getDescription();
 		this.category = category;
 		this.categoryName = TypeProductCategories.toEnum(category).getDescription();
 	}
@@ -51,7 +51,7 @@ public class ProductTopDTO  implements Serializable{
 		this.description = obj.getProduct().getDescription();
 		this.setRate(obj.getRate());
 		this.price = obj.getProduct().getPrice();
-		this.fromCountry = obj.getProduct().getFromCountry();
+		this.countryIsoCode = obj.getProduct().getCountryIsoCode();
 	}
 
 	public Integer getId() {
@@ -78,12 +78,12 @@ public class ProductTopDTO  implements Serializable{
 		this.rate = rate;
 	}
 
-	public String getFromCountry() {
-		return fromCountry;
+	public String getCountryIsoCode() {
+		return countryIsoCode;
 	}
 
-	public void setFromCountry(String fromCountry) {
-		this.fromCountry = fromCountry;
+	public void setCountryIsoCode(String countryIsoCode) {
+		this.countryIsoCode = countryIsoCode;
 	}
 
 	public double getPrice() {

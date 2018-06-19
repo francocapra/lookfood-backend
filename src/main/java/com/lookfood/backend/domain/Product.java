@@ -36,7 +36,7 @@ public class Product implements Serializable{
 	
 	private String idExternal;
 	
-	private String fromCountry;
+	private String countryIsoCode;
 	
 	private Integer category;
 	
@@ -70,14 +70,14 @@ public class Product implements Serializable{
 		super();
 	}
 
-	public Product(Integer id, String description, Double price, String currency, String idExternal, String fromCountry, Integer category ) {
+	public Product(Integer id, String description, Double price, String currency, String idExternal, String countryIsoCode, Integer category ) {
 		super();
 		this.id = id;
 		this.description = description;
 		this.price = price;
 		this.currency = currency;
 		this.idExternal = idExternal;
-		this.fromCountry = fromCountry;
+		this.countryIsoCode = countryIsoCode;
 		this.category = category;
 	}
 	
@@ -123,12 +123,12 @@ public class Product implements Serializable{
 		this.currency = currency;
 	}
 
-	public String getFromCountry() {
-		return fromCountry;
+	public String getCountryIsoCode() {
+		return countryIsoCode;
 	}
 
-	public void setFromCountry(String fromCountry) {
-		this.fromCountry = fromCountry;
+	public void setCountryIsoCode(String countryIsoCode) {
+		this.countryIsoCode = countryIsoCode;
 	}
 
 	public String getIdExternal() {

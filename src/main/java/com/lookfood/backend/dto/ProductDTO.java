@@ -43,7 +43,7 @@ public class ProductDTO  implements Serializable{
 		this.price = obj.getPrice();
 		this.currency = obj.getCurrency();
 		this.idExternal = obj.getIdExternal();
-		this.countryIsoCode = obj.getFromCountry();
+		this.countryIsoCode = obj.getCountryIsoCode();
 		this.category = obj.getCategory();
 	}
 
@@ -79,12 +79,12 @@ public class ProductDTO  implements Serializable{
 		this.currency = currency;
 	}
 
-	public String getFromCountry() {
+	public String getCountryIsoCode() {
 		return countryIsoCode;
 	}
 
-	public void setFromCountry(String fromCountry) {
-		this.countryIsoCode = fromCountry;
+	public void setCountryIsoCode(String countryIsoCode) {
+		this.countryIsoCode = countryIsoCode;
 	}
 
 	public String getIdExternal() {
