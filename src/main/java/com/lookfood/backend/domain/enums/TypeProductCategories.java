@@ -5,7 +5,16 @@ public enum TypeProductCategories {
 	PASTA(1, "Massas"),
 	MEAT(2, "Carnes"),
 	SEAFOOD(3, "Frutos do Mar"),
-	DESSERT(4, "Sobremesas");
+	DESSERT(4, "Sobremesas"),
+	SALAD(5, "Saladas"),
+	PRIMARY(6, "Entradas"),
+	GRAIN(7, "Grãos"),
+	MAIN(8, "Pratos Principais"),
+	COFFEE(9, "Cafés"),
+	VEGETARIAN(10, "Vegetarianos"),
+	VEGAN(11, "Veganos"),
+	APPETIZER(12, "Petiscos"),
+	SOUP(13, "Sopas");
 	
 	private Integer code;
 	private String description;

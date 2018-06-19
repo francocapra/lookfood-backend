@@ -28,7 +28,7 @@ public class ProductDTO  implements Serializable{
 	
 	private Date modifiedDate;
 	
-	private String fromCountry;
+	private String countryIsoCode;
 	
 	private Integer category;
 
@@ -43,7 +43,7 @@ public class ProductDTO  implements Serializable{
 		this.price = obj.getPrice();
 		this.currency = obj.getCurrency();
 		this.idExternal = obj.getIdExternal();
-		this.fromCountry = obj.getFromCountry();
+		this.countryIsoCode = obj.getFromCountry();
 		this.category = obj.getCategory();
 	}
 
@@ -80,11 +80,11 @@ public class ProductDTO  implements Serializable{
 	}
 
 	public String getFromCountry() {
-		return fromCountry;
+		return countryIsoCode;
 	}
 
 	public void setFromCountry(String fromCountry) {
-		this.fromCountry = fromCountry;
+		this.countryIsoCode = fromCountry;
 	}
 
 	public String getIdExternal() {
