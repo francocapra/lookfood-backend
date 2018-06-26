@@ -2,6 +2,8 @@ package com.lookfood.backend.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.lookfood.backend.domain.ItemProduct;
 import com.lookfood.backend.domain.enums.TypeCountries;
 import com.lookfood.backend.domain.enums.TypeProductCategories;
@@ -27,12 +29,15 @@ public class ProductTopDTO  implements Serializable{
 
 	private long numberOfReviews;
 	
+	@Length(max=500, message="O tamanho máximo não pode ultrapassar 500 caracteres")
+	private String fullDescription;
+	
 	public ProductTopDTO() {
 		super();
 	}
 		
 	public ProductTopDTO(Integer id, String description, Integer rate, double price, String countryIsoCode,
-			long numberOfReviews, Integer category) {
+			long numberOfReviews, Integer category, String fullDescription) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -43,6 +48,7 @@ public class ProductTopDTO  implements Serializable{
 		this.fromCountryName = TypeCountries.toEnum(countryIsoCode).getDescription();
 		this.category = category;
 		this.categoryName = TypeProductCategories.toEnum(category).getDescription();
+		this.fullDescription = fullDescription;
 	}
 
 	public ProductTopDTO(ItemProduct obj) {
@@ -124,6 +130,14 @@ public class ProductTopDTO  implements Serializable{
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+	public String getFullDescription() {
+		return fullDescription;
+	}
+
+	public void setFullDescription(String fullDescription) {
+		this.fullDescription = fullDescription;
 	}
 
 }

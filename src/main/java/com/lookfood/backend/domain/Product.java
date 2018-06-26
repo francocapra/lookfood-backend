@@ -15,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,6 +42,8 @@ public class Product implements Serializable{
 	private String countryIsoCode;
 	
 	private Integer category;
+	
+	private String fullDescription;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")	
 	private Date createdDate;
@@ -70,7 +75,7 @@ public class Product implements Serializable{
 		super();
 	}
 
-	public Product(Integer id, String description, Double price, String currency, String idExternal, String countryIsoCode, Integer category ) {
+	public Product(Integer id, String description, Double price, String currency, String idExternal, String countryIsoCode, Integer category, String fullDescription ) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -79,6 +84,7 @@ public class Product implements Serializable{
 		this.idExternal = idExternal;
 		this.countryIsoCode = countryIsoCode;
 		this.category = category;
+		this.fullDescription = fullDescription;
 	}
 	
 
@@ -185,6 +191,14 @@ public class Product implements Serializable{
 
 	public void setCategory(Integer category) {
 		this.category = category;
+	}
+
+	public String getFullDescription() {
+		return fullDescription;
+	}
+
+	public void setFullDescription(String fullDescription) {
+		this.fullDescription = fullDescription;
 	}
 
 	@Override

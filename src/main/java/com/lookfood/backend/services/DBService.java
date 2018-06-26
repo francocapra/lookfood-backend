@@ -95,23 +95,23 @@ public class DBService {
 
 		// Persist: Product/ Professional
 		Product p1 = new Product(null, "Moqueca", 23.00, "BRL", null, TypeCountries.BRAZIL.getIsoCode(),
-				TypeProductCategories.MEAT.getCode());
+				TypeProductCategories.MEAT.getCode(), "No Brasil, é prato típico especialmente dos estados da Bahia, do Espírito Santo, Pará e Pernambuco, apresentando variações regionais significativas. Pode ser preparada com peixe, mariscos, crustáceos, galinha ou ovos.");
 		Product p2 = new Product(null, "Acarajé", 34.00, "BRL", null, TypeCountries.BRAZIL.getIsoCode(),
-				TypeProductCategories.PASTA.getCode());
+				TypeProductCategories.PASTA.getCode(), "O acarajé é uma especialidade gastronômica das culinárias africana e afro-brasileira. Trata-se de um bolinho feito de massa de feijão-fradinho, cebola e sal, e frito em azeite de dendê");
 		Product p3 = new Product(null, "Poutine", 45.80, "BRL", null, TypeCountries.USA.getIsoCode(),
-				TypeProductCategories.PASTA.getCode());
+				TypeProductCategories.PASTA.getCode(), "DOUBLE POUTINE: POUTINE (PRATO TÍPICO CANADENSE), 700G DE BATATA-FRITA CANADENSE, 200G DE PROTEÍNA À ESCOLHA (BOI, FRANGO OU PORCO), QUEIJO DERRETIDO E MOLHO ESPECIAL (4 OPÇÕES).");
 		Product p4 = new Product(null, "Bannock", 28.00, "BRL", null, TypeCountries.MEXICO.getIsoCode(),
-				TypeProductCategories.MEAT.getCode());
+				TypeProductCategories.MEAT.getCode(), "");
 		Product p5 = new Product(null, "Butter tarts", 59.00, "BRL", null, TypeCountries.BRAZIL.getIsoCode(),
-				TypeProductCategories.SEAFOOD.getCode());
+				TypeProductCategories.SEAFOOD.getCode(), "");
 		Product p6 = new Product(null, "Wurst e Currywurst", 56.00, "BRL", null, TypeCountries.MEXICO.getIsoCode(),
-				TypeProductCategories.SEAFOOD.getCode());
+				TypeProductCategories.SEAFOOD.getCode(), "");
 		Product p7 = new Product(null, "Schnitzel", 14.00, "BRL", null, TypeCountries.USA.getIsoCode(),
-				TypeProductCategories.MEAT.getCode());
+				TypeProductCategories.MEAT.getCode(), "");
 		Product p8 = new Product(null, "Feijoada", 11.00, "BRL", null, TypeCountries.USA.getIsoCode(),
-				TypeProductCategories.MEAT.getCode());
+				TypeProductCategories.MEAT.getCode(), "");
 		Product p9 = new Product(null, "Churrasco", 23.00, "BRL", null, TypeCountries.MEXICO.getIsoCode(),
-				TypeProductCategories.DESSERT.getCode());
+				TypeProductCategories.DESSERT.getCode(), "");
 
 		Professional prof1 = new Professional(null, "José", TypePosition.CHEF);
 		Professional prof2 = new Professional(null, "Maria", TypePosition.ASSISTANT);

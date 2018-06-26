@@ -31,6 +31,9 @@ public class ProductDTO  implements Serializable{
 	private String countryIsoCode;
 	
 	private Integer category;
+	
+	@Length(max=500, message="O tamanho deve ser no máximo 500 caracteres")
+	private String fullDescription;
 
 	public ProductDTO() {
 		super();
@@ -117,6 +120,14 @@ public class ProductDTO  implements Serializable{
 
 	public void setCategory(Integer category) {
 		this.category = category;
+	}
+
+	public String getFullDescription() {
+		return fullDescription;
+	}
+
+	public void setFullDescription(String fullDescription) {
+		this.fullDescription = fullDescription;
 	}
 
 }
