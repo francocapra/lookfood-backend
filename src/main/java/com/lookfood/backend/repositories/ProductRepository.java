@@ -30,7 +30,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 //FONT: https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods
 	
 	public static final String BASIC_TOP_PRODUCT_DTO = "SELECT new com.lookfood.backend.dto.ProductTopDTO(obj.id.product.id, obj.id.product.description, obj.rate, "
-			+ "obj.id.product.price, obj.id.product.countryIsoCode, count(obj.id.product.id), obj.id.product.category, obj.id.product.fullDescription) ";
+			+ "obj.id.product.price, obj.id.product.countryIsoCode, count(obj.id.product.id), obj.id.product.category, obj.id.product.fullDescription, obj.id.product.partner) ";
 	
 	public static final String BASIC_PRODUCT_DTO = "SELECT new com.lookfood.backend.dto.ProductDTO(obj.id.product.id, obj.id.product.description, obj.rate, "
 			+ "obj.id.product.price, obj.id.product.countryIsoCode, count(obj.id.product.id), obj.id.product.category, obj.id.product.fullDescription, obj.id.product.partner) ";
