@@ -139,20 +139,20 @@ public class ProductResources {
 	
 	@ApiOperation(value="List Top Products By Country") 
 	@RequestMapping(value="/byCountry/{isoCode}", method=RequestMethod.GET)
-	public ResponseEntity<List<ProductTopDTO>> findByCountry(
+	public ResponseEntity<List<ProductDTO>> findByCountry(
 			@PathVariable("isoCode") String isoCode
 			) {
 		
-		List<ProductTopDTO> list = service.findByCountry(isoCode);
+		List<ProductDTO> list = service.findByCountry(isoCode);
 		
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@ApiOperation(value="List Top Products By Category")
 	@RequestMapping(value="/byCategory/{categoryCode}", method=RequestMethod.GET)
-	public ResponseEntity<List<ProductTopDTO>> findByCategory(@PathVariable("categoryCode") Integer categoryCode){
+	public ResponseEntity<List<ProductDTO>> findByCategory(@PathVariable("categoryCode") Integer categoryCode){
 		
-		List<ProductTopDTO> list = service.findByCategory(categoryCode);
+		List<ProductDTO> list = service.findByCategory(categoryCode);
 		
 		return ResponseEntity.ok().body(list);
 	}

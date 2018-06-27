@@ -7,7 +7,10 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.lookfood.backend.domain.Partner;
 import com.lookfood.backend.domain.Product;
+import com.lookfood.backend.domain.enums.TypeCountries;
+import com.lookfood.backend.domain.enums.TypeProductCategories;
 
 public class ProductDTO  implements Serializable{	
 	private static final long serialVersionUID = 1L;
@@ -35,6 +38,16 @@ public class ProductDTO  implements Serializable{
 	@Length(max=500, message="O tamanho deve ser no máximo 500 caracteres")
 	private String fullDescription;
 
+	private Integer rate;
+
+	private long numberOfReviews;
+
+	private String fromCountryName;
+
+	private String categoryName;
+	
+	private Partner partner;
+
 	public ProductDTO() {
 		super();
 	}
@@ -48,6 +61,22 @@ public class ProductDTO  implements Serializable{
 		this.idExternal = obj.getIdExternal();
 		this.countryIsoCode = obj.getCountryIsoCode();
 		this.category = obj.getCategory();
+	}
+	
+	public ProductDTO(Integer id, String description, Integer rate, double price, String countryIsoCode,
+			long numberOfReviews, Integer category, String fullDescription, Partner partner) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.rate = rate;
+		this.price = price;
+		this.countryIsoCode = countryIsoCode;
+		this.numberOfReviews = numberOfReviews;
+		this.fromCountryName = TypeCountries.toEnum(countryIsoCode).getDescription();
+		this.category = category;
+		this.categoryName = TypeProductCategories.toEnum(category).getDescription();
+		this.fullDescription = fullDescription;
+		this.partner = partner;
 	}
 
 	public Integer getId() {
@@ -128,6 +157,46 @@ public class ProductDTO  implements Serializable{
 
 	public void setFullDescription(String fullDescription) {
 		this.fullDescription = fullDescription;
+	}
+
+	public Integer getRate() {
+		return rate;
+	}
+
+	public void setRate(Integer rate) {
+		this.rate = rate;
+	}
+
+	public long getNumberOfReviews() {
+		return numberOfReviews;
+	}
+
+	public void setNumberOfReviews(long numberOfReviews) {
+		this.numberOfReviews = numberOfReviews;
+	}
+
+	public String getFromCountryName() {
+		return fromCountryName;
+	}
+
+	public void setFromCountryName(String fromCountryName) {
+		this.fromCountryName = fromCountryName;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public Partner getPartner() {
+		return partner;
+	}
+
+	public void setPartner(Partner partner) {
+		this.partner = partner;
 	}
 
 }

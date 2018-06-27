@@ -175,13 +175,13 @@ public class ProductService {
 		return repository.findTopUpToFifty(pageRequest);
 	}
 	
-	public List<ProductTopDTO> findByCountry(String countryIsoCode){
+	public List<ProductDTO> findByCountry(String countryIsoCode){
 		PageRequest pageRequest = PageRequest.of(0, 20);
 		
 		return repository.findByCountry(pageRequest, countryIsoCode);
 	}
 	
-	public List<ProductTopDTO> findByCategory(Integer categoryCode){
+	public List<ProductDTO> findByCategory(Integer categoryCode){
 		PageRequest pageRequest = PageRequest.of(0, 20);
 		
 		return repository.findByCategory(pageRequest, categoryCode);

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lookfood.backend.domain.ItemProduct;
 import com.lookfood.backend.domain.Product;
 import com.lookfood.backend.domain.Professional;
+import com.lookfood.backend.dto.ProductDTO;
 import com.lookfood.backend.dto.ProductTopDTO;
 
 @Repository
@@ -30,6 +31,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	public static final String BASIC_TOP_PRODUCT_DTO = "SELECT new com.lookfood.backend.dto.ProductTopDTO(obj.id.product.id, obj.id.product.description, obj.rate, "
 			+ "obj.id.product.price, obj.id.product.countryIsoCode, count(obj.id.product.id), obj.id.product.category, obj.id.product.fullDescription) ";
+	
+	public static final String BASIC_PRODUCT_DTO = "SELECT new com.lookfood.backend.dto.ProductDTO(obj.id.product.id, obj.id.product.description, obj.rate, "
+			+ "obj.id.product.price, obj.id.product.countryIsoCode, count(obj.id.product.id), obj.id.product.category, obj.id.product.fullDescription, obj.id.product.partner) ";
 	
 	@Transactional(readOnly=true)
 	Page<Product> findDistinctByDescriptionContainingAndProfessionalsIn(
@@ -53,20 +57,20 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<ProductTopDTO> findTopUpToFifty(Pageable pageable);
 	
 	@Transactional(readOnly=true)
-	@Query(value=BASIC_TOP_PRODUCT_DTO
+	@Query(value=BASIC_PRODUCT_DTO
 			+ "FROM ItemProduct obj "
 			+ "WHERE obj.id.product.countryIsoCode = :countryIsoCode "
 			+ "GROUP BY obj.id.product.id "
 			+ "ORDER BY AVG( obj.rate ) DESC, count(obj.id.product.id) DESC")
-	List<ProductTopDTO> findByCountry(Pageable pageable, @Param(value="countryIsoCode") String countryIsoCode);
+	List<ProductDTO> findByCountry(Pageable pageable, @Param(value="countryIsoCode") String countryIsoCode);
 	
 	@Transactional
-	@Query(value=BASIC_TOP_PRODUCT_DTO
+	@Query(value=BASIC_PRODUCT_DTO
 			+ "FROM ItemProduct obj "
 			+ "WHERE obj.id.product.category = :categoryCode "
 			+ "GROUP BY obj.id.product.id "
 			+ "ORDER BY AVG( obj.rate ) DESC, count(obj.id.product.id) DESC")
-	List<ProductTopDTO> findByCategory(Pageable pageable, @Param(value="categoryCode") Integer categoryCode);
+	List<ProductDTO> findByCategory(Pageable pageable, @Param(value="categoryCode") Integer categoryCode);
 	
 	@Transactional(readOnly=true)
 	List<Product> findAllByPartnerId(Integer partnerId);
