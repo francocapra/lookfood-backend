@@ -98,7 +98,8 @@ public class ReviewService {
 	}
 
 	public Review update(Review obj) {
-		find(obj.getId());
+//		find(obj.getId());
+		findWithoutSec(obj.getId());
 		return repository.save(obj);		
 	}
 
