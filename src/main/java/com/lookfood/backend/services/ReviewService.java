@@ -59,6 +59,14 @@ public class ReviewService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Review.class.getName()));
 
 	}
+	
+	public Review findWithoutSec(Integer id) {
+		
+		Optional<Review> obj = repository.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Review.class.getName()));
+
+	}
 
 	@Transactional
 	public Review insert(ReviewDTO reviewDTO) {
@@ -130,7 +138,7 @@ public class ReviewService {
 
 	public Review updateFromDTO(@Valid ReviewDTO reviewDTO) {
 		
-		Review review = find(reviewDTO.getId());
+		Review review = findWithoutSec(reviewDTO.getId());
 		updateDataFromDTO(review, reviewDTO);		
 		return review;
 	}

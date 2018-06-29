@@ -46,6 +46,8 @@ public class SecutityConfig extends WebSecurityConfigurerAdapter {
 
 	public static final String[] PUBLIC_MATCHERS_POST = { "/partners", "/auth/forgot/**" };
 	
+	public static final String[] PUBLIC_MATCHERS_PUT = { "/reviews" };
+	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers(
@@ -74,6 +76,7 @@ public class SecutityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+				.antMatchers(HttpMethod.PUT, PUBLIC_MATCHERS_PUT).permitAll()
 				.antMatchers(PUBLIC_MATCHERS).permitAll()
 				.anyRequest().authenticated();
 
