@@ -28,6 +28,7 @@ import com.lookfood.backend.repositories.ReviewRepository;
 import com.lookfood.backend.security.SSUserDetails;
 import com.lookfood.backend.services.exceptions.AuthorizationException;
 import com.lookfood.backend.services.exceptions.ObjectNotFoundException;
+import com.lookfood.backend.services.exceptions.ReviewClosedException;
 
 @Service
 public class ReviewService {
@@ -122,8 +123,13 @@ public class ReviewService {
 
 	public ReviewDTO findByCode(String reviewCode) {
 
-		Review review = repository.findByReviewCode(reviewCode);		
-		ReviewDTO reviewDTO = new ReviewDTO() ;
+		Review review = repository.findByReviewCode(reviewCode);
+		
+		if(review.getStatus() == TypeStatus.CLOSE) {
+			throw new ReviewClosedException("A avaliação solicitada já foi encerrada.");
+		}
+		
+		ReviewDTO reviewDTO = new ReviewDTO();
 		
 		reviewDTO.setId(review.getId());
 		reviewDTO.setStatus(review.getStatus().getDescription());
